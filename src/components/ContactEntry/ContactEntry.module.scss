@@ -1,0 +1,40 @@
+@use "@/styles/glass.scss" as *;
+
+.contactEntry {
+  @include glass;
+
+  color: inherit;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1.2rem 1.3rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.icon {
+  fill: white;
+  display: flex;
+  align-items: center;
+
+  svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: 700;
+}
+
+.value {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+}
