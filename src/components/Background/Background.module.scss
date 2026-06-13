@@ -1,172 +1,324 @@
 .background {
     position: fixed;
     inset: 0;
-
+    z-index: -1;
     width: 100vw;
     height: 120dvh;
-
-    z-index: -1;
-    pointer-events: none;
-
     overflow: hidden;
-
-    background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
-    filter: brightness(var(--bg-filter-brightness));
-    transition: background 240ms ease, filter 240ms ease;
+    pointer-events: none;
+    background:
+            radial-gradient(circle at 12% 8%, rgba(var(--aurora-2), 0.18), transparent 34%),
+            radial-gradient(circle at 86% 12%, rgba(var(--aurora-3), 0.14), transparent 32%),
+            linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+    isolation: isolate;
+    transition: background 260ms ease;
 }
 
-
-.blobs {
-    width: 100%;
-    height: 100%;
-    filter: url(#goo) blur(var(--blob-blur));
-}
-
-// Base blob styles
-@mixin blob {
-    width: var(--circle-size);
-    height: var(--circle-size);
-
+.background::before,
+.background::after {
+    content: "";
     position: absolute;
-    top: calc(50% - var(--circle-size) / 2);
-    left: calc(50% - var(--circle-size) / 2);
+    inset: -12%;
+    z-index: 2;
+    pointer-events: none;
+}
 
-    mix-blend-mode: var(--blending);
+.background::before {
+    background:
+            radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 32%),
+            linear-gradient(180deg, rgba(0, 0, 0, 0.08), transparent 28%, rgba(0, 0, 0, 0.22));
+    mix-blend-mode: soft-light;
+}
 
+.background::after {
+    background:
+            radial-gradient(circle at center, transparent 44%, rgba(0, 0, 0, 0.22) 100%);
+}
+
+.aurora {
+    position: absolute;
+    inset: -12%;
+    z-index: 1;
+    filter: url("#goo") blur(var(--aurora-blur)) saturate(var(--aurora-saturate)) contrast(var(--aurora-contrast)) brightness(var(--aurora-brightness));
     opacity: 1;
 }
 
-// Individual blob styles, they vary in color, position and movement
+@mixin blobBase {
+    position: absolute;
+    width: var(--aurora-circle-size);
+    height: var(--aurora-circle-size);
+    border-radius: 999px;
+    mix-blend-mode: var(--aurora-blending);
+    will-change: transform;
+}
+
 .blob1 {
-    @include blob;
+    @include blobBase;
 
-    background: radial-gradient(circle at center, rgba(var(--color1), var(--blob-alpha)), rgba(var(--color1), 0) 50%) no-repeat;
-
-    transform-origin: center center;
-    animation: moveVertical 30s ease infinite;
+    top: -22%;
+    left: -14%;
+    width: calc(var(--aurora-circle-size) * 1.05);
+    height: calc(var(--aurora-circle-size) * 1.05);
+    background: radial-gradient(circle at center, rgba(var(--aurora-1), var(--aurora-alpha)), rgba(var(--aurora-1), 0) 58%) no-repeat;
+    animation: auroraSweepOne 28s ease-in-out infinite alternate;
 }
 
 .blob2 {
-    @include blob;
+    @include blobBase;
 
-    background: radial-gradient(circle at center, rgba(var(--color2), var(--blob-alpha)), rgba(var(--color2), 0) 50%) no-repeat;
-
-    transform-origin: calc(50% - 400px);
-    animation: moveInCircle 20s reverse infinite;
+    top: -28%;
+    right: -16%;
+    width: calc(var(--aurora-circle-size) * 0.96);
+    height: calc(var(--aurora-circle-size) * 0.96);
+    background: radial-gradient(circle at center, rgba(var(--aurora-2), var(--aurora-alpha)), rgba(var(--aurora-2), 0) 56%) no-repeat;
+    animation: auroraOrbitOne 24s ease-in-out infinite;
 }
 
 .blob3 {
-    @include blob;
+    @include blobBase;
 
-    background: radial-gradient(circle at center, rgba(var(--color3), var(--blob-alpha)), rgba(var(--color3), 0) 50%) no-repeat;
-
-    top: calc(50% - var(--circle-size) / 2 + 200px);
-    left: calc(50% - var(--circle-size) / 2 - 500px);
-
-    transform-origin: calc(50% + 400px);
-    animation: moveInCircle 40s linear infinite;
+    top: 18%;
+    left: 18%;
+    width: calc(var(--aurora-circle-size) * 0.88);
+    height: calc(var(--aurora-circle-size) * 0.88);
+    background: radial-gradient(circle at center, rgba(var(--aurora-3), var(--aurora-soft-alpha)), rgba(var(--aurora-3), 0) 54%) no-repeat;
+    animation: auroraDriftOne 34s linear infinite;
 }
 
 .blob4 {
-    @include blob;
+    @include blobBase;
 
-    background: radial-gradient(circle at center, rgba(var(--color4), var(--blob-alpha)), rgba(var(--color4), 0) 50%) no-repeat;
-
-    transform-origin: calc(50% - 200px);
-    animation: moveHorizontal 40s ease infinite;
+    right: -20%;
+    bottom: -26%;
+    width: calc(var(--aurora-circle-size) * 1.02);
+    height: calc(var(--aurora-circle-size) * 1.02);
+    background: radial-gradient(circle at center, rgba(var(--aurora-4), var(--aurora-soft-alpha)), rgba(var(--aurora-4), 0) 57%) no-repeat;
+    animation: auroraSweepTwo 38s ease-in-out infinite alternate;
 }
 
 .blob5 {
-    @include blob;
+    @include blobBase;
 
-    background: radial-gradient(circle at center, rgba(var(--color5), var(--blob-alpha)), rgba(var(--color5), 0) 50%) no-repeat;
+    left: 30%;
+    bottom: -30%;
+    width: calc(var(--aurora-circle-size) * 0.82);
+    height: calc(var(--aurora-circle-size) * 0.82);
+    background: radial-gradient(circle at center, rgba(var(--aurora-5), var(--aurora-soft-alpha)), rgba(var(--aurora-5), 0) 55%) no-repeat;
+    animation: auroraOrbitTwo 30s ease-in-out infinite reverse;
+}
 
-    transform-origin: calc(50% - 800px) calc(50% + 200px);
-    animation: moveHorizontal 20s ease infinite;
+.blob6 {
+    @include blobBase;
+
+    top: 6%;
+    left: 46%;
+    width: calc(var(--aurora-circle-size) * 0.64);
+    height: calc(var(--aurora-circle-size) * 0.64);
+    background: radial-gradient(circle at center, rgba(var(--aurora-6), calc(var(--aurora-soft-alpha) * 0.9)), rgba(var(--aurora-6), 0) 58%) no-repeat;
+    animation: auroraPulse 20s ease-in-out infinite;
+}
+
+.blob7 {
+    @include blobBase;
+
+    top: 46%;
+    left: -18%;
+    width: calc(var(--aurora-circle-size) * 0.72);
+    height: calc(var(--aurora-circle-size) * 0.72);
+    background: radial-gradient(circle at center, rgba(var(--aurora-7), calc(var(--aurora-soft-alpha) * 0.95)), rgba(var(--aurora-7), 0) 57%) no-repeat;
+    animation: auroraDriftTwo 42s ease-in-out infinite;
+}
+
+.auroraRibbon {
+    position: absolute;
+    top: 8%;
+    left: -18%;
+    width: 136%;
+    height: 58%;
+    background:
+            radial-gradient(ellipse at 20% 48%, rgba(var(--aurora-1), calc(var(--aurora-soft-alpha) * 0.75)), transparent 34%),
+            radial-gradient(ellipse at 50% 40%, rgba(var(--aurora-3), calc(var(--aurora-soft-alpha) * 0.68)), transparent 32%),
+            radial-gradient(ellipse at 80% 56%, rgba(var(--aurora-2), calc(var(--aurora-soft-alpha) * 0.72)), transparent 35%);
+    mix-blend-mode: var(--aurora-blending);
+    transform: rotate(-9deg);
+    animation: auroraRibbonFlow 36s ease-in-out infinite alternate;
+    will-change: transform;
 }
 
 .blobInteractive {
-    @include blob;
-
-    width: 100%;
-    height: 100%;
+    @include blobBase;
 
     top: -50%;
     left: -50%;
-
-    background: radial-gradient(circle at center, rgba(var(--color-interactive), var(--blob-alpha)), rgba(var(--color-interactive), 0) 50%) no-repeat;
-
-    opacity: var(--blob-interactive-alpha);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(var(--aurora-interactive), var(--aurora-interactive-alpha)), rgba(var(--aurora-interactive), 0) 48%) no-repeat;
+    opacity: var(--aurora-interactive-alpha);
 }
 
-// The svg filter
 .filter {
     position: absolute;
     top: 0;
     left: 0;
+    width: 0;
+    height: 0;
 }
 
-// Blob animations
-@keyframes moveInCircle {
+@keyframes auroraSweepOne {
     0% {
-        transform: rotate(0deg);
+        transform: translate3d(-9%, -4%, 0) rotate(0deg) scale(0.96);
     }
     50% {
-        transform: rotate(180deg);
+        transform: translate3d(12%, 11%, 0) rotate(58deg) scale(1.08);
     }
     100% {
-        transform: rotate(360deg);
+        transform: translate3d(25%, -2%, 0) rotate(112deg) scale(1.02);
     }
 }
 
-@keyframes moveVertical {
+@keyframes auroraSweepTwo {
     0% {
-        transform: translateY(-50%);
+        transform: translate3d(10%, 4%, 0) rotate(12deg) scale(1.04);
     }
     50% {
-        transform: translateY(50%);
+        transform: translate3d(-20%, -16%, 0) rotate(-42deg) scale(0.98);
     }
     100% {
-        transform: translateY(-50%);
+        transform: translate3d(-8%, 10%, 0) rotate(-94deg) scale(1.08);
     }
 }
 
-@keyframes moveHorizontal {
+@keyframes auroraOrbitOne {
     0% {
-        transform: translateX(-50%) translateY(-10%);
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(0.98);
+    }
+    35% {
+        transform: translate3d(-18%, 18%, 0) rotate(82deg) scale(1.08);
+    }
+    70% {
+        transform: translate3d(-5%, 30%, 0) rotate(188deg) scale(0.94);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) rotate(360deg) scale(0.98);
+    }
+}
+
+@keyframes auroraOrbitTwo {
+    0% {
+        transform: translate3d(-4%, 0, 0) rotate(0deg) scale(1);
+    }
+    45% {
+        transform: translate3d(18%, -24%, 0) rotate(112deg) scale(1.12);
+    }
+    100% {
+        transform: translate3d(-4%, 0, 0) rotate(360deg) scale(1);
+    }
+}
+
+@keyframes auroraDriftOne {
+    0% {
+        transform: translate3d(-10%, 22%, 0) rotate(0deg) scale(1);
     }
     50% {
-        transform: translateX(50%) translateY(10%);
+        transform: translate3d(24%, -12%, 0) rotate(180deg) scale(1.14);
     }
     100% {
-        transform: translateX(-50%) translateY(-10%);
+        transform: translate3d(-10%, 22%, 0) rotate(360deg) scale(1);
     }
 }
 
-.blob1,
-.blob2,
-.blob3,
-.blob4,
-.blob5,
-.blobInteractive {
-    will-change: transform;
+@keyframes auroraDriftTwo {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(-18deg) scale(1.05);
+    }
+    50% {
+        transform: translate3d(34%, -20%, 0) rotate(70deg) scale(0.92);
+    }
+    100% {
+        transform: translate3d(8%, 12%, 0) rotate(140deg) scale(1.04);
+    }
+}
+
+@keyframes auroraPulse {
+    0%,
+    100% {
+        transform: translate3d(-8%, 8%, 0) scale(0.86);
+        opacity: 0.68;
+    }
+    50% {
+        transform: translate3d(18%, -10%, 0) scale(1.18);
+        opacity: 1;
+    }
+}
+
+@keyframes auroraRibbonFlow {
+    0% {
+        transform: translate3d(-4%, 2%, 0) rotate(-10deg) scale(0.98);
+    }
+    50% {
+        transform: translate3d(5%, -4%, 0) rotate(-6deg) scale(1.04);
+    }
+    100% {
+        transform: translate3d(9%, 3%, 0) rotate(-12deg) scale(1.02);
+    }
 }
 
 @media (max-width: 640px) {
     .background {
         height: 115dvh;
+        background:
+                radial-gradient(circle at 18% 4%, rgba(var(--aurora-2), 0.14), transparent 34%),
+                radial-gradient(circle at 86% 8%, rgba(var(--aurora-3), 0.12), transparent 32%),
+                linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
     }
 
-    .blobs {
-        filter: url(#goo) blur(18px);
+    .aurora {
+        inset: -18%;
+        filter: url("#goo") blur(18px) saturate(var(--aurora-saturate)) brightness(var(--aurora-brightness));
     }
 
     .blob1,
     .blob2,
     .blob3,
     .blob4,
-    .blob5 {
+    .blob5,
+    .blob6,
+    .blob7,
+    .auroraRibbon {
         animation-duration: 56s;
+    }
+
+    .blobInteractive {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .blob1,
+    .blob2,
+    .blob3,
+    .blob4,
+    .blob5,
+    .blob6,
+    .blob7,
+    .auroraRibbon {
+        animation: none;
+    }
+
+    .blob1 {
+        transform: translate3d(4%, 2%, 0) scale(1.04);
+    }
+
+    .blob2 {
+        transform: translate3d(-8%, 8%, 0) scale(1.02);
+    }
+
+    .blob3 {
+        transform: translate3d(10%, -6%, 0) scale(1.08);
+    }
+
+    .auroraRibbon {
+        transform: rotate(-9deg) scale(1.02);
     }
 
     .blobInteractive {

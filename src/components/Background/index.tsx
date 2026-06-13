@@ -7,7 +7,7 @@ import {useEffect, useRef} from "react";
 type Position = {
     x: number;
     y: number;
-}
+};
 
 export default function Background() {
     const interactiveBubbleRef = useRef<HTMLDivElement>(null);
@@ -19,11 +19,21 @@ export default function Background() {
 
     useEffect(() => {
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
         const element = interactiveBubbleRef.current;
 
-        if (prefersReducedMotion || !element) {
+        if (prefersReducedMotion || !hasFinePointer || !element) {
             return;
         }
+
+        const initialPosition = {
+            x: window.innerWidth * 0.58,
+            y: window.innerHeight * 0.42,
+        };
+
+        targetPositionRef.current = initialPosition;
+        currentPositionRef.current = initialPosition;
+        element.style.transform = `translate3d(${Math.round(initialPosition.x)}px, ${Math.round(initialPosition.y)}px, 0)`;
 
         const stopAnimation = () => {
             if (animationFrameIdRef.current !== null) {
@@ -39,7 +49,7 @@ export default function Background() {
             currentPosition.x += (targetPosition.x - currentPosition.x) / 20;
             currentPosition.y += (targetPosition.y - currentPosition.y) / 20;
 
-            element.style.transform = `translate(${Math.round(currentPosition.x)}px, ${Math.round(currentPosition.y)}px)`;
+            element.style.transform = `translate3d(${Math.round(currentPosition.x)}px, ${Math.round(currentPosition.y)}px, 0)`;
 
             const deltaX = Math.abs(targetPosition.x - currentPosition.x);
             const deltaY = Math.abs(targetPosition.y - currentPosition.y);
@@ -57,7 +67,7 @@ export default function Background() {
             }
         };
 
-        const handleMouseMove = (event: MouseEvent) => {
+        const handlePointerMove = (event: PointerEvent) => {
             targetPositionRef.current = {
                 x: event.clientX,
                 y: event.clientY,
@@ -66,10 +76,10 @@ export default function Background() {
             startAnimation();
         };
 
-        window.addEventListener("mousemove", handleMouseMove, {passive: true});
+        window.addEventListener("pointermove", handlePointerMove, {passive: true});
 
         return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("pointermove", handlePointerMove);
             stopAnimation();
         };
     }, []);
@@ -86,12 +96,15 @@ export default function Background() {
                 </defs>
             </svg>
 
-            <div className={styles.blobs}>
+            <div className={styles.aurora}>
                 <div className={styles.blob1}/>
                 <div className={styles.blob2}/>
                 <div className={styles.blob3}/>
                 <div className={styles.blob4}/>
                 <div className={styles.blob5}/>
+                <div className={styles.blob6}/>
+                <div className={styles.blob7}/>
+                <div className={styles.auroraRibbon}/>
                 <div className={styles.blobInteractive} ref={interactiveBubbleRef}/>
             </div>
         </div>
