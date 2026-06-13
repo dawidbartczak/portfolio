@@ -1,6 +1,7 @@
 import "./globals.scss";
 import type { Metadata } from "next";
 import { Jost, Krona_One } from "next/font/google";
+import Script from "next/script";
 
 import Background from "@/components/Background";
 
@@ -22,10 +23,22 @@ export const metadata: Metadata = {
     icons: ["favicon.svg"],
 };
 
+const themeScript = `
+(() => {
+    try {
+        const theme = localStorage.getItem("portfolio-theme");
+        document.documentElement.dataset.theme = theme === "light" ? "light" : "dark";
+    } catch {
+        document.documentElement.dataset.theme = "dark";
+    }
+})();
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="pl">
+        <html lang="pl" data-theme="dark" suppressHydrationWarning>
         <body className={`${jost.variable} ${kronaOne.variable}`}>
+        <Script id="portfolio-theme" strategy="beforeInteractive" dangerouslySetInnerHTML={{__html: themeScript}} />
 
         {children}
 

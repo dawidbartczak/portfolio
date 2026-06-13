@@ -25,8 +25,8 @@ export const siteCopy = {
             en: "Freelance / contract software delivery",
         },
         title: {
-            pl: "Buduję kompletne MVP i trudne prototypy od pomysłu do działającego produktu.",
-            en: "I build complete MVPs and hard prototypes from idea to working product.",
+            pl: "Dawid Bartczak. End-to-end MVP builder.",
+            en: "Dawid Bartczak. End-to-end MVP builder.",
         },
         lead: {
             pl: "Jestem Dawid Bartczak. Łączę full-stack, aplikacje desktop/mobile, automatyzacje oraz ML/NLP, żeby zamieniać niejasne problemy w działające systemy. Moje starsze projekty powstały ręcznie, przed powszechnym AI-assisted codingiem. Dziś używam AI jako mnożnika produktywności, bez oddawania mu decyzji inżynierskich.",

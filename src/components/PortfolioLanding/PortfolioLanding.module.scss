@@ -1,16 +1,16 @@
 .page {
     width: min(1180px, calc(100% - 2rem));
     margin: 0 auto;
-    padding: 1.2rem 0 4rem;
+    padding: 1rem 0 4rem;
 }
 
 .glassPanel {
     position: relative;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid var(--panel-border);
     border-radius: 0.9rem;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035));
-    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    background: linear-gradient(145deg, var(--panel-bg-a), var(--panel-bg-b));
+    box-shadow: var(--panel-shadow);
 }
 
 .glassPanel::before {
@@ -19,11 +19,8 @@
     inset: 0;
     z-index: 0;
     border-radius: inherit;
-    background:
-            linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.03)),
-            radial-gradient(circle at 18% 0%, rgba(140, 174, 255, 0.18), transparent 32%),
-            radial-gradient(circle at 90% 90%, rgba(218, 151, 255, 0.12), transparent 34%);
-    backdrop-filter: blur(18px) saturate(135%);
+    background: var(--panel-highlight);
+    backdrop-filter: var(--panel-frost);
 }
 
 .panelContent {
@@ -39,12 +36,42 @@
     grid-template-columns: 1fr auto auto;
     align-items: center;
     gap: 1rem;
-    padding: 0.9rem 0;
-    backdrop-filter: blur(10px);
+    padding: 0.78rem 0;
+    isolation: isolate;
+}
+
+.nav::before {
+    content: "";
+    position: absolute;
+    inset: 0 -0.65rem;
+    z-index: 0;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+    box-shadow: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+}
+
+.navScrolled::before {
+    border-color: var(--nav-border);
+    background: var(--nav-bg);
+    box-shadow: var(--nav-shadow);
+    opacity: 1;
+    backdrop-filter: blur(16px) saturate(140%);
+}
+
+.brand,
+.navLinks,
+.navControls {
+    position: relative;
+    z-index: 1;
 }
 
 .brand,
 .navLinks a,
+.themeToggle button,
 .localeToggle button,
 .inlineLink,
 .textLink,
@@ -56,61 +83,90 @@
 }
 
 .brand {
+    min-width: 0;
+    color: var(--text-strong);
     font-family: var(--font-krona-one), sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.86rem;
+    line-height: 1.2;
+    white-space: nowrap;
 }
 
 .navLinks {
     display: flex;
     gap: 1rem;
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--nav-link);
     font-size: 0.9rem;
 }
 
-.navLinks a:hover {
-    color: #ffffff;
+.navLinks a {
+    transition: color 160ms ease;
 }
 
+.navLinks a:hover {
+    color: var(--nav-link-hover);
+}
+
+.navControls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.themeToggle,
 .localeToggle {
     display: flex;
     gap: 0.25rem;
     padding: 0.25rem;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid var(--panel-border);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--toggle-bg);
 }
 
+.themeToggle button,
 .localeToggle button {
-    min-width: 2.4rem;
     height: 2rem;
     border: 0;
     border-radius: 999px;
     background: transparent;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-soft);
     cursor: pointer;
     font: inherit;
+    font-size: 0.9rem;
+    line-height: 1;
+    white-space: nowrap;
 }
 
+.themeToggle button {
+    min-width: 3.65rem;
+}
+
+.localeToggle button {
+    min-width: 2.4rem;
+}
+
+.themeToggle .themeActive,
 .localeToggle .localeActive {
-    background: rgba(255, 255, 255, 0.18);
-    color: #ffffff;
+    background: var(--toggle-active-bg);
+    color: var(--text-strong);
 }
 
 .hero {
-    margin-top: 3rem;
+    margin-top: clamp(1.15rem, 2.5vh, 1.8rem);
 }
 
 .hero .panelContent {
     display: grid;
-    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.7fr);
-    gap: clamp(2rem, 6vw, 5rem);
-    align-items: end;
-    padding: clamp(2rem, 6vw, 5rem);
+    min-height: min(520px, calc(100svh - 6.75rem));
+    grid-template-columns: minmax(0, 1.22fr) minmax(250px, 0.72fr);
+    gap: clamp(1.5rem, 4vw, 3.4rem);
+    align-items: center;
+    padding: clamp(1.7rem, 4vw, 3.2rem);
 }
 
 .eyebrow {
-    margin: 0 0 0.9rem;
-    color: #bde985;
+    margin: 0 0 0.75rem;
+    color: var(--accent-strong);
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -122,23 +178,23 @@
 .sectionHeader h2,
 .contactSection h2 {
     margin: 0;
-    color: #ffffff;
+    color: var(--text-strong);
     font-family: var(--font-krona-one), sans-serif;
     letter-spacing: 0;
 }
 
 .hero h1 {
-    max-width: 920px;
-    font-size: clamp(2.35rem, 6vw, 5.7rem);
-    line-height: 1.02;
+    max-width: 880px;
+    font-size: clamp(2.25rem, 4.75vw, 4.45rem);
+    line-height: 1.035;
 }
 
 .heroLead {
-    max-width: 780px;
-    margin: 1.5rem 0 0;
-    color: rgba(255, 255, 255, 0.78);
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
-    line-height: 1.75;
+    max-width: 760px;
+    margin: 1.15rem 0 0;
+    color: var(--text-muted);
+    font-size: clamp(0.98rem, 1.16vw, 1.12rem);
+    line-height: 1.66;
 }
 
 .heroActions,
@@ -152,7 +208,7 @@
 }
 
 .heroActions {
-    margin-top: 2rem;
+    margin-top: 1.45rem;
 }
 
 .primaryButton,
@@ -162,23 +218,23 @@
     align-items: center;
     justify-content: center;
     gap: 0.55rem;
-    min-height: 2.75rem;
-    padding: 0.8rem 1rem;
+    min-height: 2.65rem;
+    padding: 0.74rem 1rem;
     border-radius: 999px;
     font-weight: 700;
     line-height: 1;
 }
 
 .primaryButton {
-    background: #d8ff8f;
-    color: #101208;
+    background: var(--accent);
+    color: var(--accent-contrast);
 }
 
 .secondaryButton,
 .caseStudyLink {
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(255, 255, 255, 0.07);
-    color: #ffffff;
+    border: 1px solid var(--panel-border);
+    background: var(--button-secondary-bg);
+    color: var(--text-strong);
 }
 
 .buttonIcon,
@@ -188,15 +244,18 @@
 }
 
 .heroAside {
+    align-self: center;
+    max-width: 330px;
     padding: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid var(--panel-border);
     border-radius: 0.75rem;
-    background: rgba(0, 0, 0, 0.18);
+    background: var(--button-secondary-bg);
 }
 
 .heroAside p {
     margin: 0.5rem 0 1rem;
-    color: rgba(255, 255, 255, 0.78);
+    color: var(--text-muted);
+    line-height: 1.58;
 }
 
 .statusDot {
@@ -204,8 +263,8 @@
     width: 0.7rem;
     height: 0.7rem;
     border-radius: 999px;
-    background: #bde985;
-    box-shadow: 0 0 0 6px rgba(189, 233, 133, 0.12);
+    background: var(--accent-strong);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-strong) 18%, transparent);
 }
 
 .heroStack,
@@ -219,10 +278,10 @@
 .tagList span,
 .eraBadge,
 .archiveCategory {
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    border: 1px solid var(--chip-border);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.07);
-    color: rgba(255, 255, 255, 0.75);
+    background: var(--chip-bg);
+    color: var(--text-muted);
     font-size: 0.78rem;
     line-height: 1;
     padding: 0.45rem 0.58rem;
@@ -236,31 +295,31 @@
 }
 
 .proofItem .panelContent {
-    padding: 1rem;
+    padding: 0.95rem 1rem;
 }
 
 .proofItem strong {
     display: block;
-    color: #ffffff;
+    color: var(--text-strong);
     font-family: var(--font-krona-one), sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.12rem;
 }
 
 .proofItem span {
     display: block;
-    margin-top: 0.4rem;
-    color: rgba(255, 255, 255, 0.68);
-    line-height: 1.45;
+    margin-top: 0.35rem;
+    color: var(--text-soft);
+    line-height: 1.42;
 }
 
 .section,
 .contactSection {
-    margin-top: clamp(3rem, 7vw, 6rem);
+    margin-top: clamp(2.8rem, 6vw, 5.4rem);
 }
 
 .sectionHeader {
     max-width: 780px;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.15rem;
 }
 
 .sectionHeader h2,
@@ -271,10 +330,10 @@
 
 .sectionHeader > p:not(.eyebrow),
 .contactSection > .panelContent > p:not(.eyebrow) {
-    margin: 1rem 0 0;
-    color: rgba(255, 255, 255, 0.72);
+    margin: 0.95rem 0 0;
+    color: var(--text-muted);
     font-size: 1.05rem;
-    line-height: 1.7;
+    line-height: 1.68;
 }
 
 .offerGrid,
@@ -290,7 +349,7 @@
 .techCard .panelContent,
 .archiveCard .panelContent,
 .processCard .panelContent {
-    padding: 1.2rem;
+    padding: 1.15rem;
 }
 
 .offerCard h3,
@@ -300,7 +359,7 @@
 .featuredCard h3,
 .processCard h3 {
     margin: 0;
-    color: #ffffff;
+    color: var(--text-strong);
     font-family: var(--font-krona-one), sans-serif;
     font-size: 1rem;
     line-height: 1.3;
@@ -311,9 +370,9 @@
 .archiveCard p,
 .featuredCard p,
 .processCard p {
-    margin: 0.85rem 0 0;
-    color: rgba(255, 255, 255, 0.72);
-    line-height: 1.65;
+    margin: 0.82rem 0 0;
+    color: var(--text-muted);
+    line-height: 1.62;
 }
 
 .featuredGrid {
@@ -332,9 +391,9 @@
     display: flex;
     min-height: 100%;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--chip-border);
     border-radius: 0.7rem;
-    background: rgba(0, 0, 0, 0.28);
+    background: var(--media-bg);
 }
 
 .projectImage {
@@ -361,7 +420,7 @@
 
 .metaRow {
     margin-bottom: 0.7rem;
-    color: rgba(255, 255, 255, 0.62);
+    color: var(--text-soft);
     font-size: 0.85rem;
 }
 
@@ -374,7 +433,7 @@
 }
 
 .proofList li {
-    color: rgba(255, 255, 255, 0.78);
+    color: var(--text-muted);
     line-height: 1.5;
 }
 
@@ -385,7 +444,7 @@
     height: 0.45rem;
     margin-right: 0.55rem;
     border-radius: 999px;
-    background: #bde985;
+    background: var(--accent-strong);
 }
 
 .cardFooter {
@@ -393,7 +452,7 @@
     flex-wrap: wrap;
     gap: 0.75rem;
     align-items: center;
-    margin-top: 1.2rem;
+    margin-top: 1.15rem;
 }
 
 .inlineLink,
@@ -401,7 +460,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    color: #d8ff8f;
+    color: var(--accent);
     font-weight: 700;
 }
 
@@ -445,13 +504,13 @@
 .processCard span {
     display: block;
     margin-bottom: 1rem;
-    color: #bde985;
+    color: var(--accent-strong);
     font-family: var(--font-krona-one), sans-serif;
     font-size: 0.9rem;
 }
 
 .contactSection .panelContent {
-    padding: clamp(1.6rem, 5vw, 3rem);
+    padding: clamp(1.5rem, 4.5vw, 2.8rem);
 }
 
 .contactSection {
@@ -459,7 +518,7 @@
 }
 
 .contactActions {
-    margin-top: 1.4rem;
+    margin-top: 1.35rem;
 }
 
 @media (max-width: 980px) {
@@ -476,6 +535,10 @@
         grid-template-columns: 1fr;
     }
 
+    .heroAside {
+        max-width: none;
+    }
+
     .proofStrip,
     .offerGrid,
     .aiGrid,
@@ -489,15 +552,88 @@
 @media (max-width: 640px) {
     .page {
         width: min(100% - 1rem, 1180px);
-        padding-top: 0.6rem;
+        padding-top: 0.5rem;
+    }
+
+    .nav {
+        gap: 0.5rem;
+        padding: 0.62rem 0;
+    }
+
+    .nav::before {
+        inset: 0 -0.25rem;
+    }
+
+    .brand {
+        font-size: 0.76rem;
+        white-space: normal;
+    }
+
+    .navControls {
+        gap: 0.35rem;
+    }
+
+    .themeToggle,
+    .localeToggle {
+        gap: 0.18rem;
+        padding: 0.2rem;
+    }
+
+    .themeToggle button,
+    .localeToggle button {
+        height: 1.8rem;
+        font-size: 0.78rem;
+    }
+
+    .themeToggle button {
+        min-width: 2.75rem;
+    }
+
+    .localeToggle button {
+        min-width: 2.05rem;
     }
 
     .hero {
-        margin-top: 1.2rem;
+        margin-top: 0.75rem;
     }
 
     .hero .panelContent {
-        padding: 1.25rem;
+        min-height: auto;
+        gap: 1.05rem;
+        padding: 1.1rem;
+    }
+
+    .hero h1 {
+        font-size: clamp(2rem, 10.5vw, 3rem);
+        line-height: 1.02;
+    }
+
+    .heroLead {
+        margin-top: 0.95rem;
+        font-size: 0.98rem;
+        line-height: 1.6;
+    }
+
+    .heroActions {
+        margin-top: 1.1rem;
+    }
+
+    .heroAside {
+        padding: 0.9rem;
+    }
+
+    .proofStrip {
+        gap: 0.6rem;
+        margin-top: 0.65rem;
+    }
+
+    .section,
+    .contactSection {
+        margin-top: 2.6rem;
+    }
+
+    .sectionHeader {
+        margin-bottom: 1rem;
     }
 
     .proofStrip,
@@ -508,6 +644,23 @@
     .archiveGrid,
     .processGrid {
         grid-template-columns: 1fr;
+    }
+
+    .offerCard .panelContent,
+    .aiCard .panelContent,
+    .techCard .panelContent,
+    .archiveCard .panelContent,
+    .processCard .panelContent {
+        padding: 1rem;
+    }
+
+    .featuredCard .panelContent {
+        gap: 1rem;
+        padding: 0.8rem;
+    }
+
+    .featuredBody {
+        padding: 0.2rem 0.1rem 0.35rem;
     }
 
     .metaRow,
@@ -522,5 +675,6 @@
     .secondaryButton,
     .caseStudyLink {
         width: 100%;
+        min-height: 2.55rem;
     }
 }

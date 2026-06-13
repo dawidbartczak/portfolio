@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {Code, Github, Mail, Play} from "@/icons";
 import {contact, localeNames, siteCopy, text} from "@/content/site";
 import {featuredProjects, withoutAiProjects} from "@/content/projects";
+import {useThemePreference, type ThemePreference} from "@/hooks/useThemePreference";
 import type {Locale, Project, ProjectLink} from "@/types/project";
 import styles from "./PortfolioLanding.module.scss";
 
@@ -113,11 +114,22 @@ function ArchiveCard({project, locale}: { project: Project; locale: Locale }) {
 
 export default function PortfolioLanding() {
     const [locale, setLocale] = useState<Locale>("pl");
+    const [theme, setTheme] = useThemePreference();
+    const [isScrolled, setIsScrolled] = useState(false);
     const t = useMemo(() => (value: {pl: string; en: string}) => text(value, locale), [locale]);
+
+    useEffect(() => {
+        const updateScrollState = () => setIsScrolled(window.scrollY > 12);
+
+        updateScrollState();
+        window.addEventListener("scroll", updateScrollState, {passive: true});
+
+        return () => window.removeEventListener("scroll", updateScrollState);
+    }, []);
 
     return (
         <main className={styles.page}>
-            <nav className={styles.nav} aria-label="Primary">
+            <nav className={cx(styles.nav, isScrolled && styles.navScrolled)} aria-label="Primary">
                 <a href="#top" className={styles.brand}>Dawid Bartczak</a>
                 <div className={styles.navLinks}>
                     <a href="#offer">{t(siteCopy.nav.offer)}</a>
@@ -125,18 +137,33 @@ export default function PortfolioLanding() {
                     <a href="#process">{t(siteCopy.nav.process)}</a>
                     <a href="#contact">{t(siteCopy.nav.contact)}</a>
                 </div>
-                <div className={styles.localeToggle} aria-label="Language switcher">
-                    {(["pl", "en"] as Locale[]).map((item) => (
-                        <button
-                            aria-pressed={locale === item}
-                            className={locale === item ? styles.localeActive : undefined}
-                            key={item}
-                            onClick={() => setLocale(item)}
-                            type="button"
-                        >
-                            {localeNames[item]}
-                        </button>
-                    ))}
+                <div className={styles.navControls}>
+                    <div className={styles.themeToggle} aria-label={locale === "pl" ? "Przełącznik motywu" : "Theme switcher"}>
+                        {(["dark", "light"] as ThemePreference[]).map((item) => (
+                            <button
+                                aria-pressed={theme === item}
+                                className={theme === item ? styles.themeActive : undefined}
+                                key={item}
+                                onClick={() => setTheme(item)}
+                                type="button"
+                            >
+                                {item === "dark" ? "Dark" : "Light"}
+                            </button>
+                        ))}
+                    </div>
+                    <div className={styles.localeToggle} aria-label="Language switcher">
+                        {(["pl", "en"] as Locale[]).map((item) => (
+                            <button
+                                aria-pressed={locale === item}
+                                className={locale === item ? styles.localeActive : undefined}
+                                key={item}
+                                onClick={() => setLocale(item)}
+                                type="button"
+                            >
+                                {localeNames[item]}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </nav>
 

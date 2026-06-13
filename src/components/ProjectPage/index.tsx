@@ -4,6 +4,7 @@ import Link from "next/link";
 import {useMemo, useState} from "react";
 import {Code, Play} from "@/icons";
 import {localeNames, text} from "@/content/site";
+import {useThemePreference, type ThemePreference} from "@/hooks/useThemePreference";
 import type {Locale, Project, ProjectLink} from "@/types/project";
 import styles from "./ProjectPage.module.scss";
 
@@ -36,24 +37,40 @@ function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale })
 
 export default function ProjectPage({ project }: ProjectPageProps) {
     const [locale, setLocale] = useState<Locale>("pl");
+    const [theme, setTheme] = useThemePreference();
     const t = useMemo(() => (value: {pl: string; en: string}) => text(value, locale), [locale]);
 
     return (
         <main className={styles.page}>
             <nav className={styles.nav}>
                 <Link href="/">{locale === "pl" ? "← Strona główna" : "← Home"}</Link>
-                <div className={styles.localeToggle} aria-label="Language switcher">
-                    {(["pl", "en"] as Locale[]).map((item) => (
-                        <button
-                            aria-pressed={locale === item}
-                            className={locale === item ? styles.localeActive : undefined}
-                            key={item}
-                            onClick={() => setLocale(item)}
-                            type="button"
-                        >
-                            {localeNames[item]}
-                        </button>
-                    ))}
+                <div className={styles.navControls}>
+                    <div className={styles.themeToggle} aria-label={locale === "pl" ? "Przełącznik motywu" : "Theme switcher"}>
+                        {(["dark", "light"] as ThemePreference[]).map((item) => (
+                            <button
+                                aria-pressed={theme === item}
+                                className={theme === item ? styles.themeActive : undefined}
+                                key={item}
+                                onClick={() => setTheme(item)}
+                                type="button"
+                            >
+                                {item === "dark" ? "Dark" : "Light"}
+                            </button>
+                        ))}
+                    </div>
+                    <div className={styles.localeToggle} aria-label="Language switcher">
+                        {(["pl", "en"] as Locale[]).map((item) => (
+                            <button
+                                aria-pressed={locale === item}
+                                className={locale === item ? styles.localeActive : undefined}
+                                key={item}
+                                onClick={() => setLocale(item)}
+                                type="button"
+                            >
+                                {localeNames[item]}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </nav>
 
