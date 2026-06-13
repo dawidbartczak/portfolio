@@ -1,168 +1,440 @@
 import type { Project } from "@/types/project";
 
+const withoutAiNote = {
+    pl: "Projekt zbudowany ręcznie przed erą powszechnego AI-assisted codingu. Pokazuje samodzielne rozumienie problemu, debugowanie i dowożenie bez gotowych odpowiedzi z narzędzi AI.",
+    en: "Hand-built before AI-assisted coding became mainstream. It shows independent problem solving, debugging and delivery without relying on AI-generated answers.",
+};
+
 export const projects = [
+    {
+        id: "byteflow",
+        title: "Byteflow",
+        year: "2026",
+        category: {pl: "Aplikacja desktopowa", en: "Desktop application"},
+        era: "without-ai",
+        featured: true,
+        featuredLabel: {pl: "Produkt desktopowy", en: "Desktop product"},
+        description: {
+            pl: "Lekka, wieloplatformowa aplikacja do komunikacji szeregowej zbudowana w Tauri.",
+            en: "A lightweight cross-platform serial communication app built with Tauri.",
+        },
+        thumbnailPath: "/images/thumbnails/byteflow.png",
+        tags: ["Desktop", "Tauri", "Serial I/O", "UX"],
+        stack: ["TypeScript", "React", "Tauri", "Rust ecosystem"],
+        role: {
+            pl: "Projektowanie interfejsu, logika aplikacji, integracja komunikacji szeregowej, build desktopowy.",
+            en: "Interface design, application logic, serial communication integration and desktop build setup.",
+        },
+        proofPoints: [
+            {
+                pl: "Łączy praktyczny problem sprzętowy z czytelnym UI.",
+                en: "Connects a practical hardware-facing problem with a readable UI.",
+            },
+            {
+                pl: "Pokazuje umiejętność budowania narzędzi użytkowych, nie tylko stron.",
+                en: "Shows the ability to build useful tools, not only websites.",
+            },
+            {
+                pl: "Dobrze nadaje się jako dowód myślenia produktowego.",
+                en: "Works well as proof of product-minded engineering.",
+            },
+        ],
+        caseStudy: {
+            problem: {
+                pl: "Komunikacja z urządzeniami przez port szeregowy często wymaga surowych, nieprzyjaznych narzędzi. Celem było stworzenie lżejszego, bardziej dopracowanego interfejsu dla pracy z danymi szeregowymi.",
+                en: "Working with serial devices often requires raw, unfriendly tools. The goal was to build a lighter, more polished interface for reading and sending serial data.",
+            },
+            built: {
+                pl: "Zbudowałem aplikację desktopową z czytelnym interfejsem, obsługą danych w różnych formatach i fundamentem pod dalszą rozbudowę narzędzia.",
+                en: "I built a desktop app with a readable interface, support for multiple data formats and a foundation for future expansion.",
+            },
+            role: {
+                pl: "End-to-end: UI, logika, integracja aplikacji desktopowej i przygotowanie projektu jako realnego narzędzia.",
+                en: "End-to-end: UI, logic, desktop integration and shaping the project as a real tool.",
+            },
+            architecture: {
+                pl: "Frontend odpowiada za szybkie operacje użytkownika i wizualizację danych, a warstwa Tauri daje dostęp do możliwości aplikacji desktopowej bez ciężkiego runtime'u.",
+                en: "The frontend handles user operations and data display, while Tauri provides desktop capabilities without a heavy runtime.",
+            },
+            hardParts: [
+                {pl: "Projektowanie UI pod powtarzalną pracę techniczną.", en: "Designing UI for repeated technical work."},
+                {pl: "Utrzymanie aplikacji lekkiej mimo desktopowego zakresu.", en: "Keeping the app lightweight despite desktop scope."},
+                {pl: "Porządkowanie danych wejścia/wyjścia w czytelny workflow.", en: "Structuring input/output data into a readable workflow."},
+            ],
+            proves: [
+                {pl: "Potrafię dowieźć narzędzie użytkowe od pomysłu do działającej aplikacji.", en: "I can ship a practical tool from idea to working app."},
+                {pl: "Nie jestem ograniczony do jednej platformy.", en: "I am not limited to one platform."},
+            ],
+            note: withoutAiNote,
+        },
+        links: [
+            {
+                type: "source",
+                label: {pl: "Kod źródłowy", en: "Source code"},
+                value: "github.com/dawidbartczak/byteflow",
+                href: "https://github.com/dawidbartczak/byteflow",
+            },
+        ],
+    },
+    {
+        id: "paragon-pipeline",
+        title: "Paragon Pipeline",
+        year: "2025",
+        category: {pl: "ML / OCR / NLP", en: "ML / OCR / NLP"},
+        era: "without-ai",
+        featured: true,
+        featuredLabel: {pl: "Pipeline ML", en: "ML pipeline"},
+        description: {
+            pl: "Seria modeli i algorytmów do odczytu, klasyfikacji oraz ekstrakcji informacji z polskich paragonów.",
+            en: "A series of models and algorithms for reading, classifying and extracting information from Polish receipts.",
+        },
+        thumbnailPath: "/images/thumbnails/paragon.png",
+        tags: ["OCR", "NER", "Transformers", "Receipts"],
+        stack: ["Python", "Jupyter", "PyTorch ecosystem", "NLP"],
+        role: {
+            pl: "Projekt pipeline'u, eksperymenty modelowe, przygotowanie danych, klasyfikacja i ekstrakcja informacji.",
+            en: "Pipeline design, model experiments, data preparation, classification and information extraction.",
+        },
+        proofPoints: [
+            {
+                pl: "Łączy kilka wyspecjalizowanych modeli w jeden proces.",
+                en: "Connects several specialised models into one process.",
+            },
+            {
+                pl: "Pokazuje pracę z nieidealnymi danymi i polskim kontekstem językowym.",
+                en: "Shows work with imperfect data and Polish-language context.",
+            },
+            {
+                pl: "To najmocniejszy dowód samodzielnego ML/NLP problem solvingu.",
+                en: "This is the strongest proof of independent ML/NLP problem solving.",
+            },
+        ],
+        caseStudy: {
+            problem: {
+                pl: "Paragon to trudny dokument: ma nieregularne formatowanie, skróty, szumy OCR i dane, których nie da się wygodnie parsować prostymi regexami.",
+                en: "A receipt is a difficult document: irregular formatting, abbreviations, OCR noise and data that cannot be reliably parsed with simple regexes.",
+            },
+            built: {
+                pl: "Zbudowałem koncepcję pipeline'u: ParagonOCR odczytuje linie, ParagonNER klasyfikuje je, a ParagonPIE wydobywa informacje produktowe.",
+                en: "I built a pipeline concept: ParagonOCR reads lines, ParagonNER classifies them and ParagonPIE extracts product information.",
+            },
+            role: {
+                pl: "Samodzielne badanie problemu, eksperymenty z modelami, projekt etapów pipeline'u i dokumentowanie zależności między repozytoriami.",
+                en: "Independent problem research, model experiments, pipeline stage design and documenting how the repositories connect.",
+            },
+            architecture: {
+                pl: "Pipeline rozbija problem na mniejsze etapy: obraz → linie tekstu → klasyfikacja linii → filtrowanie → ekstrakcja informacji.",
+                en: "The pipeline decomposes the problem into smaller stages: image → text lines → line classification → filtering → information extraction.",
+            },
+            hardParts: [
+                {pl: "Podział złożonego problemu ML na mierzalne etapy.", en: "Splitting a complex ML problem into measurable stages."},
+                {pl: "Praca z polskim językiem, skrótami i formatem paragonów.", en: "Handling Polish language, abbreviations and receipt formats."},
+                {pl: "Myślenie o całym systemie, nie tylko pojedynczym notebooku.", en: "Thinking about the full system, not just a single notebook."},
+            ],
+            proves: [
+                {pl: "Potrafię projektować pipeline'y ML od pierwszych zasad.", en: "I can design ML pipelines from first principles."},
+                {pl: "Umiem rozłożyć niejasny problem na architekturę techniczną.", en: "I can turn an ambiguous problem into technical architecture."},
+            ],
+            note: withoutAiNote,
+        },
+        links: [
+            {
+                type: "source",
+                label: {pl: "ParagonOCR", en: "ParagonOCR"},
+                value: "OCR repo",
+                href: "https://github.com/dawidbartczak/paragonocr",
+            },
+            {
+                type: "source",
+                label: {pl: "ParagonNER", en: "ParagonNER"},
+                value: "NER repo",
+                href: "https://github.com/dawidbartczak/paragonner",
+            },
+            {
+                type: "source",
+                label: {pl: "ParagonPIE", en: "ParagonPIE"},
+                value: "PIE repo",
+                href: "https://github.com/dawidbartczak/paragonpie",
+            },
+        ],
+    },
     {
         id: "crimsongpt",
         title: "CrimsonGPT",
-        description: "Projekt full-stack, mały eksperymentalny model językowy przed fazą fine-tuningu",
-        paragraphs: [
-            "Projekt full-stack, mały eksperymentalny model językowy przed fazą fine-tuningu",
+        year: "2026",
+        category: {pl: "Full-stack / NLP", en: "Full-stack / NLP"},
+        era: "without-ai",
+        featured: true,
+        featuredLabel: {pl: "Full-stack NLP", en: "Full-stack NLP"},
+        description: {
+            pl: "Full-stackowy eksperyment z małym modelem językowym przed fazą fine-tuningu.",
+            en: "A full-stack experiment around a small language model before the fine-tuning phase.",
+        },
+        thumbnailPath: "/images/thumbnails/crimsongpt.png",
+        tags: ["Full-stack", "LLM", "NLP", "Product UI"],
+        stack: ["TypeScript", "React", "Next.js", "NLP concepts"],
+        role: {
+            pl: "Interfejs, integracja doświadczenia użytkownika, eksperyment językowy i przygotowanie projektu end-to-end.",
+            en: "Interface, user experience integration, language-model experiment and end-to-end project setup.",
+        },
+        proofPoints: [
+            {pl: "Łączy frontend produktu z eksperymentem ML.", en: "Connects product frontend with an ML experiment."},
+            {pl: "Pokazuje ciekawość wokół modeli językowych jeszcze przed boomem AI toolingowym.", en: "Shows curiosity around language models before AI tooling became standard."},
+            {pl: "Ma działające demo i publiczny kod.", en: "Has a working demo and public source code."},
         ],
-        thumbnailPath: "/images/thumbnails/crimsongpt.webp",
-        actions: [
+        caseStudy: {
+            problem: {
+                pl: "Chciałem zrozumieć, jak wygląda zbudowanie produktu wokół małego modelu językowego, zamiast tylko używać gotowego API.",
+                en: "I wanted to understand what it means to build a product around a small language model instead of only calling a ready-made API.",
+            },
+            built: {
+                pl: "Zbudowałem aplikację full-stack z interfejsem czatu i fundamentem pod dalszy eksperyment z modelem.",
+                en: "I built a full-stack app with a chat interface and a foundation for further model experimentation.",
+            },
+            role: {
+                pl: "Samodzielne połączenie części produktowej, UI i eksperymentalnego zaplecza NLP.",
+                en: "Independently connecting product UI with an experimental NLP backend direction.",
+            },
+            architecture: {
+                pl: "Projekt traktuje model jako część produktu: użytkownik widzi prosty interfejs, a pod spodem projekt może ewoluować wraz z treningiem i fine-tuningiem.",
+                en: "The project treats the model as part of a product: the user sees a simple interface while the underlying system can evolve through training and fine-tuning.",
+            },
+            hardParts: [
+                {pl: "Połączenie eksperymentu ML z produktem webowym.", en: "Connecting an ML experiment with a web product."},
+                {pl: "Projektowanie UI dla rozmowy z modelem.", en: "Designing UI for model interaction."},
+                {pl: "Praca z niepełnym, eksperymentalnym zakresem projektu.", en: "Working with an incomplete experimental project scope."},
+            ],
+            proves: [
+                {pl: "Potrafię budować produkt wokół technologii, której dopiero się uczę.", en: "I can build a product around technology I am actively learning."},
+                {pl: "Umiem łączyć research, UI i wdrażalny kod.", en: "I can connect research, UI and shippable code."},
+            ],
+            note: withoutAiNote,
+        },
+        links: [
             {
                 type: "demo",
+                label: {pl: "Demo", en: "Demo"},
                 value: "crimsongpt.dawidbartczak.dev",
                 href: "https://crimsongpt.dawidbartczak.dev",
             },
             {
                 type: "source",
-                value: "https://github.com/dawidbartczak/crimson-gpt",
+                label: {pl: "Kod źródłowy", en: "Source code"},
+                value: "github.com/dawidbartczak/crimson-gpt",
                 href: "https://github.com/dawidbartczak/crimson-gpt",
-            },
-        ],
-    },
-    {
-        id: "byteflow",
-        title: "Byteflow",
-        description: "Lekka, wieloplatformowa aplikacja do komunikacji szeregowej, zbudowana w Tauri",
-        paragraphs: [
-            "Lekka, wieloplatformowa aplikacja do komunikacji szeregowej, zbudowana w Tauri",
-        ],
-        thumbnailPath: "/images/thumbnails/byteflow.webp",
-        actions: [
-            {
-                type: "source",
-                value: "https://github.com/dawidbartczak/byteflow",
-                href: "https://github.com/dawidbartczak/byteflow",
             },
         ],
     },
     {
         id: "canvasgl",
         title: "CanvasGL",
-        description: "Rasteryzacja trójkątów z interpolacją barycentryczną w HTML Canvas",
-        paragraphs: [
-            "Rasteryzacja trójkątów z interpolacją barycentryczną w HTML Canvas",
-            "Demo losuje 3 punkty, z których powstaje rasteryzowany trójkąt. Kliknięcie powoduje odświerzenie demo.",
+        year: "2025",
+        category: {pl: "Grafika / algorytmy", en: "Graphics / algorithms"},
+        era: "without-ai",
+        description: {
+            pl: "Rasteryzacja trójkątów z interpolacją barycentryczną w HTML Canvas.",
+            en: "Triangle rasterisation with barycentric interpolation in HTML Canvas.",
+        },
+        thumbnailPath: "/images/thumbnails/canvasgl.png",
+        tags: ["Canvas", "Graphics", "Math"],
+        stack: ["JavaScript", "HTML Canvas"],
+        role: {
+            pl: "Implementacja koncepcji grafiki komputerowej od podstaw.",
+            en: "Implementing computer graphics concepts from scratch.",
+        },
+        proofPoints: [
+            {pl: "Dowód algorytmicznego myślenia i matematyki w praktyce.", en: "Proof of algorithmic thinking and practical math."},
+            {pl: "Implementacja bez gotowego silnika graficznego.", en: "Implementation without a ready-made graphics engine."},
         ],
-        thumbnailPath: "/images/thumbnails/canvasgl.webp",
-        actions: [
-            {
-                type: "demo",
-                value: "canvasgl.dawidbartczak.dev",
-                href: "https://canvasgl.dawidbartczak.dev",
+        caseStudy: {
+            problem: {
+                pl: "Zrozumieć rasteryzację nie jako API, ale jako algorytm działający piksel po pikselu.",
+                en: "Understand rasterisation not as an API, but as an algorithm working pixel by pixel.",
             },
-            {
-                type: "source",
-                value: "https://github.com/dawidbartczak/canvasgl",
-                href: "https://github.com/dawidbartczak/canvasgl",
+            built: {
+                pl: "Demo losujące punkty, tworzące trójkąt i wypełniające go interpolacją barycentryczną.",
+                en: "A demo that generates points, creates a triangle and fills it using barycentric interpolation.",
             },
+            role: {
+                pl: "Samodzielna implementacja algorytmu i wizualizacji w Canvas.",
+                en: "Independent implementation of the algorithm and Canvas visualisation.",
+            },
+            architecture: {
+                pl: "Logika generuje geometrię, wyznacza obszar trójkąta i oblicza kolor przez współrzędne barycentryczne.",
+                en: "The logic generates geometry, determines the triangle area and computes colour through barycentric coordinates.",
+            },
+            hardParts: [
+                {pl: "Myślenie w układzie pikseli i współrzędnych.", en: "Thinking in pixels and coordinate systems."},
+                {pl: "Interpolacja wartości wewnątrz geometrii.", en: "Interpolating values inside geometry."},
+            ],
+            proves: [
+                {pl: "Potrafię zejść niżej niż framework i zrozumieć mechanikę.", en: "I can go below the framework and understand the mechanics."},
+            ],
+            note: withoutAiNote,
+        },
+        links: [
+            {type: "demo", label: {pl: "Demo", en: "Demo"}, value: "canvasgl.dawidbartczak.dev", href: "https://canvasgl.dawidbartczak.dev"},
+            {type: "source", label: {pl: "Kod źródłowy", en: "Source code"}, value: "github.com/dawidbartczak/canvasgl", href: "https://github.com/dawidbartczak/canvasgl"},
         ],
     },
     {
         id: "parametricregression",
-        title: "Parametric regression",
-        description: "Dopasowywanie funkcji do zbioru punktów metodą regresji parametrycznej z wizualizacją w HTML Canvas",
-        paragraphs: [
-            "Dopasowywanie funkcji do zbioru punktów metodą regresji parametrycznej z wizualizacją w HTML Canvas",
-            "Demo losowo generuje punkty, a następnie dopasowuje do nich funkcję. Układ można przeglądać, przesuwając go myszką i powiększając/zmniejszając za pomocą scrolla.",
+        title: "Parametric Regression",
+        year: "2025",
+        category: {pl: "Matematyka / wizualizacja", en: "Math / visualisation"},
+        era: "without-ai",
+        description: {
+            pl: "Dopasowywanie funkcji do zbioru punktów metodą regresji parametrycznej z wizualizacją w Canvas.",
+            en: "Fitting a function to points with parametric regression and Canvas visualisation.",
+        },
+        thumbnailPath: "/images/thumbnails/parametricregression.png",
+        tags: ["Regression", "Canvas", "Math"],
+        stack: ["JavaScript", "HTML Canvas"],
+        role: {
+            pl: "Algorytm regresji, interaktywna wizualizacja i UI demo.",
+            en: "Regression algorithm, interactive visualisation and demo UI.",
+        },
+        proofPoints: [
+            {pl: "Łączy matematykę, wizualizację i interakcję.", en: "Connects math, visualisation and interaction."},
+            {pl: "Pokazuje cierpliwość do eksperymentów algorytmicznych.", en: "Shows patience for algorithmic experiments."},
         ],
-        thumbnailPath: "/images/thumbnails/parametricregression.webp",
-        actions: [
-            {
-                type: "demo",
-                value: "parametricregression.dawidbartczak.dev",
-                href: "https://parametricregression.dawidbartczak.dev",
+        caseStudy: {
+            problem: {
+                pl: "Zobaczyć, jak funkcja może dopasowywać się do losowo generowanych punktów w interaktywnym środowisku.",
+                en: "See how a function can fit randomly generated points in an interactive environment.",
             },
-            {
-                type: "source",
-                value: "https://github.com/dawidbartczak/parametric-regression",
-                href: "https://github.com/dawidbartczak/parametric-regression",
+            built: {
+                pl: "Demo z generowaniem punktów, dopasowywaniem funkcji oraz przesuwaniem i zoomowaniem układu.",
+                en: "A demo with point generation, function fitting, panning and zooming.",
             },
+            role: {
+                pl: "Implementacja matematyki, renderingu i obsługi interakcji.",
+                en: "Implementation of the math, rendering and interaction handling.",
+            },
+            architecture: {
+                pl: "Canvas renderuje układ i wynik regresji, a logika dopasowania aktualizuje parametry funkcji.",
+                en: "Canvas renders the coordinate system and regression result while fitting logic updates function parameters.",
+            },
+            hardParts: [
+                {pl: "Stabilizacja wizualizacji podczas interakcji.", en: "Keeping the visualisation stable during interaction."},
+                {pl: "Przekładanie abstrakcyjnej matematyki na czytelne demo.", en: "Turning abstract math into a readable demo."},
+            ],
+            proves: [
+                {pl: "Potrafię budować narzędzia edukacyjne i eksperymentalne.", en: "I can build educational and experimental tools."},
+            ],
+            note: withoutAiNote,
+        },
+        links: [
+            {type: "demo", label: {pl: "Demo", en: "Demo"}, value: "parametricregression.dawidbartczak.dev", href: "https://parametricregression.dawidbartczak.dev"},
+            {type: "source", label: {pl: "Kod źródłowy", en: "Source code"}, value: "github.com/dawidbartczak/parametric-regression", href: "https://github.com/dawidbartczak/parametric-regression"},
         ],
     },
     {
         id: "biteback",
         title: "BiteBack",
-        description: "Aplikacja mobilna wspierająca rozsądne zarządanie lodówką w celu zapobiegania marnowania jedzenia",
-        paragraphs: [
-            "Aplikacja mobilna wspierająca rozsądne zarządanie lodówką w celu zapobiegania marnowania jedzenia",
+        year: "2026",
+        category: {pl: "Aplikacja mobilna", en: "Mobile app"},
+        era: "without-ai",
+        description: {
+            pl: "Aplikacja mobilna z konkursu programistycznego wspierająca ograniczanie marnowania jedzenia.",
+            en: "A coding-competition mobile app helping reduce food waste.",
+        },
+        thumbnailPath: "/images/thumbnails/biteback.png",
+        tags: ["Mobile", "React Native", "Product"],
+        stack: ["TypeScript", "React Native"],
+        role: {
+            pl: "Współtworzenie aplikacji mobilnej i flow użytkownika.",
+            en: "Co-building the mobile app and user flow.",
+        },
+        proofPoints: [
+            {pl: "Pokazuje pracę nad produktem z realnym problemem społecznym.", en: "Shows work on a product with a real-world social problem."},
+            {pl: "Dodaje do portfolio zakres mobile.", en: "Adds mobile scope to the portfolio."},
         ],
-        thumbnailPath: "/images/thumbnails/biteback.webp",
-        actions: [
-            {
-                type: "source",
-                value: "https://github.com/qczer/biteback",
-                href: "https://github.com/qczer/biteback",
+        caseStudy: {
+            problem: {
+                pl: "Marnowanie jedzenia często zaczyna się od braku kontroli nad tym, co jest w lodówce i kiedy traci ważność.",
+                en: "Food waste often starts with losing track of what is in the fridge and when it expires.",
             },
-        ],
-    },
-    {
-        id: "paragonpie",
-        title: "ParagonPIE",
-        description: "Sieć neuronowa do ekstrakcji informacji z wierszy polskich paragonów",
-        paragraphs: [
-            "Sieć neuronowa do ekstrakcji informacji z wierszy polskich paragonów",
-        ],
-        thumbnailPath: "/images/thumbnails/paragon.webp",
-        actions: [
-            {
-                type: "source",
-                value: "https://github.com/dawidbartczak/paragonpie",
-                href: "https://github.com/dawidbartczak/paragonpie",
+            built: {
+                pl: "Aplikacja mobilna pomagająca rozsądniej zarządzać produktami spożywczymi.",
+                en: "A mobile app that helps manage food products more intentionally.",
             },
-        ],
-    },
-    {
-        id: "paragonocr",
-        title: "ParagonOCR",
-        description: "Sieć neuronowa do odczytu wierszy polskich paragonów",
-        paragraphs: [
-            "Sieć neuronowa do odczytu wierszy polskich paragonów",
-        ],
-        thumbnailPath: "/images/thumbnails/paragon.webp",
-        actions: [
-            {
-                type: "source",
-                value: "https://github.com/dawidbartczak/paragonocr",
-                href: "https://github.com/dawidbartczak/paragonocr",
+            role: {
+                pl: "Praca nad produktem konkursowym, UI i funkcjami aplikacji.",
+                en: "Work on the competition product, UI and application features.",
             },
-        ],
-    },
-    {
-        id: "paragonner",
-        title: "ParagonNER",
-        description: "Sieć neuronowa do klasyfikacji wierszy polskich paragonów",
-        paragraphs: [
-            "Sieć neuronowa do klasyfikacji wierszy polskich paragonów",
-        ],
-        thumbnailPath: "/images/thumbnails/paragon.webp",
-        actions: [
-            {
-                type: "source",
-                value: "https://github.com/dawidbartczak/paragonner",
-                href: "https://github.com/dawidbartczak/paragonner",
+            architecture: {
+                pl: "Aplikacja skupia się na szybkim flow użytkownika i praktycznym zastosowaniu na telefonie.",
+                en: "The app focuses on a fast user flow and practical mobile use.",
             },
+            hardParts: [
+                {pl: "Zamiana problemu konkursowego na zrozumiały produkt.", en: "Turning a competition problem into a clear product."},
+                {pl: "Projektowanie pod mobile constraints.", en: "Designing for mobile constraints."},
+            ],
+            proves: [
+                {pl: "Potrafię pracować poza webem i myśleć produktowo.", en: "I can work beyond the web and think product-first."},
+            ],
+            note: withoutAiNote,
+        },
+        links: [
+            {type: "source", label: {pl: "Kod źródłowy", en: "Source code"}, value: "github.com/qczer/biteback", href: "https://github.com/qczer/biteback"},
         ],
     },
     {
         id: "crimsontokenizer",
         title: "Crimson Tokenizer",
-        description: "Tokenizator BPE trenowany na korpusie polskich tekstów datasetu SpeakLeash",
-        paragraphs: [
-            "Tokenizator BPE trenowany na korpusie polskich tekstów datasetu SpeakLeash",
+        year: "2025",
+        category: {pl: "NLP tooling", en: "NLP tooling"},
+        era: "without-ai",
+        description: {
+            pl: "Tokenizator BPE trenowany na korpusie polskich tekstów datasetu SpeakLeash.",
+            en: "A BPE tokenizer trained on a Polish text corpus from SpeakLeash.",
+        },
+        thumbnailPath: "/images/thumbnails/crimsontokenizer.png",
+        tags: ["BPE", "Tokenizer", "Polish NLP"],
+        stack: ["Python", "NLP"],
+        role: {
+            pl: "Eksperyment z tokenizacją i przygotowaniem danych językowych.",
+            en: "Experimenting with tokenisation and language data preparation.",
+        },
+        proofPoints: [
+            {pl: "Pokazuje zainteresowanie fundamentami modeli językowych.", en: "Shows interest in language-model foundations."},
+            {pl: "Dotyka problemu polskiego języka w NLP.", en: "Touches the problem of Polish-language NLP."},
         ],
-        thumbnailPath: "/images/thumbnails/crimsontokenizer.webp",
-        actions: [
-            {
-                type: "source",
-                value: "https://github.com/dawidbartczak/crimson-tokenizer",
-                href: "https://github.com/dawidbartczak/crimson-tokenizer",
+        caseStudy: {
+            problem: {
+                pl: "Modele językowe zaczynają się od danych i tokenizacji. Chciałem zrozumieć ten etap praktycznie.",
+                en: "Language models start with data and tokenisation. I wanted to understand this stage practically.",
             },
+            built: {
+                pl: "Tokenizator BPE trenowany na polskim korpusie tekstowym.",
+                en: "A BPE tokenizer trained on a Polish text corpus.",
+            },
+            role: {
+                pl: "Przygotowanie eksperymentu i praca z mechaniką tokenizacji.",
+                en: "Preparing the experiment and working with tokenisation mechanics.",
+            },
+            architecture: {
+                pl: "Projekt skupia się na etapie przygotowania reprezentacji tekstu, który poprzedza trening modeli.",
+                en: "The project focuses on text representation preparation before model training.",
+            },
+            hardParts: [
+                {pl: "Praca z korpusem tekstowym i polskim językiem.", en: "Working with a text corpus and Polish language."},
+                {pl: "Zrozumienie BPE jako mechanizmu, nie buzzwordu.", en: "Understanding BPE as a mechanism, not a buzzword."},
+            ],
+            proves: [
+                {pl: "Rozumiem, że AI/ML to nie tylko gotowe API.", en: "I understand that AI/ML is not only a ready-made API."},
+            ],
+            note: withoutAiNote,
+        },
+        links: [
+            {type: "source", label: {pl: "Kod źródłowy", en: "Source code"}, value: "github.com/dawidbartczak/crimson-tokenizer", href: "https://github.com/dawidbartczak/crimson-tokenizer"},
         ],
     },
 ] satisfies Project[];
+
+export const featuredProjects = projects.filter((project) => project.featured);
+export const withoutAiProjects = projects.filter((project) => project.era === "without-ai");
 
 export function getProject(id: string) {
     return projects.find((project) => project.id === id);

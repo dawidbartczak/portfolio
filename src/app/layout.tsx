@@ -17,8 +17,8 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-    title: "Dawid Bartczak",
-    description: "Portfolio Dawida Bartczaka - projekty full-stack, deep learning i aplikacje użytkowe.",
+    title: "Dawid Bartczak | End-to-end MVP builder",
+    description: "Freelance portfolio Dawida Bartczaka: end-to-end MVP, custom software, full-stack, ML/NLP, desktop and automation projects.",
     icons: ["favicon.svg"],
 };
 

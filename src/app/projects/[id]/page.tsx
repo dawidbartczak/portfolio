@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: ProjectRouteProps): Promise<M
 
     return {
         title: `${project.title} | Dawid Bartczak`,
-        description: project.description,
+        description: project.description.pl,
     };
 }
 

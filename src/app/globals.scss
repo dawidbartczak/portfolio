@@ -23,20 +23,23 @@
 
 html {
   font-size: clamp(14px, 1.0vw, 16px);
+  scroll-behavior: smooth;
   //background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
 }
 
 body {
+  width: 100%;
   min-height: 100%;
   font-family: var(--font-jost), "Jost", sans-serif;
   color: #d3d7e1;
   background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
 }
 
 p {
   font-size: 1rem;
   line-height: 1.7;
-  opacity: 0.8;
   margin-bottom: 1rem;
 
   &:last-child {
