@@ -10,26 +10,28 @@
 
     --color-interactive: 150, 120, 210; // soft violet
 
-    --circle-size: 80%;
+    --circle-size: 100vh;
     --blending: hard-light;
 }
 
 .background {
-    z-index: -1;
+    position: fixed;
+    inset: 0;
 
     width: 100vw;
-    height: 100vh;
+    height: 120dvh;
 
-    position: absolute;
-    top: 0;
-    left: 0;
+    z-index: -1;
+    pointer-events: none;
 
     overflow: hidden;
 
+    //background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
     background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
 
     filter: brightness(80%);
 }
+
 
 .blobs {
     filter: url(#goo) blur(40px);
@@ -157,4 +159,36 @@
     100% {
         transform: translateX(-50%) translateY(-10%);
     }
+}
+
+.blob1,
+.blob2,
+.blob3,
+.blob4,
+.blob5,
+.blobInteractive {
+    will-change: transform;
+}
+
+.blobs {
+    width: 100%;
+    height: 100%;
+    filter: url(#goo) blur(35px);
+}
+
+/* MOBILE: only style changes */
+[data-mobile="true"] .blobs {
+    filter: url(#goo) blur(12px);
+}
+
+[data-mobile="true"] .blob1,
+[data-mobile="true"] .blob2,
+[data-mobile="true"] .blob3,
+[data-mobile="true"] .blob4,
+[data-mobile="true"] .blob5 {
+    animation: none;
+}
+
+[data-mobile="true"] .blobInteractive {
+    display: none;
 }

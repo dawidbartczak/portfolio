@@ -1,0 +1,19 @@
+.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(2rem, 3vw, 4rem) 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3rem, 3vw, 7.5rem);
+}
+
+.page::-webkit-scrollbar {
+    display: none;
+}
+
+.contactEntries {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

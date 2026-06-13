@@ -1,0 +1,45 @@
+:root {
+  --color-bg1: rgb(6, 6, 12);
+  --color-bg2: rgb(18, 11, 36);
+
+  --color1: 120, 160, 230;            // muted blue
+  --color2: 180, 120, 230;            // muted lavender
+  --color3: 110, 200, 230;            // muted cyan
+  --color4: 170, 90, 90;              // muted red
+  --color5: 160, 160, 90;             // muted yellow
+
+  --color-interactive: 150, 120, 210; // soft violet
+
+  --circle-size: 100vh;
+  --blending: hard-light;
+}
+
+*,
+::before,
+::after {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(14px, 1.0vw, 16px);
+  //background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+}
+
+body {
+  min-height: 100%;
+  font-family: var(--font-jost), "Jost", sans-serif;
+  color: #d3d7e1;
+  background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.8;
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

@@ -18,14 +18,19 @@ export default function Background() {
     const animationFrameIdRef = useRef<number | null>(null);
 
     useEffect(() => {
-        const handleMouseMove = (event: MouseEvent) => {
-            targetPositionRef.current = {
-                x: event.clientX,
-                y: event.clientY,
-            };
-        };
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const element = interactiveBubbleRef.current;
 
-        window.addEventListener("mousemove", handleMouseMove);
+        if (prefersReducedMotion || !element) {
+            return;
+        }
+
+        const stopAnimation = () => {
+            if (animationFrameIdRef.current !== null) {
+                cancelAnimationFrame(animationFrameIdRef.current);
+                animationFrameIdRef.current = null;
+            }
+        };
 
         const updatePosition = () => {
             const targetPosition = targetPositionRef.current;
@@ -34,23 +39,40 @@ export default function Background() {
             currentPosition.x += (targetPosition.x - currentPosition.x) / 20;
             currentPosition.y += (targetPosition.y - currentPosition.y) / 20;
 
-            if (interactiveBubbleRef.current) {
-                interactiveBubbleRef.current.style.transform = `translate(${Math.round(currentPosition.x)}px, ${Math.round(currentPosition.y)}px)`;
+            element.style.transform = `translate(${Math.round(currentPosition.x)}px, ${Math.round(currentPosition.y)}px)`;
+
+            const deltaX = Math.abs(targetPosition.x - currentPosition.x);
+            const deltaY = Math.abs(targetPosition.y - currentPosition.y);
+
+            if (deltaX > 0.5 || deltaY > 0.5) {
+                animationFrameIdRef.current = requestAnimationFrame(updatePosition);
+            } else {
+                stopAnimation();
             }
+        };
 
-            animationFrameIdRef.current = requestAnimationFrame(updatePosition);
-        }
+        const startAnimation = () => {
+            if (animationFrameIdRef.current === null) {
+                animationFrameIdRef.current = requestAnimationFrame(updatePosition);
+            }
+        };
 
-        animationFrameIdRef.current = requestAnimationFrame(updatePosition);
+        const handleMouseMove = (event: MouseEvent) => {
+            targetPositionRef.current = {
+                x: event.clientX,
+                y: event.clientY,
+            };
+
+            startAnimation();
+        };
+
+        window.addEventListener("mousemove", handleMouseMove, {passive: true});
 
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
-
-            if (animationFrameIdRef.current !== null) {
-                cancelAnimationFrame(animationFrameIdRef.current);
-            }
+            stopAnimation();
         };
-    }, [interactiveBubbleRef]);
+    }, []);
 
     return (
         <div className={styles.background}>

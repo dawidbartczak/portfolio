@@ -1,0 +1,41 @@
+@mixin glass {
+  // Variables
+  --border-1: hsla(0, 0%, 100%, 0.35);
+  --border-2: hsla(0, 0%, 100%, 0.12);
+  --border-width: 1px;
+
+  position: relative;
+
+  background: hsla(0, 0%, 100%, 0.12);
+  backdrop-filter: blur(14px) saturate(140%);
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+
+  //isolation: isolate;
+
+  // Pseudo elements
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  &::before {
+    border: var(--border-width) solid transparent;
+    background: linear-gradient(var(--border-1), var(--border-2)) border-box;
+    mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+    mask-composite: subtract;
+    -webkit-mask-composite: destination-out;
+    z-index: -2;
+  }
+
+  &::after {
+    background-image: url("/images/noise.svg");
+    background-size: 120px 120px;
+    opacity: 0.35;
+    z-index: 2;
+  }
+}
