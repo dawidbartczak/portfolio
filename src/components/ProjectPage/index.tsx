@@ -337,6 +337,8 @@ export default function ProjectPage({project}: ProjectPageProps) {
                                         alt={project.title}
                                         className={styles.projectImage}
                                         height={540}
+                                        priority
+                                        sizes="(max-width: 980px) calc(100vw - 3rem), 42vw"
                                         src={project.thumbnailPath}
                                         unoptimized
                                         width={860}
