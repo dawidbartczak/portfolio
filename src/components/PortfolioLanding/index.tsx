@@ -101,6 +101,8 @@ function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale })
 }
 
 function FeaturedCard({project, locale}: { project: Project; locale: Locale }) {
+    const cardLinks = project.id === "paragon-pipeline" ? project.links : project.links.slice(0, 2);
+
     return (
         <article className={cx(styles.glassPanel, styles.featuredCard, styles.interactiveCard)} data-reveal>
             <div className={styles.panelContent}>
@@ -139,7 +141,7 @@ function FeaturedCard({project, locale}: { project: Project; locale: Locale }) {
                         <Link className={styles.caseStudyLink} href={`/projects/${project.id}`}>
                             <span>{locale === "pl" ? "Case study" : "Case study"}</span>
                         </Link>
-                        <ProjectLinks links={project.links.slice(0, 2)} locale={locale}/>
+                        <ProjectLinks links={cardLinks} locale={locale}/>
                     </div>
                 </div>
             </div>
@@ -148,8 +150,10 @@ function FeaturedCard({project, locale}: { project: Project; locale: Locale }) {
 }
 
 function ArchiveCard({project, locale}: { project: Project; locale: Locale }) {
+    const cardLinks = project.id === "paragon-pipeline" ? project.links : project.links.slice(0, 1);
+
     return (
-        <article className={cx(styles.glassPanel, styles.archiveCard, styles.interactiveCard)} data-reveal>
+        <article className={cx(styles.glassPanel, styles.archiveCard, styles.interactiveCard)} data-reveal id={`project-${project.id}`}>
             <div className={styles.panelContent}>
                 <div className={styles.archiveHeader}>
                     <div>
@@ -174,7 +178,7 @@ function ArchiveCard({project, locale}: { project: Project; locale: Locale }) {
                     <Link className={styles.textLink} href={`/projects/${project.id}`}>
                         {locale === "pl" ? "Zobacz szczegóły" : "View details"}
                     </Link>
-                    <ProjectLinks links={project.links.slice(0, 1)} locale={locale}/>
+                    <ProjectLinks links={cardLinks} locale={locale}/>
                 </div>
             </div>
         </article>

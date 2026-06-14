@@ -4,6 +4,7 @@ import Link from "next/link";
 import {useMemo, useState} from "react";
 import {Code, Moon, Play, Sun} from "@/icons";
 import {localeNames, text} from "@/content/site";
+import {useReveal} from "@/hooks/useReveal";
 import {useThemePreference, type ThemePreference} from "@/hooks/useThemePreference";
 import type {Locale, Project, ProjectLink} from "@/types/project";
 import styles from "./ProjectPage.module.scss";
@@ -22,6 +23,10 @@ const themeIcons = {
     dark: Moon,
     light: Sun,
 };
+
+function cx(...classes: Array<string | false | undefined>) {
+    return classes.filter(Boolean).join(" ");
+}
 
 function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale }) {
     return (
@@ -45,10 +50,12 @@ export default function ProjectPage({ project }: ProjectPageProps) {
     const [theme, setTheme] = useThemePreference();
     const t = useMemo(() => (value: {pl: string; en: string}) => text(value, locale), [locale]);
 
+    useReveal();
+
     return (
-        <main className={styles.page}>
+        <main className={cx(styles.page, styles.revealReady)}>
             <nav className={styles.nav}>
-                <Link href="/">{locale === "pl" ? "← Strona główna" : "← Home"}</Link>
+                <Link href={`/#project-${project.id}`}>{locale === "pl" ? "← Strona główna" : "← Home"}</Link>
                 <div className={styles.navControls}>
                     <div className={styles.themeToggle} aria-label={locale === "pl" ? "Przełącznik motywu" : "Theme switcher"}>
                         {(["dark", "light"] as ThemePreference[]).map((item) => {
@@ -89,7 +96,7 @@ export default function ProjectPage({ project }: ProjectPageProps) {
             </nav>
 
             <section className={styles.hero}>
-                <div className={styles.glassPanel}>
+                <div className={cx(styles.glassPanel, styles.interactiveCard)} data-reveal>
                     <div className={styles.panelContent}>
                         <p className={styles.eyebrow}>{t(project.category)} · {project.year}</p>
                         <h1>{project.title}</h1>
@@ -105,28 +112,28 @@ export default function ProjectPage({ project }: ProjectPageProps) {
             </section>
 
             <section className={styles.caseGrid}>
-                <article className={styles.glassPanel}>
+                <article className={cx(styles.glassPanel, styles.interactiveCard)} data-reveal>
                     <div className={styles.panelContent}>
                         <h2>{locale === "pl" ? "Problem" : "Problem"}</h2>
                         <p>{t(project.caseStudy.problem)}</p>
                     </div>
                 </article>
 
-                <article className={styles.glassPanel}>
+                <article className={cx(styles.glassPanel, styles.interactiveCard)} data-reveal>
                     <div className={styles.panelContent}>
                         <h2>{locale === "pl" ? "Co zbudowałem" : "What I built"}</h2>
                         <p>{t(project.caseStudy.built)}</p>
                     </div>
                 </article>
 
-                <article className={styles.glassPanel}>
+                <article className={cx(styles.glassPanel, styles.interactiveCard)} data-reveal>
                     <div className={styles.panelContent}>
                         <h2>{locale === "pl" ? "Moja rola" : "My role"}</h2>
                         <p>{t(project.caseStudy.role)}</p>
                     </div>
                 </article>
 
-                <article className={styles.glassPanel}>
+                <article className={cx(styles.glassPanel, styles.interactiveCard)} data-reveal>
                     <div className={styles.panelContent}>
                         <h2>{locale === "pl" ? "Architektura" : "Architecture"}</h2>
                         <p>{t(project.caseStudy.architecture)}</p>
@@ -135,7 +142,7 @@ export default function ProjectPage({ project }: ProjectPageProps) {
             </section>
 
             <section className={styles.twoColumns}>
-                <article className={styles.glassPanel}>
+                <article className={cx(styles.glassPanel, styles.interactiveCard)} data-reveal>
                     <div className={styles.panelContent}>
                         <h2>{locale === "pl" ? "Najtrudniejsze fragmenty" : "Hard parts"}</h2>
                         <ul>
@@ -146,7 +153,7 @@ export default function ProjectPage({ project }: ProjectPageProps) {
                     </div>
                 </article>
 
-                <article className={styles.glassPanel}>
+                <article className={cx(styles.glassPanel, styles.interactiveCard)} data-reveal>
                     <div className={styles.panelContent}>
                         <h2>{locale === "pl" ? "Co to udowadnia" : "What this proves"}</h2>
                         <ul>
@@ -159,8 +166,8 @@ export default function ProjectPage({ project }: ProjectPageProps) {
             </section>
 
             {project.caseStudy.note && (
-                <section className={styles.note}>
-                    <div className={styles.glassPanel}>
+                <section className={styles.note} data-reveal>
+                    <div className={cx(styles.glassPanel, styles.notePanel)}>
                         <div className={styles.panelContent}>
                             <p>{t(project.caseStudy.note)}</p>
                         </div>

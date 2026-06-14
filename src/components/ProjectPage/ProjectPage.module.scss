@@ -1,4 +1,8 @@
 .page {
+    --motion-fast: 140ms;
+    --motion-medium: 240ms;
+    --motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
     position: relative;
     z-index: 1;
     width: min(1080px, calc(100% - 2rem));
@@ -99,6 +103,53 @@
     padding: clamp(1.2rem, 4vw, 2.2rem);
 }
 
+.interactiveCard {
+    --hover: 0;
+
+    transition:
+        transform var(--motion-fast) var(--motion-ease),
+        border-color var(--motion-fast) ease;
+}
+
+.interactiveCard::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle 300px at 50% 0%, color-mix(in srgb, var(--accent-strong) 14%, transparent), transparent 58%);
+    opacity: var(--hover);
+    pointer-events: none;
+    transition: opacity var(--motion-fast) ease;
+}
+
+.revealReady [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+    transition:
+        opacity var(--motion-medium) ease,
+        transform var(--motion-medium) var(--motion-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+}
+
+.revealReady [data-revealed="true"] {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .interactiveCard:hover,
+    .interactiveCard:focus-within {
+        --hover: 1;
+
+        border-color: color-mix(in srgb, var(--accent-strong) 36%, var(--panel-border));
+        transform: translate3d(0, -2px, 0);
+    }
+}
+
 .hero {
     margin-top: 1.5rem;
 }
@@ -160,6 +211,7 @@
     color: var(--accent);
     font-weight: 700;
     text-decoration: none;
+    transition: color var(--motion-fast) ease, transform var(--motion-fast) var(--motion-ease);
 }
 
 .icon {
@@ -223,8 +275,30 @@
     margin-top: 1rem;
 }
 
+.notePanel {
+    border-color: color-mix(in srgb, var(--panel-border) 65%, transparent);
+    background: transparent;
+    box-shadow: none;
+}
+
+.notePanel::before,
+.notePanel::after {
+    display: none;
+}
+
+.notePanel .panelContent {
+    padding: clamp(0.95rem, 2vw, 1.2rem) 0;
+}
+
 .note p {
     margin: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .links a:hover {
+        color: var(--accent-strong);
+        transform: translateY(-1px);
+    }
 }
 
 @media (max-width: 760px) {
@@ -266,5 +340,20 @@
     .caseGrid,
     .twoColumns {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .interactiveCard,
+    .interactiveCard::after,
+    .revealReady [data-reveal],
+    .links a {
+        transition: none;
+    }
+
+    .interactiveCard:hover,
+    .interactiveCard:focus-within,
+    .links a:hover {
+        transform: none;
     }
 }
