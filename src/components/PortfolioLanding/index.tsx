@@ -117,7 +117,7 @@ function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale })
                 }
 
                 return (
-                    <a className={styles.inlineLink} href={link.href} key={`${link.type}-${link.href}`} rel="noreferrer" target="_blank">
+                    <a className={styles.inlineLink} href={link.href} key={`${link.type}-${link.href}`} rel="noopener noreferrer" target="_blank">
                         {content}
                     </a>
                 );
@@ -704,7 +704,7 @@ export default function PortfolioLanding() {
                                     <Mail className={styles.buttonIcon}/>
                                     <span>{t(siteCopy.contact.emailLabel)}</span>
                                 </a>
-                                <a className={styles.secondaryButton} href={contact.github} rel="noreferrer" target="_blank">
+                                <a className={styles.secondaryButton} href={contact.github} rel="noopener noreferrer" target="_blank">
                                     <Github className={styles.buttonIcon}/>
                                     <span>{t(siteCopy.contact.githubLabel)}</span>
                                 </a>

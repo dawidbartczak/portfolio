@@ -90,7 +90,7 @@ function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale })
                 const Icon = linkIcons[link.type];
 
                 return (
-                    <a href={link.href} key={`${link.type}-${link.href}`} rel="noreferrer" target="_blank">
+                    <a href={link.href} key={`${link.type}-${link.href}`} rel="noopener noreferrer" target="_blank">
                         <Icon className={styles.icon}/>
                         <span>{text(link.label, locale)}</span>
                         <ExternalLink className={styles.externalIcon}/>
