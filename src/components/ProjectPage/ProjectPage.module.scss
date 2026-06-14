@@ -198,6 +198,7 @@
 
 .hero h1,
 .sectionHeader h2,
+.snapshotIntro h2,
 .systemMapPanel h2,
 .valuePanel h2,
 .bridgeIntro h2,
@@ -392,6 +393,7 @@
 }
 
 .storySection,
+.snapshotSection,
 .deliveryProof,
 .clientBridge,
 .deepDive,
@@ -445,6 +447,7 @@
 }
 
 .bridgeCard h3,
+.snapshotCard h3,
 .storyCard h3 {
     margin: 1rem 0 0;
     color: var(--text-strong);
@@ -454,6 +457,8 @@
 }
 
 .storyCard p,
+.snapshotIntro p,
+.snapshotCard p,
 .systemMapPanel > .panelContent > p,
 .bridgeIntro p,
 .bridgeCard p,
@@ -463,6 +468,48 @@
     margin: 0.85rem 0 0;
     color: var(--text-muted);
     line-height: 1.68;
+}
+
+.snapshotSection {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.62fr) minmax(0, 1.38fr);
+    gap: 1rem;
+    align-items: stretch;
+}
+
+.snapshotIntro .panelContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: clamp(1.1rem, 2.6vw, 1.75rem);
+}
+
+.snapshotIntro h2 {
+    margin-top: 0.85rem;
+    font-size: clamp(1.35rem, 2vw, 2rem);
+    line-height: 1.16;
+}
+
+.snapshotGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.snapshotCard .panelContent {
+    display: flex;
+    flex-direction: column;
+    min-height: 12.5rem;
+    padding: clamp(1rem, 2vw, 1.25rem);
+}
+
+.snapshotCard h3 {
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+}
+
+.snapshotCard p {
+    line-height: 1.55;
 }
 
 .deliveryProof {
@@ -758,6 +805,7 @@
 
 @media (max-width: 980px) {
     .hero > .panelContent,
+    .snapshotSection,
     .deliveryProof,
     .clientBridge,
     .deepDive {
@@ -769,6 +817,10 @@
     }
 
     .proofStrip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .snapshotGrid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -834,10 +886,15 @@
 
     .stackPanel,
     .storyGrid,
+    .snapshotGrid,
     .bridgeGrid,
     .proofStrip,
     .cta .panelContent {
         grid-template-columns: 1fr;
+    }
+
+    .snapshotCard .panelContent {
+        min-height: auto;
     }
 
     .bridgeCard .panelContent {

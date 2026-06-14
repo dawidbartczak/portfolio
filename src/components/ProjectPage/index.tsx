@@ -161,6 +161,39 @@ export default function ProjectPage({project}: ProjectPageProps) {
             value: repoLabel(project, locale),
         },
     ];
+    const snapshotItems: StoryItem[] = [
+        {
+            eyebrow: {pl: "Cel", en: "Goal"},
+            icon: Target,
+            id: "snapshot-goal",
+            title: {pl: "Problem", en: "Problem"},
+            text: project.caseStudy.problem,
+        },
+        {
+            eyebrow: {pl: "Efekt", en: "Result"},
+            icon: Rocket,
+            id: "snapshot-result",
+            title: {pl: "Co powstało", en: "What shipped"},
+            text: project.caseStudy.built,
+        },
+        {
+            eyebrow: {pl: "Rdzeń", en: "Core"},
+            icon: Code2,
+            id: "snapshot-core",
+            title: {pl: "Techniczny zakres", en: "Technical scope"},
+            text: {
+                pl: project.stack.join(" / "),
+                en: project.stack.join(" / "),
+            },
+        },
+        {
+            eyebrow: {pl: "Sygnał", en: "Signal"},
+            icon: Trophy,
+            id: "snapshot-signal",
+            title: {pl: "Dlaczego to ważne", en: "Why it matters"},
+            text: project.caseStudy.clientValue?.title ?? project.caseStudy.proves[0] ?? project.role,
+        },
+    ];
     const clientBridgeSteps: StoryItem[] = [
         {
             eyebrow: {pl: "01 / Scope", en: "01 / Scope"},
@@ -311,6 +344,40 @@ export default function ProjectPage({project}: ProjectPageProps) {
                         </article>
                     );
                 })}
+            </section>
+
+            <section className={styles.snapshotSection}>
+                <article className={cx(styles.glassPanel, styles.snapshotIntro, styles.interactiveCard)} data-reveal>
+                    <div className={styles.panelContent}>
+                        <div className={styles.sectionKicker}>
+                            <FileText className={styles.kickerIcon}/>
+                            <span>{locale === "pl" ? "Case study w 30 sekund" : "30-second case study"}</span>
+                        </div>
+                        <h2>{locale === "pl" ? "Najpierw szybki obraz, potem detale." : "A quick scan first, details after."}</h2>
+                        <p>{locale === "pl"
+                            ? "Ten skrót pokazuje, czy projekt jest relevantny dla Twojego problemu: co było do rozwiązania, co powstało, jaki był rdzeń techniczny i jaki sygnał daje to przy zleceniu."
+                            : "This summary shows whether the project is relevant to your problem: what needed solving, what shipped, the technical core and the signal it gives for client work."}</p>
+                    </div>
+                </article>
+
+                <div className={styles.snapshotGrid}>
+                    {snapshotItems.map((item) => {
+                        const Icon = item.icon;
+
+                        return (
+                            <article className={cx(styles.glassPanel, styles.snapshotCard, styles.interactiveCard)} data-reveal key={item.id}>
+                                <div className={styles.panelContent}>
+                                    <div className={styles.cardTopline}>
+                                        <span>{t(item.eyebrow)}</span>
+                                        <Icon className={styles.cardIcon}/>
+                                    </div>
+                                    <h3>{t(item.title)}</h3>
+                                    <p>{t(item.text)}</p>
+                                </div>
+                            </article>
+                        );
+                    })}
+                </div>
             </section>
 
             <section className={styles.storySection}>
