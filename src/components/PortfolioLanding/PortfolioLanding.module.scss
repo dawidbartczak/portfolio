@@ -1266,6 +1266,52 @@
     margin-top: 1.35rem;
 }
 
+.contactMeta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem;
+    margin-top: 1rem;
+    max-width: 780px;
+}
+
+.contactMetaItem {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.14rem 0.55rem;
+    align-items: center;
+    min-width: 0;
+    border: 1px solid var(--chip-border);
+    border-radius: 0.78rem;
+    background:
+        linear-gradient(145deg, color-mix(in srgb, var(--chip-bg) 80%, transparent), color-mix(in srgb, var(--button-secondary-bg) 46%, transparent));
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-strong) 8%, transparent);
+    padding: 0.72rem 0.76rem;
+}
+
+.contactMetaIcon {
+    grid-row: span 2;
+    width: 1rem;
+    min-width: 1rem;
+    height: 1rem;
+    color: var(--accent-strong);
+}
+
+.contactMetaItem span {
+    color: var(--text-soft);
+    font-size: 0.72rem;
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.contactMetaItem strong {
+    overflow: hidden;
+    color: var(--text-strong);
+    font-size: 0.84rem;
+    line-height: 1.24;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .briefStarter {
     display: grid;
     gap: 0.9rem;
@@ -1363,6 +1409,10 @@
     .page {
         width: min(100% - 1rem, 1440px);
         padding-top: 0.5rem;
+    }
+
+    .contactMeta {
+        grid-template-columns: 1fr;
     }
 
     .nav {

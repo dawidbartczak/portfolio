@@ -173,6 +173,20 @@ export const siteCopy = {
         },
         emailLabel: {pl: "Napisz email", en: "Email me"},
         githubLabel: {pl: "Zobacz GitHub", en: "View GitHub"},
+        metaItems: [
+            {
+                label: {pl: "Dostępność", en: "Availability"},
+                value: {pl: "freelance / contract", en: "freelance / contract"},
+            },
+            {
+                label: {pl: "Zakres", en: "Scope"},
+                value: {pl: "MVP, prototyp, automatyzacja", en: "MVP, prototype, automation"},
+            },
+            {
+                label: {pl: "Start", en: "Start"},
+                value: {pl: "brief → plan → pierwszy zakres", en: "brief → plan → first slice"},
+            },
+        ],
         briefTitle: {pl: "W pierwszej wiadomości wystarczy:", en: "For the first message, send:"},
         briefItems: [
             {pl: "co chcesz zbudować lub usprawnić", en: "what you want to build or improve"},

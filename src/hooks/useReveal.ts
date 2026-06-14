@@ -28,18 +28,24 @@ export function useReveal(selector = "[data-reveal]") {
         });
 
         const revealOrObserve = (element: HTMLElement, index = 0) => {
-            if (element.dataset.revealed === "true" || tracked.has(element)) {
+            if (element.dataset.revealed === "true") {
+                return;
+            }
+
+            const rect = element.getBoundingClientRect();
+            const isVisibleNow = rect.top < window.innerHeight * 0.96 && rect.bottom > 0;
+
+            if (isVisibleNow) {
+                element.setAttribute("data-revealed", "true");
+                observer.unobserve(element);
+                return;
+            }
+
+            if (tracked.has(element)) {
                 return;
             }
 
             tracked.add(element);
-            const rect = element.getBoundingClientRect();
-
-            if (rect.top < window.innerHeight * 0.96) {
-                element.setAttribute("data-revealed", "true");
-                return;
-            }
-
             element.style.setProperty("--reveal-delay", `${Math.min(index * 12, 72)}ms`);
             observer.observe(element);
         };
@@ -51,6 +57,13 @@ export function useReveal(selector = "[data-reveal]") {
         };
 
         scan();
+
+        const rescan = () => window.requestAnimationFrame(scan);
+        const hashRescan = window.setTimeout(scan, 240);
+
+        window.addEventListener("hashchange", rescan);
+        window.addEventListener("load", rescan);
+        window.addEventListener("resize", rescan);
 
         const mutationObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
@@ -73,6 +86,10 @@ export function useReveal(selector = "[data-reveal]") {
         mutationObserver.observe(document.body, {childList: true, subtree: true});
 
         return () => {
+            window.clearTimeout(hashRescan);
+            window.removeEventListener("hashchange", rescan);
+            window.removeEventListener("load", rescan);
+            window.removeEventListener("resize", rescan);
             observer.disconnect();
             mutationObserver.disconnect();
         };

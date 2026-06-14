@@ -54,6 +54,7 @@ const collaborationIcons = [Compass, Rocket, GitBranch];
 const deliverableIcons = [Github, Server, Code2];
 const techIcons = [AppWindow, Layers3, Server, BrainCircuit];
 const briefIcons = [Compass, Rocket, GitBranch];
+const contactMetaIcons = [Rocket, Layers3, Compass];
 
 const capabilityItems = [
     {label: "Full-stack", Icon: Layers3},
@@ -681,6 +682,19 @@ export default function PortfolioLanding() {
                                     <Github className={styles.buttonIcon}/>
                                     <span>{t(siteCopy.contact.githubLabel)}</span>
                                 </a>
+                            </div>
+                            <div className={styles.contactMeta}>
+                                {siteCopy.contact.metaItems.map((item, index) => {
+                                    const Icon = contactMetaIcons[index] ?? Sparkles;
+
+                                    return (
+                                        <div className={styles.contactMetaItem} key={`contact-meta-${index}`}>
+                                            <IconGlyph Icon={Icon} className={styles.contactMetaIcon}/>
+                                            <span>{t(item.label)}</span>
+                                            <strong>{t(item.value)}</strong>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                         <aside className={styles.briefStarter}>
