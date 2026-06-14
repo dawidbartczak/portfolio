@@ -161,37 +161,35 @@ export default function ProjectPage({project}: ProjectPageProps) {
             value: repoLabel(project, locale),
         },
     ];
-    const snapshotItems: StoryItem[] = [
+    const primaryProof = project.caseStudy.proves[0] ?? project.proofPoints[0] ?? project.role;
+    const deliveryLensItems: StoryItem[] = [
         {
-            eyebrow: {pl: "Cel", en: "Goal"},
+            eyebrow: {pl: "01", en: "01"},
             icon: Target,
-            id: "snapshot-goal",
+            id: "lens-problem",
             title: {pl: "Problem", en: "Problem"},
             text: project.caseStudy.problem,
         },
         {
-            eyebrow: {pl: "Efekt", en: "Result"},
+            eyebrow: {pl: "02", en: "02"},
             icon: Rocket,
-            id: "snapshot-result",
-            title: {pl: "Co powstało", en: "What shipped"},
+            id: "lens-artifact",
+            title: {pl: "Artefakt", en: "Artifact"},
             text: project.caseStudy.built,
         },
         {
-            eyebrow: {pl: "Rdzeń", en: "Core"},
-            icon: Code2,
-            id: "snapshot-core",
-            title: {pl: "Techniczny zakres", en: "Technical scope"},
-            text: {
-                pl: project.stack.join(" / "),
-                en: project.stack.join(" / "),
-            },
+            eyebrow: {pl: "03", en: "03"},
+            icon: GitBranch,
+            id: "lens-decisions",
+            title: {pl: "Decyzje", en: "Decisions"},
+            text: project.caseStudy.architecture,
         },
         {
-            eyebrow: {pl: "Sygnał", en: "Signal"},
+            eyebrow: {pl: "04", en: "04"},
             icon: Trophy,
-            id: "snapshot-signal",
-            title: {pl: "Dlaczego to ważne", en: "Why it matters"},
-            text: project.caseStudy.clientValue?.title ?? project.caseStudy.proves[0] ?? project.role,
+            id: "lens-proof",
+            title: {pl: "Dowód", en: "Proof"},
+            text: primaryProof,
         },
     ];
     const clientBridgeSteps: StoryItem[] = [
@@ -346,37 +344,40 @@ export default function ProjectPage({project}: ProjectPageProps) {
                 })}
             </section>
 
-            <section className={styles.snapshotSection}>
-                <article className={cx(styles.glassPanel, styles.snapshotIntro, styles.interactiveCard)} data-reveal>
-                    <div className={styles.panelContent}>
-                        <div className={styles.sectionKicker}>
-                            <FileText className={styles.kickerIcon}/>
-                            <span>{locale === "pl" ? "Case study w 30 sekund" : "30-second case study"}</span>
+            <section className={cx(styles.deliveryLens, styles.glassPanel)} data-reveal>
+                <div className={styles.panelContent}>
+                    <div className={styles.lensHeader}>
+                        <div>
+                            <div className={styles.sectionKicker}>
+                                <Layers3 className={styles.kickerIcon}/>
+                                <span>{locale === "pl" ? "Jak czytać ten projekt" : "How to read this project"}</span>
+                            </div>
+                            <h2>{locale === "pl"
+                                ? "Nie chodzi o sam screenshot. Chodzi o decyzje pod spodem."
+                                : "It is not just the screenshot. It is the decisions underneath."}</h2>
                         </div>
-                        <h2>{locale === "pl" ? "Najpierw szybki obraz, potem detale." : "A quick scan first, details after."}</h2>
                         <p>{locale === "pl"
-                            ? "Ten skrót pokazuje, czy projekt jest relevantny dla Twojego problemu: co było do rozwiązania, co powstało, jaki był rdzeń techniczny i jaki sygnał daje to przy zleceniu."
-                            : "This summary shows whether the project is relevant to your problem: what needed solving, what shipped, the technical core and the signal it gives for client work."}</p>
+                            ? "Ten pasek porządkuje case study pod kątem klienta: jaki był problem, co zostało dowiezione, gdzie było ryzyko i jaki sygnał daje to przy podobnym zleceniu."
+                            : "This rail frames the case study for a client: the problem, the shipped artifact, the risk area and the signal it gives for similar work."}</p>
                     </div>
-                </article>
 
-                <div className={styles.snapshotGrid}>
-                    {snapshotItems.map((item) => {
-                        const Icon = item.icon;
+                    <div className={styles.lensRail}>
+                        {deliveryLensItems.map((item, index) => {
+                            const Icon = item.icon;
 
-                        return (
-                            <article className={cx(styles.glassPanel, styles.snapshotCard, styles.interactiveCard)} data-reveal key={item.id}>
-                                <div className={styles.panelContent}>
-                                    <div className={styles.cardTopline}>
+                            return (
+                                <article className={styles.lensStep} key={item.id}>
+                                    <div className={styles.lensNode}>
                                         <span>{t(item.eyebrow)}</span>
-                                        <Icon className={styles.cardIcon}/>
+                                        <Icon className={styles.lensIcon}/>
                                     </div>
                                     <h3>{t(item.title)}</h3>
                                     <p>{t(item.text)}</p>
-                                </div>
-                            </article>
-                        );
-                    })}
+                                    {index < deliveryLensItems.length - 1 && <span className={styles.lensConnector} aria-hidden="true"/>}
+                                </article>
+                            );
+                        })}
+                    </div>
                 </div>
             </section>
 
