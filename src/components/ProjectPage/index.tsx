@@ -421,11 +421,11 @@ export default function ProjectPage({project}: ProjectPageProps) {
             <section className={cx(styles.deliveryLens, styles.glassPanel)} data-reveal>
                 <div className={styles.panelContent}>
                     <div className={styles.lensHeader}>
-                        <div>
-                            <div className={styles.sectionKicker}>
-                                <Layers3 className={styles.kickerIcon}/>
-                                <span>{locale === "pl" ? "Jak czytać ten projekt" : "How to read this project"}</span>
-                            </div>
+                        <div className={cx(styles.sectionKicker, styles.lensKicker)}>
+                            <Layers3 className={styles.kickerIcon}/>
+                            <span>{locale === "pl" ? "Jak czytać ten projekt" : "How to read this project"}</span>
+                        </div>
+                        <div className={styles.lensHeaderTitle}>
                             <h2>{locale === "pl"
                                 ? "Nie chodzi o sam screenshot. Chodzi o decyzje pod spodem."
                                 : "It is not just the screenshot. It is the decisions underneath."}</h2>
@@ -456,9 +456,14 @@ export default function ProjectPage({project}: ProjectPageProps) {
             </section>
 
             <section className={styles.storySection}>
-                <div className={styles.sectionHeader} data-reveal>
-                    <p className={styles.eyebrow}>{locale === "pl" ? "Case study" : "Case study"}</p>
-                    <h2>{locale === "pl" ? "Od problemu do działającego systemu." : "From problem to working system."}</h2>
+                <div className={cx(styles.sectionHeader, styles.storyHeader)} data-reveal>
+                    <div>
+                        <p className={styles.eyebrow}>{locale === "pl" ? "Case study" : "Case study"}</p>
+                        <h2>{locale === "pl" ? "Od problemu do działającego systemu." : "From problem to working system."}</h2>
+                    </div>
+                    <p className={styles.storyHeaderCopy}>{locale === "pl"
+                        ? "Cztery krótkie części pokazują kontekst, dowieziony artefakt, decyzje techniczne i odpowiedzialność za efekt."
+                        : "Four short parts show the context, shipped artifact, technical decisions and ownership of the outcome."}</p>
                 </div>
 
                 <div className={styles.storyGrid}>
@@ -590,19 +595,27 @@ export default function ProjectPage({project}: ProjectPageProps) {
                     </div>
                 </article>
 
-                <article className={cx(styles.glassPanel, styles.provesPanel, styles.interactiveCard)} data-reveal>
-                    <div className={styles.panelContent}>
-                        <div className={styles.sectionKicker}>
+                <article className={cx(styles.proofSignalPanel, styles.interactiveCard)} data-reveal>
+                    <div className={styles.proofSignalContent}>
+                        <div className={cx(styles.sectionKicker, styles.proofSignalKicker)}>
                             <Trophy className={styles.kickerIcon}/>
                             <span>{locale === "pl" ? "Co to udowadnia" : "What this proves"}</span>
                         </div>
-                        <div className={styles.provesList}>
+                        <div className={styles.proofSignalBody}>
+                            <div className={styles.proofSignalMark} aria-hidden="true">
+                                <span className={styles.proofSignalRing}/>
+                                <Trophy className={styles.proofSignalIcon}/>
+                                <span>{locale === "pl" ? "Dowód" : "Signal"}</span>
+                            </div>
+                            <ol className={styles.proofSignalList}>
                             {project.caseStudy.proves.map((item, index) => (
-                                <div className={styles.proveCard} key={`proves-${index}`}>
-                                    <Lightbulb className={styles.proveIcon}/>
+                                <li className={styles.proofSignalItem} key={`proves-${index}`}>
+                                    <span className={styles.proofSignalIndex}>{String(index + 1).padStart(2, "0")}</span>
+                                    <Lightbulb className={styles.proofSignalItemIcon}/>
                                     <p>{t(item)}</p>
-                                </div>
+                                </li>
                             ))}
+                            </ol>
                         </div>
                     </div>
                 </article>
