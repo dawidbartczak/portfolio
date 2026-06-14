@@ -150,7 +150,9 @@ function FeaturedCard({project, locale}: { project: Project; locale: Locale }) {
 }
 
 function ArchiveCard({project, locale}: { project: Project; locale: Locale }) {
-    const cardLinks = project.id === "paragon-pipeline" ? project.links : project.links.slice(0, 1);
+    const cardLinks = project.id === "paragon-pipeline"
+        ? project.links.filter((link) => text(link.label, locale) === "ParagonPIE")
+        : project.links.slice(0, 1);
 
     return (
         <article className={cx(styles.glassPanel, styles.archiveCard, styles.interactiveCard)} data-reveal id={`project-${project.id}`}>
