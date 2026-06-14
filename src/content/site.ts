@@ -173,6 +173,12 @@ export const siteCopy = {
         },
         emailLabel: {pl: "Napisz email", en: "Email me"},
         githubLabel: {pl: "Zobacz GitHub", en: "View GitHub"},
+        briefTitle: {pl: "W pierwszej wiadomości wystarczy:", en: "For the first message, send:"},
+        briefItems: [
+            {pl: "co chcesz zbudować lub usprawnić", en: "what you want to build or improve"},
+            {pl: "jaki problem biznesowy ma to rozwiązać", en: "what business problem it should solve"},
+            {pl: "czy ważniejszy jest szybki MVP, prototyp czy konsultacja", en: "whether you need a fast MVP, prototype or consultation"},
+        ],
     },
 } satisfies Record<string, unknown>;
 

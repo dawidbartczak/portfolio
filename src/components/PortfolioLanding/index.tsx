@@ -53,6 +53,7 @@ const proofIcons = [Compass, Github, Boxes, Sparkles];
 const collaborationIcons = [Compass, Rocket, GitBranch];
 const deliverableIcons = [Github, Server, Code2];
 const techIcons = [AppWindow, Layers3, Server, BrainCircuit];
+const briefIcons = [Compass, Rocket, GitBranch];
 
 const capabilityItems = [
     {label: "Full-stack", Icon: Layers3},
@@ -666,18 +667,37 @@ export default function PortfolioLanding() {
 
             <section className={cx(styles.contactSection, styles.glassPanel, styles.interactiveCard)} data-reveal id="contact">
                 <div className={styles.panelContent}>
-                    <p className={styles.eyebrow}>{t(siteCopy.contact.eyebrow)}</p>
-                    <h2>{t(siteCopy.contact.title)}</h2>
-                    <p>{t(siteCopy.contact.lead)}</p>
-                    <div className={styles.contactActions}>
-                        <a className={styles.primaryButton} href={contact.mailto}>
-                            <Mail className={styles.buttonIcon}/>
-                            <span>{t(siteCopy.contact.emailLabel)}</span>
-                        </a>
-                        <a className={styles.secondaryButton} href={contact.github} rel="noreferrer" target="_blank">
-                            <Github className={styles.buttonIcon}/>
-                            <span>{t(siteCopy.contact.githubLabel)}</span>
-                        </a>
+                    <div className={styles.contactBody}>
+                        <div className={styles.contactCopy}>
+                            <p className={styles.eyebrow}>{t(siteCopy.contact.eyebrow)}</p>
+                            <h2>{t(siteCopy.contact.title)}</h2>
+                            <p>{t(siteCopy.contact.lead)}</p>
+                            <div className={styles.contactActions}>
+                                <a className={styles.primaryButton} href={contact.mailto}>
+                                    <Mail className={styles.buttonIcon}/>
+                                    <span>{t(siteCopy.contact.emailLabel)}</span>
+                                </a>
+                                <a className={styles.secondaryButton} href={contact.github} rel="noreferrer" target="_blank">
+                                    <Github className={styles.buttonIcon}/>
+                                    <span>{t(siteCopy.contact.githubLabel)}</span>
+                                </a>
+                            </div>
+                        </div>
+                        <aside className={styles.briefStarter}>
+                            <span>{t(siteCopy.contact.briefTitle)}</span>
+                            <ul>
+                                {siteCopy.contact.briefItems.map((item, index) => {
+                                    const Icon = briefIcons[index] ?? Sparkles;
+
+                                    return (
+                                        <li key={`brief-${index}`}>
+                                            <IconGlyph Icon={Icon} className={styles.briefIcon}/>
+                                            <span>{t(item)}</span>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </aside>
                     </div>
                 </div>
             </section>
