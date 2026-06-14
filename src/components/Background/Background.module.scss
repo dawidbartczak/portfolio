@@ -39,7 +39,7 @@
     position: absolute;
     inset: -12%;
     z-index: 1;
-    filter: url("#goo") blur(var(--aurora-blur)) saturate(var(--aurora-saturate)) contrast(var(--aurora-contrast)) brightness(var(--aurora-brightness));
+    filter: blur(var(--aurora-blur)) saturate(var(--aurora-saturate)) contrast(var(--aurora-contrast)) brightness(var(--aurora-brightness));
     opacity: 1;
 }
 
@@ -49,7 +49,6 @@
     height: var(--aurora-circle-size);
     border-radius: 999px;
     mix-blend-mode: var(--aurora-blending);
-    will-change: transform;
 }
 
 .blob1 {
@@ -110,6 +109,7 @@
 .blob6 {
     @include blobBase;
 
+    display: none;
     top: 6%;
     left: 46%;
     width: calc(var(--aurora-circle-size) * 0.64);
@@ -121,6 +121,7 @@
 .blob7 {
     @include blobBase;
 
+    display: none;
     top: 46%;
     left: -18%;
     width: calc(var(--aurora-circle-size) * 0.72);
@@ -142,7 +143,6 @@
     mix-blend-mode: var(--aurora-blending);
     transform: rotate(-9deg);
     animation: auroraRibbonFlow 36s ease-in-out infinite alternate;
-    will-change: transform;
 }
 
 .blobInteractive {
@@ -150,18 +150,11 @@
 
     top: 0;
     left: 0;
-    width: min(76rem, 92vmax);
-    height: min(76rem, 92vmax);
-    background: radial-gradient(circle at center, rgba(var(--aurora-interactive), var(--aurora-interactive-alpha)), rgba(var(--aurora-interactive), 0) 48%) no-repeat;
-    opacity: var(--aurora-interactive-alpha);
-}
-
-.filter {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
+    width: min(60rem, 74vmax);
+    height: min(60rem, 74vmax);
+    background: radial-gradient(circle at center, rgba(var(--aurora-interactive), calc(var(--aurora-interactive-alpha) * 0.72)), rgba(var(--aurora-interactive), 0) 48%) no-repeat;
+    opacity: calc(var(--aurora-interactive-alpha) * 0.75);
+    will-change: transform;
 }
 
 @keyframes auroraSweepOne {
@@ -274,7 +267,7 @@
 
     .aurora {
         inset: -18%;
-        filter: url("#goo") blur(18px) saturate(var(--aurora-saturate)) brightness(var(--aurora-brightness));
+        filter: blur(14px) saturate(var(--aurora-saturate)) brightness(var(--aurora-brightness));
     }
 
     .blob1,
@@ -282,8 +275,6 @@
     .blob3,
     .blob4,
     .blob5,
-    .blob6,
-    .blob7,
     .auroraRibbon {
         animation-duration: 56s;
     }

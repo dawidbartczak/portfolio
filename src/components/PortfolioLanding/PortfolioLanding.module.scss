@@ -1,4 +1,8 @@
 .page {
+    --motion-fast: 140ms;
+    --motion-medium: 240ms;
+    --motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
     position: relative;
     z-index: 1;
     width: min(1440px, calc(100% - clamp(2rem, 5vw, 5.5rem)));
@@ -30,6 +34,102 @@
     z-index: 1;
 }
 
+.interactiveCard {
+    --hover: 0;
+
+    transition:
+        transform var(--motion-fast) var(--motion-ease),
+        border-color var(--motion-fast) ease;
+}
+
+.interactiveCard::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle 300px at 50% 0%, color-mix(in srgb, var(--accent-strong) 14%, transparent), transparent 58%);
+    opacity: var(--hover);
+    pointer-events: none;
+    transition: opacity var(--motion-fast) ease;
+}
+
+.revealReady [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+    transition:
+        opacity var(--motion-medium) ease,
+        transform var(--motion-medium) var(--motion-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+}
+
+.revealReady [data-reveal]:not(.interactiveCard) {
+    transform: translate3d(0, 8px, 0);
+}
+
+.revealReady [data-revealed="true"] {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+}
+
+.sectionIcon,
+.metaIcon,
+.badgeIcon,
+.stackIcon {
+    display: block;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+}
+
+.iconBadge,
+.proofIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--chip-border);
+    border-radius: 0.72rem;
+    background:
+        linear-gradient(145deg, color-mix(in srgb, var(--chip-bg) 82%, transparent), color-mix(in srgb, var(--button-secondary-bg) 58%, transparent));
+    color: var(--accent-strong);
+    box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--text-strong) 10%, transparent),
+        0 0 24px color-mix(in srgb, var(--accent-strong) 10%, transparent);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.cardHeader h3 {
+    padding-top: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .interactiveCard:hover,
+    .interactiveCard:focus-within {
+        --hover: 1;
+
+        border-color: color-mix(in srgb, var(--accent-strong) 36%, var(--panel-border));
+        transform: translate3d(0, -2px, 0);
+    }
+
+    .interactiveCard:hover .iconBadge,
+    .interactiveCard:focus-within .iconBadge,
+    .interactiveCard:hover .proofIcon,
+    .interactiveCard:focus-within .proofIcon {
+        color: var(--accent);
+    }
+}
+
 .nav {
     position: sticky;
     top: 0.75rem;
@@ -42,7 +142,7 @@
     padding: 0.72rem 1rem;
     border-radius: 999px;
     isolation: isolate;
-    transition: top 190ms ease, border-radius 190ms ease, padding 190ms ease, margin-top 190ms ease;
+    transition: border-radius var(--motion-fast) ease;
 }
 
 .nav::before {
@@ -56,8 +156,8 @@
     box-shadow: var(--nav-shadow-top);
     opacity: 1;
     pointer-events: none;
-    transition: background 190ms ease, border-color 190ms ease, border-radius 190ms ease, box-shadow 190ms ease, opacity 190ms ease, inset 190ms ease;
-    backdrop-filter: blur(14px) saturate(132%);
+    transition: background-color var(--motion-fast) ease, border-color var(--motion-fast) ease, border-radius var(--motion-fast) ease;
+    backdrop-filter: blur(12px) saturate(132%);
 }
 
 .navScrolled {
@@ -71,7 +171,7 @@
     inset: 0 -0.55rem;
     background: var(--nav-bg);
     box-shadow: var(--nav-shadow);
-    backdrop-filter: blur(16px) saturate(142%);
+    backdrop-filter: blur(12px) saturate(132%);
 }
 
 .brand,
@@ -174,6 +274,7 @@
 
 .hero {
     margin-top: clamp(1.15rem, 2.5vh, 1.8rem);
+    scroll-margin-top: 5.5rem;
 }
 
 .hero .panelContent {
@@ -245,6 +346,10 @@
     border-radius: 999px;
     font-weight: 700;
     line-height: 1;
+    transition:
+        border-color var(--motion-fast) ease,
+        background-color var(--motion-fast) ease,
+        transform var(--motion-fast) var(--motion-ease);
 }
 
 .primaryButton {
@@ -263,6 +368,14 @@
 .inlineIcon {
     width: 1rem;
     height: 1rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .primaryButton:hover,
+    .secondaryButton:hover,
+    .caseStudyLink:hover {
+        transform: translateY(-1px);
+    }
 }
 
 .heroAside {
@@ -297,9 +410,9 @@
     inset: 0;
     z-index: -1;
     background:
-        linear-gradient(115deg, transparent 0 39%, color-mix(in srgb, var(--text-strong) 10%, transparent) 39% 40%, transparent 40%),
-        linear-gradient(155deg, transparent 0 66%, color-mix(in srgb, var(--accent) 12%, transparent) 66% 67%, transparent 67%),
-        radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 34%);
+        radial-gradient(circle at 18% 18%, color-mix(in srgb, var(--accent-strong) 12%, transparent), transparent 32%),
+        radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 34%),
+        radial-gradient(circle at 72% 86%, color-mix(in srgb, var(--text-strong) 8%, transparent), transparent 42%);
     opacity: 0.9;
 }
 
@@ -319,7 +432,7 @@
     gap: 0.58rem;
     max-width: 100%;
     min-height: 2rem;
-    padding: 0.35rem 0.62rem 0.35rem 0.45rem;
+    padding: 0.35rem 0.62rem 0.35rem 0.72rem;
     border: 1px solid var(--chip-border);
     border-radius: 999px;
     background: color-mix(in srgb, var(--chip-bg) 72%, transparent);
@@ -346,7 +459,7 @@
 
 .deliveryMap {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.86fr) auto minmax(0, 0.86fr) auto minmax(0, 1.28fr);
     align-items: center;
     gap: 0.45rem;
     margin-top: 0.1rem;
@@ -363,10 +476,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.42rem;
     min-width: 0;
     min-height: 3rem;
-    padding: 0.55rem 0.62rem;
+    padding: 0.55rem 0.5rem;
     border: 1px solid color-mix(in srgb, var(--chip-border) 78%, transparent);
     border-radius: 0.78rem;
     background: color-mix(in srgb, var(--chip-bg) 60%, transparent);
@@ -391,10 +504,12 @@
 
 .deliveryStep strong {
     min-width: 0;
-    overflow: visible;
+    max-width: 100%;
+    overflow: hidden;
     font-family: var(--font-krona-one), sans-serif;
-    font-size: clamp(0.76rem, 0.95vw, 0.95rem);
+    font-size: clamp(0.7rem, 0.78vw, 0.84rem);
     line-height: 1.08;
+    text-overflow: clip;
     white-space: nowrap;
 }
 
@@ -413,6 +528,9 @@
 }
 
 .heroAside .heroStack span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.52rem;
     justify-content: flex-start;
     min-height: 2.45rem;
     padding: 0.68rem 0.78rem 0.62rem;
@@ -421,6 +539,18 @@
     color: var(--text-strong);
     font-weight: 700;
     font-size: 0.82rem;
+}
+
+.heroAside .heroStack em {
+    min-width: 0;
+    overflow: hidden;
+    font-style: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.stackIcon {
+    color: var(--accent-strong);
 }
 
 .statusDot {
@@ -446,7 +576,7 @@
 .tagList {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.46rem 0.5rem;
+    gap: 0.54rem;
 }
 
 .heroStack span,
@@ -463,19 +593,29 @@
     color: var(--text-muted);
     box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-strong) 8%, transparent);
     font-size: 0.76rem;
-    line-height: 1;
-    padding: 0.4rem 0.62rem 0.34rem;
+    line-height: 1.1;
+    padding: 0.38rem 0.62rem;
 }
 
 .proofStrip {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.8rem;
-    margin-top: 0.8rem;
+    margin-top: clamp(1.8rem, 3vw, 2.5rem);
 }
 
 .proofItem .panelContent {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 0.8rem;
+    align-items: center;
     padding: 0.95rem 1rem;
+}
+
+.proofIcon {
+    grid-row: span 2;
+    width: 2.05rem;
+    height: 2.05rem;
 }
 
 .proofItem strong {
@@ -485,9 +625,9 @@
     font-size: 1.12rem;
 }
 
-.proofItem span {
+.proofItem .panelContent > span:not(.proofIcon) {
     display: block;
-    margin-top: 0.35rem;
+    margin-top: 0.22rem;
     color: var(--text-soft);
     line-height: 1.42;
 }
@@ -495,11 +635,12 @@
 .section,
 .contactSection {
     margin-top: clamp(2.8rem, 6vw, 5.4rem);
+    scroll-margin-top: 5.5rem;
 }
 
 .sectionHeader {
     max-width: 780px;
-    margin-bottom: 1.15rem;
+    margin-bottom: clamp(1.55rem, 2.4vw, 2.25rem);
 }
 
 .sectionHeader h2,
@@ -521,7 +662,7 @@
 .techGrid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
+    gap: clamp(1rem, 1.4vw, 1.25rem);
 }
 
 .offerCard .panelContent,
@@ -529,7 +670,7 @@
 .techCard .panelContent,
 .archiveCard .panelContent,
 .processCard .panelContent {
-    padding: 1.15rem;
+    padding: clamp(1.15rem, 1.7vw, 1.35rem);
 }
 
 .offerCard h3,
@@ -550,14 +691,14 @@
 .archiveCard p,
 .featuredCard p,
 .processCard p {
-    margin: 0.82rem 0 0;
+    margin: 1rem 0 0;
     color: var(--text-muted);
     line-height: 1.62;
 }
 
 .featuredGrid {
     display: grid;
-    gap: 1rem;
+    gap: clamp(1rem, 1.4vw, 1.25rem);
 }
 
 .featuredCard .panelContent {
@@ -574,6 +715,7 @@
     border: 1px solid var(--chip-border);
     border-radius: 0.7rem;
     background: var(--media-bg);
+    transition: border-color var(--motion-fast) ease;
 }
 
 .projectImage {
@@ -602,6 +744,20 @@
     margin-bottom: 0.7rem;
     color: var(--text-soft);
     font-size: 0.85rem;
+}
+
+.metaLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.42rem;
+    min-width: 0;
+}
+
+.metaIcon,
+.badgeIcon {
+    width: 0.95rem;
+    height: 0.95rem;
+    color: var(--accent-strong);
 }
 
 .proofList {
@@ -642,16 +798,30 @@
     gap: 0.45rem;
     color: var(--accent);
     font-weight: 700;
+    transition: color 160ms ease, transform 160ms ease;
 }
 
 .inlineLink {
     font-size: 0.9rem;
 }
 
+@media (hover: hover) and (pointer: fine) {
+    .inlineLink:hover,
+    .textLink:hover {
+        color: var(--accent-strong);
+        transform: translateY(-1px);
+    }
+
+    .featuredCard:hover .featuredMedia,
+    .featuredCard:focus-within .featuredMedia {
+        border-color: color-mix(in srgb, var(--accent-strong) 35%, var(--chip-border));
+    }
+}
+
 .archiveGrid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
+    gap: clamp(1rem, 1.4vw, 1.25rem);
 }
 
 .archiveCard {
@@ -670,7 +840,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: 0.9rem;
 }
 
 .archiveHeader > div {
@@ -678,16 +848,16 @@
 }
 
 .archiveHeader h3 {
-    margin-top: 0.74rem;
+    margin-top: 0.9rem;
 }
 
 .archiveCard p {
-    margin-top: 0.68rem;
+    margin-top: 0.82rem;
     line-height: 1.58;
 }
 
 .archiveCard .tagList {
-    margin-top: 0.72rem;
+    margin-top: 0.95rem;
 }
 
 .archiveActions {
@@ -696,8 +866,15 @@
     justify-content: space-between;
 }
 
+.textLink::after {
+    content: "→";
+    color: currentColor;
+    font-family: var(--font-krona-one), sans-serif;
+    font-size: 0.8em;
+}
+
 .techCard .tagList {
-    margin-top: 0.72rem;
+    margin-top: 1rem;
 }
 
 .aiSection {
@@ -707,12 +884,38 @@
 .processGrid {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 0.8rem;
+    gap: clamp(0.9rem, 1.2vw, 1.05rem);
 }
 
-.processCard span {
+.processGrid {
+    position: relative;
+}
+
+.processGrid::before {
+    content: "";
+    position: absolute;
+    top: 2.35rem;
+    right: 0.4rem;
+    left: 0.4rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent-strong) 28%, transparent), transparent);
+    pointer-events: none;
+}
+
+.processCard {
+    isolation: isolate;
+}
+
+.processMeta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1.35rem;
+}
+
+.processNumber {
     display: block;
-    margin-bottom: 1rem;
     color: var(--accent-strong);
     font-family: var(--font-krona-one), sans-serif;
     font-size: 0.9rem;
@@ -758,6 +961,10 @@
     .archiveGrid,
     .processGrid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .processGrid::before {
+        display: none;
     }
 }
 
@@ -853,6 +1060,7 @@
     }
 
     .deliveryMap {
+        grid-template-columns: minmax(0, 0.84fr) auto minmax(0, 0.84fr) auto minmax(0, 1.32fr);
         gap: 0.34rem;
         padding: 0.62rem;
     }
@@ -890,7 +1098,7 @@
 
     .proofStrip {
         gap: 0.6rem;
-        margin-top: 0.65rem;
+        margin-top: 1.15rem;
     }
 
     .section,
@@ -899,7 +1107,7 @@
     }
 
     .sectionHeader {
-        margin-bottom: 1rem;
+        margin-bottom: 1.25rem;
     }
 
     .proofStrip,
@@ -927,6 +1135,15 @@
 
     .featuredBody {
         padding: 0.2rem 0.1rem 0.35rem;
+    }
+
+    .cardHeader {
+        gap: 0.68rem;
+    }
+
+    .iconBadge {
+        width: 2.05rem;
+        height: 2.05rem;
     }
 
     .metaRow,
@@ -962,5 +1179,31 @@
     .deliveryArrow {
         justify-self: center;
         transform: rotate(90deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .interactiveCard,
+    .interactiveCard::after,
+    .revealReady [data-reveal],
+    .nav,
+    .nav::before,
+    .primaryButton,
+    .secondaryButton,
+    .caseStudyLink,
+    .inlineLink,
+    .textLink,
+    .featuredMedia {
+        transition: none;
+    }
+
+    .interactiveCard:hover,
+    .interactiveCard:focus-within,
+    .primaryButton:hover,
+    .secondaryButton:hover,
+    .caseStudyLink:hover,
+    .inlineLink:hover,
+    .textLink:hover {
+        transform: none;
     }
 }

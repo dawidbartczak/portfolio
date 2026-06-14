@@ -26,14 +26,24 @@ export default function Background() {
             return;
         }
 
-        const getTransformPosition = (clientX: number, clientY: number) => {
-            const parentRect = element.parentElement?.getBoundingClientRect();
-            const originX = parentRect?.left ?? 0;
-            const originY = parentRect?.top ?? 0;
+        let originX = 0;
+        let originY = 0;
+        let halfWidth = element.offsetWidth / 2;
+        let halfHeight = element.offsetHeight / 2;
 
+        const measure = () => {
+            const parentRect = element.parentElement?.getBoundingClientRect();
+
+            originX = parentRect?.left ?? 0;
+            originY = parentRect?.top ?? 0;
+            halfWidth = element.offsetWidth / 2;
+            halfHeight = element.offsetHeight / 2;
+        };
+
+        const getTransformPosition = (clientX: number, clientY: number) => {
             return {
-                x: clientX - originX - element.offsetWidth / 2,
-                y: clientY - originY - element.offsetHeight / 2,
+                x: clientX - originX - halfWidth,
+                y: clientY - originY - halfHeight,
             };
         };
 
@@ -41,6 +51,8 @@ export default function Background() {
             x: window.innerWidth * 0.58,
             y: window.innerHeight * 0.42,
         };
+
+        measure();
 
         const initialTransformPosition = getTransformPosition(initialPosition.x, initialPosition.y);
 
@@ -59,15 +71,15 @@ export default function Background() {
             const targetPosition = targetPositionRef.current;
             const currentPosition = currentPositionRef.current;
 
-            currentPosition.x += (targetPosition.x - currentPosition.x) / 20;
-            currentPosition.y += (targetPosition.y - currentPosition.y) / 20;
+            currentPosition.x += (targetPosition.x - currentPosition.x) / 10;
+            currentPosition.y += (targetPosition.y - currentPosition.y) / 10;
 
             element.style.transform = `translate3d(${Math.round(currentPosition.x)}px, ${Math.round(currentPosition.y)}px, 0)`;
 
             const deltaX = Math.abs(targetPosition.x - currentPosition.x);
             const deltaY = Math.abs(targetPosition.y - currentPosition.y);
 
-            if (deltaX > 0.5 || deltaY > 0.5) {
+            if (deltaX > 1 || deltaY > 1) {
                 animationFrameIdRef.current = requestAnimationFrame(updatePosition);
             } else {
                 stopAnimation();
@@ -87,33 +99,23 @@ export default function Background() {
         };
 
         window.addEventListener("pointermove", handlePointerMove, {passive: true});
+        window.addEventListener("resize", measure, {passive: true});
 
         return () => {
             window.removeEventListener("pointermove", handlePointerMove);
+            window.removeEventListener("resize", measure);
             stopAnimation();
         };
     }, []);
 
     return (
         <div className={styles.background}>
-            <svg className={styles.filter} xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <filter id="goo">
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
-                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo"/>
-                        <feBlend in="SourceGraphic" in2="goo"/>
-                    </filter>
-                </defs>
-            </svg>
-
             <div className={styles.aurora}>
                 <div className={styles.blob1}/>
                 <div className={styles.blob2}/>
                 <div className={styles.blob3}/>
                 <div className={styles.blob4}/>
                 <div className={styles.blob5}/>
-                <div className={styles.blob6}/>
-                <div className={styles.blob7}/>
                 <div className={styles.auroraRibbon}/>
                 <div className={styles.blobInteractive} ref={interactiveBubbleRef}/>
             </div>

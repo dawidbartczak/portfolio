@@ -16,6 +16,13 @@ export function useTilt({
     liftMax = 10,
 }: TiltOptions = {}) {
     const onMouseMove = useCallback((event: MouseEvent<HTMLElement>) => {
+        const canAnimate = window.matchMedia("(hover: hover) and (pointer: fine)").matches
+            && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (!canAnimate) {
+            return;
+        }
+
         const element = event.currentTarget;
         const rect = element.getBoundingClientRect();
 
@@ -34,6 +41,8 @@ export function useTilt({
         const dist = Math.sqrt(dx ** 2 + dy ** 2);
         const lift = (dist / maxDist) * liftMax;
 
+        element.style.setProperty("--mx", `${x}px`);
+        element.style.setProperty("--my", `${y}px`);
         element.style.setProperty("--rx", `${rotateX}deg`);
         element.style.setProperty("--ry", `${rotateY}deg`);
         element.style.setProperty("--lift", `${lift}px`);

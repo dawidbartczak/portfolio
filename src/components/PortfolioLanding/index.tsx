@@ -2,10 +2,32 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {Fragment, useEffect, useMemo, useState} from "react";
-import {Code, Github, Mail, Moon, Play, Sun} from "@/icons";
+import {
+    type LucideIcon,
+    AppWindow,
+    Bot,
+    Boxes,
+    BrainCircuit,
+    Compass,
+    Code2,
+    GitBranch,
+    Layers3,
+    Rocket,
+    Server,
+    Sparkles,
+} from "lucide-react";
+import {Fragment, useEffect, useMemo, useRef, useState} from "react";
+import {
+    Code,
+    Github,
+    Mail,
+    Moon,
+    Play,
+    Sun,
+} from "@/icons";
 import {contact, localeNames, siteCopy, text} from "@/content/site";
 import {featuredProjects, withoutAiProjects} from "@/content/projects";
+import {useReveal} from "@/hooks/useReveal";
 import {useThemePreference, type ThemePreference} from "@/hooks/useThemePreference";
 import type {Locale, Project, ProjectLink} from "@/types/project";
 import styles from "./PortfolioLanding.module.scss";
@@ -21,8 +43,43 @@ const themeIcons = {
     light: Sun,
 };
 
+const offerIcons = [Rocket, Bot, BrainCircuit];
+const aiIcons = [Compass, Boxes, Sparkles];
+const processIcons = [Compass, Layers3, Code2, GitBranch, Rocket];
+const proofIcons = [Compass, Github, Boxes, Sparkles];
+const techIcons = [AppWindow, Layers3, Server, BrainCircuit];
+
+const capabilityItems = [
+    {label: "Full-stack", Icon: Layers3},
+    {label: "ML/NLP", Icon: BrainCircuit},
+    {label: "Desktop", Icon: AppWindow},
+    {label: "Automation", Icon: Bot},
+];
+
 function cx(...classes: Array<string | false | undefined>) {
     return classes.filter(Boolean).join(" ");
+}
+
+type IconComponent = LucideIcon | typeof Code | typeof Github;
+
+function IconGlyph({Icon, className}: { Icon: IconComponent; className: string }) {
+    return <Icon className={className}/>;
+}
+
+function ProjectGlyph({project, className}: { project: Project; className: string }) {
+    if (project.tags.some((tag) => ["OCR", "NER", "LLM", "NLP", "Tokenizer"].includes(tag))) {
+        return <BrainCircuit className={className}/>;
+    }
+
+    if (project.tags.some((tag) => ["Mobile", "React Native", "Desktop", "Tauri"].includes(tag))) {
+        return <AppWindow className={className}/>;
+    }
+
+    if (project.tags.some((tag) => ["Canvas", "Graphics", "Regression"].includes(tag))) {
+        return <Boxes className={className}/>;
+    }
+
+    return <Code2 className={className}/>;
 }
 
 function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale }) {
@@ -44,7 +101,7 @@ function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale })
 
 function FeaturedCard({project, locale}: { project: Project; locale: Locale }) {
     return (
-        <article className={cx(styles.glassPanel, styles.featuredCard)}>
+        <article className={cx(styles.glassPanel, styles.featuredCard, styles.interactiveCard)} data-reveal>
             <div className={styles.panelContent}>
                 <div className={styles.featuredMedia}>
                     {project.thumbnailPath && (
@@ -61,7 +118,10 @@ function FeaturedCard({project, locale}: { project: Project; locale: Locale }) {
 
                 <div className={styles.featuredBody}>
                     <div className={styles.metaRow}>
-                        <span>{project.featuredLabel ? text(project.featuredLabel, locale) : text(project.category, locale)}</span>
+                        <span className={styles.metaLabel}>
+                            <ProjectGlyph className={styles.metaIcon} project={project}/>
+                            <span>{project.featuredLabel ? text(project.featuredLabel, locale) : text(project.category, locale)}</span>
+                        </span>
                         <span>{project.year}</span>
                     </div>
 
@@ -88,11 +148,14 @@ function FeaturedCard({project, locale}: { project: Project; locale: Locale }) {
 
 function ArchiveCard({project, locale}: { project: Project; locale: Locale }) {
     return (
-        <article className={cx(styles.glassPanel, styles.archiveCard)}>
+        <article className={cx(styles.glassPanel, styles.archiveCard, styles.interactiveCard)} data-reveal>
             <div className={styles.panelContent}>
                 <div className={styles.archiveHeader}>
                     <div>
-                        <span className={styles.archiveCategory}>{text(project.category, locale)}</span>
+                        <span className={styles.archiveCategory}>
+                            <ProjectGlyph className={styles.badgeIcon} project={project}/>
+                            <span>{text(project.category, locale)}</span>
+                        </span>
                         <h3>{project.title}</h3>
                     </div>
                     <span className={styles.eraBadge}>{locale === "pl" ? "Bez AI" : "Without AI"}</span>
@@ -121,19 +184,39 @@ export default function PortfolioLanding() {
     const [locale, setLocale] = useState<Locale>("pl");
     const [theme, setTheme] = useThemePreference();
     const [isScrolled, setIsScrolled] = useState(false);
+    const scrollFrameRef = useRef<number | null>(null);
     const t = useMemo(() => (value: {pl: string; en: string}) => text(value, locale), [locale]);
 
+    useReveal();
+
     useEffect(() => {
-        const updateScrollState = () => setIsScrolled(window.scrollY > 12);
+        const updateScrollState = () => {
+            scrollFrameRef.current = null;
+            setIsScrolled(window.scrollY > 12);
+        };
+
+        const handleScroll = () => {
+            if (scrollFrameRef.current !== null) {
+                return;
+            }
+
+            scrollFrameRef.current = window.requestAnimationFrame(updateScrollState);
+        };
 
         updateScrollState();
-        window.addEventListener("scroll", updateScrollState, {passive: true});
+        window.addEventListener("scroll", handleScroll, {passive: true});
 
-        return () => window.removeEventListener("scroll", updateScrollState);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+
+            if (scrollFrameRef.current !== null) {
+                window.cancelAnimationFrame(scrollFrameRef.current);
+            }
+        };
     }, []);
 
     return (
-        <main className={styles.page}>
+        <main className={cx(styles.page, styles.revealReady)}>
             <nav className={cx(styles.nav, isScrolled && styles.navScrolled)} aria-label="Primary">
                 <a href="#top" className={styles.brand}>Dawid Bartczak</a>
                 <div className={styles.navLinks}>
@@ -181,7 +264,7 @@ export default function PortfolioLanding() {
                 </div>
             </nav>
 
-            <section className={cx(styles.hero, styles.glassPanel)} id="top">
+            <section className={cx(styles.hero, styles.glassPanel)} id="top" data-reveal>
                 <div className={styles.panelContent}>
                     <div className={styles.heroCopy}>
                         <p className={styles.eyebrow}>{t(siteCopy.hero.eyebrow)}</p>
@@ -196,7 +279,7 @@ export default function PortfolioLanding() {
                         </div>
                     </div>
 
-                    <aside className={styles.heroAside}>
+                    <aside className={cx(styles.heroAside, styles.interactiveCard)}>
                         <div className={styles.heroStatusRow}>
                             <span className={styles.statusDot}/>
                             <span>{t(siteCopy.hero.status)}</span>
@@ -216,46 +299,60 @@ export default function PortfolioLanding() {
                         </div>
                         <p className={styles.heroAsideLead}>{t(siteCopy.hero.asideLead)}</p>
                         <div className={styles.heroStack}>
-                            <span>Full-stack</span>
-                            <span>ML/NLP</span>
-                            <span>Desktop</span>
-                            <span>Automation</span>
+                            {capabilityItems.map(({label, Icon}) => (
+                                <span key={label}>
+                                    <IconGlyph Icon={Icon} className={styles.stackIcon}/>
+                                    <em>{label}</em>
+                                </span>
+                            ))}
                         </div>
                     </aside>
                 </div>
             </section>
 
             <section className={styles.proofStrip} aria-label="Proof points">
-                {siteCopy.proof.map((item) => (
-                    <div className={cx(styles.glassPanel, styles.proofItem)} key={item.value}>
+                {siteCopy.proof.map((item, index) => {
+                    return (
+                    <div className={cx(styles.glassPanel, styles.proofItem, styles.interactiveCard)} data-reveal key={item.value}>
                         <div className={styles.panelContent}>
+                            <span className={styles.proofIcon}>
+                                <IconGlyph Icon={proofIcons[index] ?? Sparkles} className={styles.sectionIcon}/>
+                            </span>
                             <strong>{item.value}</strong>
                             <span>{t(item.label)}</span>
                         </div>
                     </div>
-                ))}
+                    );
+                })}
             </section>
 
             <section className={styles.section} id="offer">
-                <div className={styles.sectionHeader}>
+                <div className={styles.sectionHeader} data-reveal>
                     <p className={styles.eyebrow}>{t(siteCopy.offer.eyebrow)}</p>
                     <h2>{t(siteCopy.offer.title)}</h2>
                     <p>{t(siteCopy.offer.lead)}</p>
                 </div>
                 <div className={styles.offerGrid}>
-                    {siteCopy.offer.items.map((item) => (
-                        <article className={cx(styles.glassPanel, styles.offerCard)} key={t(item.title)}>
+                    {siteCopy.offer.items.map((item, index) => {
+                        return (
+                        <article className={cx(styles.glassPanel, styles.offerCard, styles.interactiveCard)} data-reveal key={t(item.title)}>
                             <div className={styles.panelContent}>
-                                <h3>{t(item.title)}</h3>
+                                <div className={styles.cardHeader}>
+                                    <span className={styles.iconBadge}>
+                                        <IconGlyph Icon={offerIcons[index] ?? Sparkles} className={styles.sectionIcon}/>
+                                    </span>
+                                    <h3>{t(item.title)}</h3>
+                                </div>
                                 <p>{t(item.text)}</p>
                             </div>
                         </article>
-                    ))}
+                        );
+                    })}
                 </div>
             </section>
 
             <section className={styles.section} id="work">
-                <div className={styles.sectionHeader}>
+                <div className={styles.sectionHeader} data-reveal>
                     <p className={styles.eyebrow}>{t(siteCopy.featured.eyebrow)}</p>
                     <h2>{t(siteCopy.featured.title)}</h2>
                     <p>{t(siteCopy.featured.lead)}</p>
@@ -268,7 +365,7 @@ export default function PortfolioLanding() {
             </section>
 
             <section className={styles.section}>
-                <div className={styles.sectionHeader}>
+                <div className={styles.sectionHeader} data-reveal>
                     <p className={styles.eyebrow}>{t(siteCopy.withoutAi.eyebrow)}</p>
                     <h2>{t(siteCopy.withoutAi.title)}</h2>
                     <p>{t(siteCopy.withoutAi.lead)}</p>
@@ -281,51 +378,71 @@ export default function PortfolioLanding() {
             </section>
 
             <section className={cx(styles.section, styles.aiSection)}>
-                <div className={styles.sectionHeader}>
+                <div className={styles.sectionHeader} data-reveal>
                     <p className={styles.eyebrow}>{t(siteCopy.aiWorkflow.eyebrow)}</p>
                     <h2>{t(siteCopy.aiWorkflow.title)}</h2>
                     <p>{t(siteCopy.aiWorkflow.lead)}</p>
                 </div>
                 <div className={styles.aiGrid}>
-                    {siteCopy.aiWorkflow.items.map((item) => (
-                        <article className={cx(styles.glassPanel, styles.aiCard)} key={t(item.title)}>
+                    {siteCopy.aiWorkflow.items.map((item, index) => {
+                        return (
+                        <article className={cx(styles.glassPanel, styles.aiCard, styles.interactiveCard)} data-reveal key={t(item.title)}>
                             <div className={styles.panelContent}>
-                                <h3>{t(item.title)}</h3>
+                                <div className={styles.cardHeader}>
+                                    <span className={styles.iconBadge}>
+                                        <IconGlyph Icon={aiIcons[index] ?? Sparkles} className={styles.sectionIcon}/>
+                                    </span>
+                                    <h3>{t(item.title)}</h3>
+                                </div>
                                 <p>{t(item.text)}</p>
                             </div>
                         </article>
-                    ))}
+                        );
+                    })}
                 </div>
             </section>
 
             <section className={styles.section} id="process">
-                <div className={styles.sectionHeader}>
+                <div className={styles.sectionHeader} data-reveal>
                     <p className={styles.eyebrow}>{t(siteCopy.process.eyebrow)}</p>
                     <h2>{t(siteCopy.process.title)}</h2>
                 </div>
                 <div className={styles.processGrid}>
-                    {siteCopy.process.steps.map((step, index) => (
-                        <article className={cx(styles.glassPanel, styles.processCard)} key={t(step.name)}>
+                    {siteCopy.process.steps.map((step, index) => {
+                        return (
+                        <article className={cx(styles.glassPanel, styles.processCard, styles.interactiveCard)} data-reveal key={t(step.name)}>
                             <div className={styles.panelContent}>
-                                <span>{String(index + 1).padStart(2, "0")}</span>
+                                <div className={styles.processMeta}>
+                                    <span className={styles.processNumber}>{String(index + 1).padStart(2, "0")}</span>
+                                    <span className={styles.iconBadge}>
+                                        <IconGlyph Icon={processIcons[index] ?? Sparkles} className={styles.sectionIcon}/>
+                                    </span>
+                                </div>
                                 <h3>{t(step.name)}</h3>
                                 <p>{t(step.text)}</p>
                             </div>
                         </article>
-                    ))}
+                        );
+                    })}
                 </div>
             </section>
 
             <section className={styles.section}>
-                <div className={styles.sectionHeader}>
+                <div className={styles.sectionHeader} data-reveal>
                     <p className={styles.eyebrow}>{t(siteCopy.tech.eyebrow)}</p>
                     <h2>{t(siteCopy.tech.title)}</h2>
                 </div>
                 <div className={styles.techGrid}>
-                    {siteCopy.tech.groups.map((group) => (
-                        <article className={cx(styles.glassPanel, styles.techCard)} key={group.name}>
+                    {siteCopy.tech.groups.map((group, index) => {
+                        return (
+                        <article className={cx(styles.glassPanel, styles.techCard, styles.interactiveCard)} data-reveal key={group.name}>
                             <div className={styles.panelContent}>
-                                <h3>{group.name}</h3>
+                                <div className={styles.cardHeader}>
+                                    <span className={styles.iconBadge}>
+                                        <IconGlyph Icon={techIcons[index] ?? Sparkles} className={styles.sectionIcon}/>
+                                    </span>
+                                    <h3>{group.name}</h3>
+                                </div>
                                 <div className={styles.tagList}>
                                     {group.items.map((item) => (
                                         <span key={item}>{item}</span>
@@ -333,11 +450,12 @@ export default function PortfolioLanding() {
                                 </div>
                             </div>
                         </article>
-                    ))}
+                        );
+                    })}
                 </div>
             </section>
 
-            <section className={cx(styles.contactSection, styles.glassPanel)} id="contact">
+            <section className={cx(styles.contactSection, styles.glassPanel, styles.interactiveCard)} data-reveal id="contact">
                 <div className={styles.panelContent}>
                     <p className={styles.eyebrow}>{t(siteCopy.contact.eyebrow)}</p>
                     <h2>{t(siteCopy.contact.title)}</h2>
