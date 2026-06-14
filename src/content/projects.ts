@@ -56,6 +56,64 @@ export const projects = [
                 pl: "Frontend odpowiada za szybkie operacje użytkownika i wizualizację danych, a warstwa Tauri daje dostęp do możliwości aplikacji desktopowej bez ciężkiego runtime'u.",
                 en: "The frontend handles user operations and data display, while Tauri provides desktop capabilities without a heavy runtime.",
             },
+            systemMap: {
+                eyebrow: {pl: "Mapa systemu", en: "System map"},
+                title: {
+                    pl: "Od portu szeregowego do czytelnego workflow.",
+                    en: "From serial port to readable workflow.",
+                },
+                lead: {
+                    pl: "Byteflow pokazuje umiejętność przełożenia niskopoziomowej pracy technicznej na narzędzie, z którego da się korzystać wielokrotnie.",
+                    en: "Byteflow shows the ability to turn low-level technical work into a repeatable tool people can actually use.",
+                },
+                steps: [
+                    {
+                        label: {pl: "Wejście", en: "Input"},
+                        title: {pl: "Port szeregowy", en: "Serial port"},
+                        text: {
+                            pl: "Aplikacja zakłada pracę z danymi przychodzącymi i wychodzącymi z urządzenia, nie tylko statyczny widok.",
+                            en: "The app is built around incoming and outgoing device data, not just a static screen.",
+                        },
+                    },
+                    {
+                        label: {pl: "Warstwa pracy", en: "Work layer"},
+                        title: {pl: "Formaty i operacje", en: "Formats and actions"},
+                        text: {
+                            pl: "UI porządkuje format, odbiór, transmisję i podstawowe operacje potrzebne w technicznym workflow.",
+                            en: "The UI structures format selection, receiving, transmitting and the basic actions needed in a technical workflow.",
+                        },
+                    },
+                    {
+                        label: {pl: "Produkt", en: "Product"},
+                        title: {pl: "Desktop bez ciężaru", en: "Lightweight desktop"},
+                        text: {
+                            pl: "Tauri daje aplikacji desktopowy zakres, ale bez poczucia ciężkiego, przypadkowego narzędzia.",
+                            en: "Tauri gives the app desktop reach without making it feel like a heavy, accidental tool.",
+                        },
+                    },
+                ],
+            },
+            clientValue: {
+                eyebrow: {pl: "Dlaczego to ma znaczenie", en: "Why it matters"},
+                title: {
+                    pl: "Dowód, że umiem budować narzędzia użytkowe, nie tylko efektowne UI.",
+                    en: "Proof that I can build practical tools, not only polished UI.",
+                },
+                items: [
+                    {
+                        pl: "Przekładam techniczny problem na interface, który zmniejsza tarcie w codziennej pracy.",
+                        en: "I translate a technical problem into an interface that reduces friction in day-to-day work.",
+                    },
+                    {
+                        pl: "Myślę o narzędziu jako o produkcie: workflow, powtarzalność, czytelność i build.",
+                        en: "I think about the tool as a product: workflow, repeatability, readability and build.",
+                    },
+                    {
+                        pl: "To dobry sygnał dla zleceń, gdzie trzeba połączyć frontend z nietypową integracją.",
+                        en: "It is a strong signal for projects that combine frontend work with uncommon integrations.",
+                    },
+                ],
+            },
             hardParts: [
                 {pl: "Projektowanie UI pod powtarzalną pracę techniczną.", en: "Designing UI for repeated technical work."},
                 {pl: "Utrzymanie aplikacji lekkiej mimo desktopowego zakresu.", en: "Keeping the app lightweight despite desktop scope."},
@@ -125,6 +183,64 @@ export const projects = [
             architecture: {
                 pl: "Pipeline rozbija problem na mniejsze etapy: obraz → linie tekstu → klasyfikacja linii → filtrowanie → ekstrakcja informacji.",
                 en: "The pipeline decomposes the problem into smaller stages: image → text lines → line classification → filtering → information extraction.",
+            },
+            systemMap: {
+                eyebrow: {pl: "Mapa pipeline'u", en: "Pipeline map"},
+                title: {
+                    pl: "Nie jeden model, tylko seria decyzji technicznych.",
+                    en: "Not one model, but a chain of technical decisions.",
+                },
+                lead: {
+                    pl: "Paragon Pipeline pokazuje, że umiem rozłożyć niejasny problem ML na etapy, które da się testować, wymieniać i rozwijać osobno.",
+                    en: "Paragon Pipeline shows that I can split an ambiguous ML problem into stages that can be tested, replaced and improved separately.",
+                },
+                steps: [
+                    {
+                        label: {pl: "OCR", en: "OCR"},
+                        title: {pl: "Obraz → linie", en: "Image → lines"},
+                        text: {
+                            pl: "Pierwszy etap skupia się na odczycie tekstu i przygotowaniu danych wejściowych z dokumentu o nieregularnym formacie.",
+                            en: "The first stage focuses on reading text and preparing input data from an irregular document format.",
+                        },
+                    },
+                    {
+                        label: {pl: "NER", en: "NER"},
+                        title: {pl: "Linie → klasy", en: "Lines → classes"},
+                        text: {
+                            pl: "Drugi etap klasyfikuje fragmenty paragonu, żeby system wiedział, które linie mogą zawierać istotne informacje.",
+                            en: "The second stage classifies receipt fragments so the system knows which lines may contain useful information.",
+                        },
+                    },
+                    {
+                        label: {pl: "PIE", en: "PIE"},
+                        title: {pl: "Klasy → informacje", en: "Classes → information"},
+                        text: {
+                            pl: "Ostatni etap skupia się na ekstrakcji informacji produktowych i zamianie szumu dokumentu w strukturę.",
+                            en: "The final stage focuses on product information extraction and turning document noise into structure.",
+                        },
+                    },
+                ],
+            },
+            clientValue: {
+                eyebrow: {pl: "Dlaczego to ma znaczenie", en: "Why it matters"},
+                title: {
+                    pl: "To case pokazuje myślenie architektoniczne w ML, nie tylko odpalenie notebooka.",
+                    en: "This case shows ML architecture thinking, not just running a notebook.",
+                },
+                items: [
+                    {
+                        pl: "Dzielę niepewny problem na etapy, które można mierzyć i poprawiać bez przepisywania całości.",
+                        en: "I split uncertain problems into stages that can be measured and improved without rewriting everything.",
+                    },
+                    {
+                        pl: "Potrafię połączyć research, dane i praktyczny pipeline, nawet gdy wejście jest nieidealne.",
+                        en: "I can connect research, data and a practical pipeline even when the input is messy.",
+                    },
+                    {
+                        pl: "To mocny dowód dla zleceń z OCR, NLP, klasyfikacją, ekstrakcją danych i automatyzacją dokumentów.",
+                        en: "It is strong proof for OCR, NLP, classification, data extraction and document automation work.",
+                    },
+                ],
             },
             hardParts: [
                 {pl: "Podział złożonego problemu ML na mierzalne etapy.", en: "Splitting a complex ML problem into measurable stages."},
@@ -198,6 +314,64 @@ export const projects = [
             architecture: {
                 pl: "Projekt traktuje model jako część produktu: użytkownik widzi prosty interfejs, a pod spodem projekt może ewoluować wraz z treningiem i fine-tuningiem.",
                 en: "The project treats the model as part of a product: the user sees a simple interface while the underlying system can evolve through training and fine-tuning.",
+            },
+            systemMap: {
+                eyebrow: {pl: "Mapa produktu", en: "Product map"},
+                title: {
+                    pl: "Model językowy opakowany w produkt, nie w samotny eksperyment.",
+                    en: "A language model wrapped as a product, not an isolated experiment.",
+                },
+                lead: {
+                    pl: "CrimsonGPT pokazuje połączenie researchu NLP z produktem, w którym użytkownik widzi prostą rozmowę, a architektura zostawia miejsce na dalszą pracę z modelem.",
+                    en: "CrimsonGPT connects NLP research with a product surface where the user sees a simple chat while the architecture leaves room for further model work.",
+                },
+                steps: [
+                    {
+                        label: {pl: "UI", en: "UI"},
+                        title: {pl: "Interfejs rozmowy", en: "Conversation interface"},
+                        text: {
+                            pl: "Warstwa produktu ukrywa eksperymentalność modelu i daje użytkownikowi prosty, znajomy sposób interakcji.",
+                            en: "The product layer hides model experimentation behind a simple, familiar interaction pattern.",
+                        },
+                    },
+                    {
+                        label: {pl: "Logika", en: "Logic"},
+                        title: {pl: "Przepływ prompt/response", en: "Prompt/response flow"},
+                        text: {
+                            pl: "Aplikacja porządkuje ścieżkę od wiadomości użytkownika do odpowiedzi, z miejscem na dalsze rozszerzanie zachowania modelu.",
+                            en: "The app structures the path from user message to response, with room to extend model behaviour later.",
+                        },
+                    },
+                    {
+                        label: {pl: "Model", en: "Model"},
+                        title: {pl: "Fundament pod tuning", en: "Foundation for tuning"},
+                        text: {
+                            pl: "Projekt traktuje model jako komponent systemu, który można rozwijać przez trening, dane i ewaluację.",
+                            en: "The project treats the model as a system component that can evolve through training, data and evaluation.",
+                        },
+                    },
+                ],
+            },
+            clientValue: {
+                eyebrow: {pl: "Dlaczego to ma znaczenie", en: "Why it matters"},
+                title: {
+                    pl: "To pokazuje, że umiem zamieniać research w używalny product surface.",
+                    en: "It shows that I can turn research into a usable product surface.",
+                },
+                items: [
+                    {
+                        pl: "Nie zatrzymuję się na modelu lub bibliotece; projektuję doświadczenie, które ktoś może sprawdzić.",
+                        en: "I do not stop at a model or library; I design an experience someone can actually try.",
+                    },
+                    {
+                        pl: "Łączę frontend, myślenie produktowe i eksperymentalne NLP w jednym kierunku technicznym.",
+                        en: "I connect frontend, product thinking and experimental NLP into one technical direction.",
+                    },
+                    {
+                        pl: "To dobry fundament pod prototypy AI, gdzie trzeba szybko pokazać działającą pierwszą wersję.",
+                        en: "It is a good foundation for AI prototypes where a working first version matters quickly.",
+                    },
+                ],
             },
             hardParts: [
                 {pl: "Połączenie eksperymentu ML z produktem webowym.", en: "Connecting an ML experiment with a web product."},

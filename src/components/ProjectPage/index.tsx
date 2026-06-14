@@ -212,7 +212,7 @@ export default function ProjectPage({project}: ProjectPageProps) {
                 </div>
             </nav>
 
-            <section className={cx(styles.hero, styles.glassPanel, styles.interactiveCard)} data-reveal>
+            <section className={cx(styles.hero, styles.glassPanel)} data-reveal>
                 <div className={styles.panelContent}>
                     <div className={styles.heroCopy}>
                         <p className={styles.eyebrow}>{projectMode} / {project.year}</p>
@@ -306,6 +306,57 @@ export default function ProjectPage({project}: ProjectPageProps) {
                     })}
                 </div>
             </section>
+
+            {(project.caseStudy.systemMap || project.caseStudy.clientValue) && (
+                <section className={styles.deliveryProof}>
+                    {project.caseStudy.systemMap && (
+                        <article className={cx(styles.glassPanel, styles.systemMapPanel, styles.interactiveCard)} data-reveal>
+                            <div className={styles.panelContent}>
+                                <div className={styles.sectionKicker}>
+                                    <Layers3 className={styles.kickerIcon}/>
+                                    <span>{t(project.caseStudy.systemMap.eyebrow)}</span>
+                                </div>
+                                <h2>{t(project.caseStudy.systemMap.title)}</h2>
+                                <p>{t(project.caseStudy.systemMap.lead)}</p>
+
+                                <ol className={styles.systemSteps}>
+                                    {project.caseStudy.systemMap.steps.map((step, index) => (
+                                        <li key={`system-step-${index}`}>
+                                            <span className={styles.stepIndex}>{String(index + 1).padStart(2, "0")}</span>
+                                            <div>
+                                                <span className={styles.stepLabel}>{t(step.label)}</span>
+                                                <strong>{t(step.title)}</strong>
+                                                <p>{t(step.text)}</p>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ol>
+                            </div>
+                        </article>
+                    )}
+
+                    {project.caseStudy.clientValue && (
+                        <article className={cx(styles.glassPanel, styles.valuePanel, styles.interactiveCard)} data-reveal>
+                            <div className={styles.panelContent}>
+                                <div className={styles.sectionKicker}>
+                                    <Sparkles className={styles.kickerIcon}/>
+                                    <span>{t(project.caseStudy.clientValue.eyebrow)}</span>
+                                </div>
+                                <h2>{t(project.caseStudy.clientValue.title)}</h2>
+
+                                <div className={styles.valueList}>
+                                    {project.caseStudy.clientValue.items.map((item, index) => (
+                                        <div className={styles.valueItem} key={`client-value-${index}`}>
+                                            <ShieldCheck className={styles.valueIcon}/>
+                                            <p>{t(item)}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </article>
+                    )}
+                </section>
+            )}
 
             <section className={styles.deepDive}>
                 <article className={cx(styles.glassPanel, styles.timelinePanel, styles.interactiveCard)} data-reveal>

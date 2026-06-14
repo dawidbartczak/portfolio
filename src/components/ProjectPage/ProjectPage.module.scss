@@ -198,6 +198,8 @@
 
 .hero h1,
 .sectionHeader h2,
+.systemMapPanel h2,
+.valuePanel h2,
 .deepDive h2,
 .cta h2 {
     margin: 0;
@@ -389,6 +391,7 @@
 }
 
 .storySection,
+.deliveryProof,
 .deepDive,
 .note,
 .cta {
@@ -448,12 +451,122 @@
 }
 
 .storyCard p,
+.systemMapPanel > .panelContent > p,
 .deepDive p,
 .notePanel p,
 .cta p {
     margin: 0.85rem 0 0;
     color: var(--text-muted);
     line-height: 1.68;
+}
+
+.deliveryProof {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.systemMapPanel .panelContent,
+.valuePanel .panelContent {
+    padding: clamp(1.1rem, 2.6vw, 1.75rem);
+}
+
+.systemMapPanel h2,
+.valuePanel h2 {
+    margin-top: 0.85rem;
+    font-size: clamp(1.45rem, 2.4vw, 2.35rem);
+    line-height: 1.14;
+}
+
+.systemSteps {
+    display: grid;
+    gap: 0.8rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.systemSteps li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.82rem;
+    align-items: flex-start;
+    border: 1px solid var(--chip-border);
+    border-radius: 0.78rem;
+    background:
+        linear-gradient(145deg, color-mix(in srgb, var(--chip-bg) 82%, transparent), color-mix(in srgb, var(--button-secondary-bg) 46%, transparent));
+    padding: 0.92rem;
+}
+
+.stepIndex {
+    display: inline-grid;
+    place-items: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    border: 1px solid var(--chip-border);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent-strong) 16%, transparent);
+    color: var(--accent-strong);
+    font-family: var(--font-krona-one), sans-serif;
+    font-size: 0.72rem;
+    line-height: 1;
+}
+
+.stepLabel {
+    display: block;
+    margin-bottom: 0.28rem;
+    color: var(--accent-strong);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.systemSteps strong {
+    display: block;
+    color: var(--text-strong);
+    font-family: var(--font-krona-one), sans-serif;
+    font-size: clamp(0.9rem, 1vw, 1.05rem);
+    line-height: 1.28;
+}
+
+.systemSteps p {
+    margin: 0.42rem 0 0;
+    color: var(--text-muted);
+    line-height: 1.58;
+}
+
+.valueList {
+    display: grid;
+    gap: 0.82rem;
+    margin-top: 1.15rem;
+}
+
+.valueItem {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: flex-start;
+    border: 1px solid var(--chip-border);
+    border-radius: 0.78rem;
+    background: color-mix(in srgb, var(--chip-bg) 74%, transparent);
+    padding: 0.9rem;
+}
+
+.valueItem p {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.58;
+}
+
+.valueIcon {
+    width: 1.08rem;
+    min-width: 1.08rem;
+    height: 1.08rem;
+    margin-top: 0.18rem;
+    color: var(--accent-strong);
 }
 
 .deepDive {
@@ -601,6 +714,7 @@
 
 @media (max-width: 980px) {
     .hero > .panelContent,
+    .deliveryProof,
     .deepDive {
         grid-template-columns: 1fr;
     }

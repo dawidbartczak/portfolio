@@ -18,6 +18,21 @@ export type ProjectCaseStudy = {
     built: LocalizedText;
     role: LocalizedText;
     architecture: LocalizedText;
+    systemMap?: {
+        eyebrow: LocalizedText;
+        title: LocalizedText;
+        lead: LocalizedText;
+        steps: Array<{
+            label: LocalizedText;
+            title: LocalizedText;
+            text: LocalizedText;
+        }>;
+    };
+    clientValue?: {
+        eyebrow: LocalizedText;
+        title: LocalizedText;
+        items: LocalizedText[];
+    };
     hardParts: LocalizedText[];
     proves: LocalizedText[];
     note?: LocalizedText;
