@@ -50,6 +50,8 @@ const offerIcons = [Rocket, Bot, BrainCircuit];
 const aiIcons = [Compass, Boxes, Sparkles];
 const processIcons = [Compass, Layers3, Code2, GitBranch, Rocket];
 const proofIcons = [Compass, Github, Boxes, Sparkles];
+const collaborationIcons = [Compass, Rocket, GitBranch];
+const deliverableIcons = [Github, Server, Code2];
 const techIcons = [AppWindow, Layers3, Server, BrainCircuit];
 
 const capabilityItems = [
@@ -581,6 +583,56 @@ export default function PortfolioLanding() {
                         </article>
                         );
                     })}
+                </div>
+            </section>
+
+            <section className={cx(styles.section, styles.collaborationSection)}>
+                <div className={styles.sectionHeader} data-reveal>
+                    <p className={styles.eyebrow}>{t(siteCopy.collaboration.eyebrow)}</p>
+                    <h2>{t(siteCopy.collaboration.title)}</h2>
+                    <p>{t(siteCopy.collaboration.lead)}</p>
+                </div>
+
+                <div className={styles.collaborationLayout}>
+                    <div className={styles.collaborationTracks}>
+                        {siteCopy.collaboration.tracks.map((track, index) => {
+                            return (
+                            <article className={cx(styles.glassPanel, styles.collaborationCard, styles.interactiveCard)} data-reveal key={`collaboration-${index}`}>
+                                <div className={styles.panelContent}>
+                                    <div className={styles.cardHeader}>
+                                        <span className={styles.iconBadge}>
+                                            <IconGlyph Icon={collaborationIcons[index] ?? Sparkles} className={styles.sectionIcon}/>
+                                        </span>
+                                        <div>
+                                            <span className={styles.cardLabel}>{t(track.label)}</span>
+                                            <h3>{t(track.title)}</h3>
+                                        </div>
+                                    </div>
+                                    <p>{t(track.text)}</p>
+                                </div>
+                            </article>
+                            );
+                        })}
+                    </div>
+
+                    <aside className={cx(styles.glassPanel, styles.deliverablesPanel, styles.interactiveCard)} data-reveal>
+                        <div className={styles.panelContent}>
+                            <h3>{t(siteCopy.collaboration.deliverablesTitle)}</h3>
+                            <div className={styles.deliverablesList}>
+                                {siteCopy.collaboration.deliverables.map((item, index) => (
+                                    <div className={styles.deliverableItem} key={`deliverable-${index}`}>
+                                        <span className={styles.iconBadge}>
+                                            <IconGlyph Icon={deliverableIcons[index] ?? Sparkles} className={styles.sectionIcon}/>
+                                        </span>
+                                        <div>
+                                            <strong>{t(item.title)}</strong>
+                                            <p>{t(item.text)}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </aside>
                 </div>
             </section>
 

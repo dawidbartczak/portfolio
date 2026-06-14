@@ -114,6 +114,46 @@ export const siteCopy = {
             {name: {pl: "Deploy", en: "Deploy"}, text: {pl: "Przygotowuję build, Docker/hosting i instrukcje dalszego utrzymania.", en: "I prepare the build, Docker/hosting and maintainability notes."}},
         ],
     },
+    collaboration: {
+        eyebrow: {pl: "Start współpracy", en: "Working together"},
+        title: {pl: "Nie potrzebuję idealnej specyfikacji. Potrzebuję jasnego problemu do dowiezienia.", en: "I do not need a perfect spec. I need a clear problem to ship."},
+        lead: {
+            pl: "Najlepsze zlecenia zaczynają się od krótkiego briefu, szybkiego uporządkowania ryzyk i pierwszego pionowego slice'u produktu. Dzięki temu szybko widać, czy rozwiązanie ma sens techniczny i biznesowy.",
+            en: "The best projects start with a short brief, fast risk mapping and the first vertical slice of the product. That makes technical and business fit visible quickly.",
+        },
+        tracks: [
+            {
+                title: {pl: "Sprint prototypowy", en: "Prototype sprint"},
+                label: {pl: "1-2 tygodnie", en: "1-2 weeks"},
+                text: {
+                    pl: "Szybko sprawdzamy najtrudniejszą część: integrację, workflow, model, OCR, UX albo automatyzację.",
+                    en: "We quickly validate the hardest part: integration, workflow, model, OCR, UX or automation.",
+                },
+            },
+            {
+                title: {pl: "MVP od zera", en: "MVP from zero"},
+                label: {pl: "produkt + kod", en: "product + code"},
+                text: {
+                    pl: "Buduję pierwszy działający zakres: UI, logikę, backend, deployment i podstawową dokumentację.",
+                    en: "I build the first working scope: UI, logic, backend, deployment and basic documentation.",
+                },
+            },
+            {
+                title: {pl: "Techniczne uporządkowanie", en: "Technical rescue"},
+                label: {pl: "refactor / deploy", en: "refactor / deploy"},
+                text: {
+                    pl: "Pomagam zamienić eksperyment albo chaotyczny kod w stabilniejszą wersję gotową do testów i dalszego rozwoju.",
+                    en: "I help turn an experiment or chaotic codebase into a more stable version ready for testing and further work.",
+                },
+            },
+        ],
+        deliverablesTitle: {pl: "Co dostajesz po drodze", en: "What you get along the way"},
+        deliverables: [
+            {title: {pl: "Repozytorium i decyzje", en: "Repository and decisions"}, text: {pl: "Kod, struktura projektu i krótkie wyjaśnienia najważniejszych wyborów technicznych.", en: "Code, project structure and short explanations of the most important technical choices."}},
+            {title: {pl: "Działający deploy", en: "Working deploy"}, text: {pl: "Build, środowisko, hosting/Docker tam, gdzie ma to sens, oraz instrukcje utrzymania.", en: "Build, environment, hosting/Docker where it makes sense, plus maintainability notes."}},
+            {title: {pl: "Następne kroki", en: "Next steps"}, text: {pl: "Lista ryzyk, uproszczeń i funkcji, które warto dodać po pierwszej wersji.", en: "A list of risks, trade-offs and features worth adding after the first version."}},
+        ],
+    },
     tech: {
         eyebrow: {pl: "Zakres techniczny", en: "Technical range"},
         title: {pl: "Szeroko, ale spięte jednym celem: dowieźć produkt.", en: "Broad, but tied to one goal: ship the product."},

@@ -774,6 +774,8 @@
 .offerCard .panelContent,
 .aiCard .panelContent,
 .techCard .panelContent,
+.collaborationCard .panelContent,
+.deliverablesPanel .panelContent,
 .archiveCard .panelContent,
 .processCard .panelContent {
     padding: clamp(1.15rem, 1.7vw, 1.35rem);
@@ -782,6 +784,8 @@
 .offerCard h3,
 .aiCard h3,
 .techCard h3,
+.collaborationCard h3,
+.deliverablesPanel h3,
 .archiveCard h3,
 .featuredCard h3,
 .processCard h3 {
@@ -794,6 +798,8 @@
 
 .offerCard p,
 .aiCard p,
+.collaborationCard p,
+.deliverableItem p,
 .archiveCard p,
 .featuredCard p,
 .processCard p {
@@ -1164,6 +1170,79 @@
     font-size: 0.9rem;
 }
 
+.collaborationLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+    gap: clamp(1rem, 1.4vw, 1.25rem);
+    align-items: stretch;
+}
+
+.collaborationTracks {
+    display: grid;
+    gap: clamp(1rem, 1.4vw, 1.25rem);
+}
+
+.collaborationCard .panelContent {
+    min-height: 100%;
+}
+
+.cardLabel {
+    display: block;
+    margin-bottom: 0.34rem;
+    color: var(--accent-strong);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.deliverablesPanel .panelContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: clamp(1.2rem, 2.6vw, 1.85rem);
+}
+
+.deliverablesPanel h3 {
+    font-size: clamp(1.25rem, 2vw, 1.85rem);
+    line-height: 1.18;
+}
+
+.deliverablesList {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 1.2rem;
+}
+
+.deliverableItem {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.8rem;
+    align-items: flex-start;
+    border: 1px solid var(--chip-border);
+    border-radius: 0.8rem;
+    background: color-mix(in srgb, var(--chip-bg) 74%, transparent);
+    padding: 0.9rem;
+}
+
+.deliverableItem .iconBadge {
+    width: 2rem;
+    height: 2rem;
+}
+
+.deliverableItem strong {
+    display: block;
+    color: var(--text-strong);
+    line-height: 1.28;
+}
+
+.deliverableItem p {
+    margin-top: 0.45rem;
+    line-height: 1.55;
+}
+
 .contactSection .panelContent {
     padding: clamp(1.5rem, 4.5vw, 2.8rem);
 }
@@ -1206,8 +1285,13 @@
     .aiGrid,
     .techGrid,
     .archiveGrid,
-    .processGrid {
+    .processGrid,
+    .collaborationLayout {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .deliverablesPanel {
+        grid-column: 1 / -1;
     }
 
     .processGrid::before {
@@ -1378,16 +1462,23 @@
     .aiGrid,
     .techGrid,
     .archiveGrid,
-    .processGrid {
+    .processGrid,
+    .collaborationLayout {
         grid-template-columns: 1fr;
     }
 
     .offerCard .panelContent,
     .aiCard .panelContent,
     .techCard .panelContent,
+    .collaborationCard .panelContent,
+    .deliverablesPanel .panelContent,
     .archiveCard .panelContent,
     .processCard .panelContent {
         padding: 1rem;
+    }
+
+    .deliverablesPanel {
+        grid-column: auto;
     }
 
     .featuredCard .panelContent {

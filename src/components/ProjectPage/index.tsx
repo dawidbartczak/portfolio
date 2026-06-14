@@ -161,6 +161,38 @@ export default function ProjectPage({project}: ProjectPageProps) {
             value: repoLabel(project, locale),
         },
     ];
+    const clientBridgeSteps: StoryItem[] = [
+        {
+            eyebrow: {pl: "01 / Scope", en: "01 / Scope"},
+            icon: Target,
+            id: "client-scope",
+            title: {pl: "Najpierw zawężam ryzyko", en: "First, narrow the risk"},
+            text: {
+                pl: "Wyciągam z projektu najmniejszy fragment, który naprawdę sprawdza techniczną i biznesową hipotezę.",
+                en: "I extract the smallest slice that actually validates the technical and business hypothesis.",
+            },
+        },
+        {
+            eyebrow: {pl: "02 / Build", en: "02 / Build"},
+            icon: Rocket,
+            id: "client-build",
+            title: {pl: "Potem buduję pionowy slice", en: "Then I build a vertical slice"},
+            text: {
+                pl: "Zamiast rozlewać pracę na dziesiątki funkcji, dowożę działającą ścieżkę od UI do danych i deploya.",
+                en: "Instead of spreading work across dozens of features, I ship one working path from UI to data and deploy.",
+            },
+        },
+        {
+            eyebrow: {pl: "03 / Handoff", en: "03 / Handoff"},
+            icon: GitBranch,
+            id: "client-handoff",
+            title: {pl: "Na końcu zostawiam dalszą drogę", en: "Finally, I leave the next path"},
+            text: {
+                pl: "Dostarczam kod, decyzje techniczne, ograniczenia i listę następnych kroków, żeby projekt nie kończył się na demo.",
+                en: "I deliver code, technical decisions, constraints and next steps so the project does not end as a demo.",
+            },
+        },
+    ];
 
     return (
         <main className={cx(styles.page, styles.revealReady)}>
@@ -357,6 +389,42 @@ export default function ProjectPage({project}: ProjectPageProps) {
                     )}
                 </section>
             )}
+
+            <section className={styles.clientBridge}>
+                <div className={cx(styles.glassPanel, styles.bridgeIntro, styles.interactiveCard)} data-reveal>
+                    <div className={styles.panelContent}>
+                        <div className={styles.sectionKicker}>
+                            <Sparkles className={styles.kickerIcon}/>
+                            <span>{locale === "pl" ? "Jak przekładam to na zlecenie" : "How this translates to client work"}</span>
+                        </div>
+                        <h2>{locale === "pl"
+                            ? `Podobny problem dowiózłbym jako konkretny projekt, nie jako eksperyment bez końca.`
+                            : `I would ship a similar problem as a concrete project, not an endless experiment.`}</h2>
+                        <p>{locale === "pl"
+                            ? `${project.title} jest dowodem technicznego kierunku. Dla klienta zaczynam od zakresu, który można szybko sprawdzić, wdrożyć i świadomie rozwijać.`
+                            : `${project.title} is proof of technical direction. For a client, I start with a scope that can be validated, deployed and developed deliberately.`}</p>
+                    </div>
+                </div>
+
+                <div className={styles.bridgeGrid}>
+                    {clientBridgeSteps.map((item) => {
+                        const Icon = item.icon;
+
+                        return (
+                            <article className={cx(styles.glassPanel, styles.bridgeCard, styles.interactiveCard)} data-reveal key={item.id}>
+                                <div className={styles.panelContent}>
+                                    <div className={styles.cardTopline}>
+                                        <span>{t(item.eyebrow)}</span>
+                                        <Icon className={styles.cardIcon}/>
+                                    </div>
+                                    <h3>{t(item.title)}</h3>
+                                    <p>{t(item.text)}</p>
+                                </div>
+                            </article>
+                        );
+                    })}
+                </div>
+            </section>
 
             <section className={styles.deepDive}>
                 <article className={cx(styles.glassPanel, styles.timelinePanel, styles.interactiveCard)} data-reveal>
