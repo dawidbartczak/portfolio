@@ -712,28 +712,41 @@
 
 .proofItem .panelContent {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    column-gap: 0.8rem;
+    grid-template-areas:
+        "icon value"
+        "icon label";
+    grid-template-columns: 2.35rem minmax(0, 1fr);
+    gap: 0.2rem 0.82rem;
     align-items: center;
+    align-content: center;
+    height: 100%;
     padding: 0.95rem 1rem;
 }
 
 .proofIcon {
-    grid-row: span 2;
-    width: 2.05rem;
-    height: 2.05rem;
+    grid-area: icon;
+    align-self: center;
+    width: 2.18rem;
+    height: 2.18rem;
+}
+
+.proofIcon .sectionIcon {
+    width: 1.08rem;
+    height: 1.08rem;
 }
 
 .proofItem strong {
+    grid-area: value;
     display: block;
     color: var(--text-strong);
     font-family: var(--font-krona-one), sans-serif;
     font-size: 1.12rem;
+    line-height: 1.15;
 }
 
 .proofItem .panelContent > span:not(.proofIcon) {
+    grid-area: label;
     display: block;
-    margin-top: 0.22rem;
     color: var(--text-soft);
     line-height: 1.42;
 }
@@ -1180,9 +1193,13 @@
 .collaborationTracks {
     display: grid;
     gap: clamp(1rem, 1.4vw, 1.25rem);
+    grid-auto-rows: 1fr;
 }
 
 .collaborationCard .panelContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     min-height: 100%;
 }
 
@@ -1213,6 +1230,7 @@
 .deliverablesList {
     display: grid;
     gap: 0.9rem;
+    grid-auto-rows: 1fr;
     margin-top: 1.2rem;
 }
 
@@ -1220,7 +1238,7 @@
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     gap: 0.8rem;
-    align-items: flex-start;
+    align-items: center;
     border: 1px solid var(--chip-border);
     border-radius: 0.8rem;
     background: color-mix(in srgb, var(--chip-bg) 74%, transparent);
@@ -1262,15 +1280,22 @@
     min-width: 0;
 }
 
+.contactCopy > p:not(.eyebrow) {
+    max-width: 72ch;
+    margin: 1.05rem 0 0;
+    color: var(--text-muted);
+    line-height: 1.62;
+}
+
 .contactActions {
-    margin-top: 1.35rem;
+    margin-top: 1.45rem;
 }
 
 .contactMeta {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.65rem;
-    margin-top: 1rem;
+    margin-top: 1.3rem;
     max-width: 780px;
 }
 
