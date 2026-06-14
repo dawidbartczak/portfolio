@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {useEffect, useMemo, useState} from "react";
-import {Code, Github, Mail, Play} from "@/icons";
+import {Fragment, useEffect, useMemo, useState} from "react";
+import {Code, Github, Mail, Moon, Play, Sun} from "@/icons";
 import {contact, localeNames, siteCopy, text} from "@/content/site";
 import {featuredProjects, withoutAiProjects} from "@/content/projects";
 import {useThemePreference, type ThemePreference} from "@/hooks/useThemePreference";
@@ -14,6 +14,11 @@ const linkIcons = {
     demo: Play,
     source: Code,
     "case-study": Code,
+};
+
+const themeIcons = {
+    dark: Moon,
+    light: Sun,
 };
 
 function cx(...classes: Array<string | false | undefined>) {
@@ -139,17 +144,26 @@ export default function PortfolioLanding() {
                 </div>
                 <div className={styles.navControls}>
                     <div className={styles.themeToggle} aria-label={locale === "pl" ? "Przełącznik motywu" : "Theme switcher"}>
-                        {(["dark", "light"] as ThemePreference[]).map((item) => (
-                            <button
-                                aria-pressed={theme === item}
-                                className={theme === item ? styles.themeActive : undefined}
-                                key={item}
-                                onClick={() => setTheme(item)}
-                                type="button"
-                            >
-                                {item === "dark" ? "Dark" : "Light"}
-                            </button>
-                        ))}
+                        {(["dark", "light"] as ThemePreference[]).map((item) => {
+                            const Icon = themeIcons[item];
+                            const label = item === "dark"
+                                ? (locale === "pl" ? "Włącz ciemny motyw" : "Use dark theme")
+                                : (locale === "pl" ? "Włącz jasny motyw" : "Use light theme");
+
+                            return (
+                                <button
+                                    aria-label={label}
+                                    aria-pressed={theme === item}
+                                    className={theme === item ? styles.themeActive : undefined}
+                                    key={item}
+                                    onClick={() => setTheme(item)}
+                                    title={label}
+                                    type="button"
+                                >
+                                    <Icon className={styles.themeIcon}/>
+                                </button>
+                            );
+                        })}
                     </div>
                     <div className={styles.localeToggle} aria-label="Language switcher">
                         {(["pl", "en"] as Locale[]).map((item) => (
@@ -183,8 +197,24 @@ export default function PortfolioLanding() {
                     </div>
 
                     <aside className={styles.heroAside}>
-                        <span className={styles.statusDot}/>
-                        <p>{t(siteCopy.hero.status)}</p>
+                        <div className={styles.heroStatusRow}>
+                            <span className={styles.statusDot}/>
+                            <span>{t(siteCopy.hero.status)}</span>
+                        </div>
+                        <div className={styles.deliveryMap} aria-label={locale === "pl" ? "Proces dostarczania" : "Delivery process"}>
+                            {siteCopy.hero.asideSteps.map((step, index) => (
+                                <Fragment key={t(step)}>
+                                    <div className={styles.deliveryStep}>
+                                        <span className={styles.deliveryIndex}>{String(index + 1).padStart(2, "0")}</span>
+                                        <strong>{t(step)}</strong>
+                                    </div>
+                                    {index < siteCopy.hero.asideSteps.length - 1 && (
+                                        <span className={styles.deliveryArrow} aria-hidden="true">→</span>
+                                    )}
+                                </Fragment>
+                            ))}
+                        </div>
+                        <p className={styles.heroAsideLead}>{t(siteCopy.hero.asideLead)}</p>
                         <div className={styles.heroStack}>
                             <span>Full-stack</span>
                             <span>ML/NLP</span>

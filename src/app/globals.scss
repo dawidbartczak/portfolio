@@ -4,23 +4,23 @@
   --color-bg1: rgb(5, 5, 13);
   --color-bg2: rgb(18, 10, 38);
 
-  --aurora-1: 89, 143, 255;
-  --aurora-2: 203, 106, 255;
-  --aurora-3: 65, 224, 218;
-  --aurora-4: 255, 126, 136;
-  --aurora-5: 230, 212, 86;
-  --aurora-6: 116, 255, 178;
-  --aurora-7: 255, 142, 217;
-  --aurora-interactive: 168, 122, 255;
-  --aurora-alpha: 0.78;
-  --aurora-soft-alpha: 0.52;
-  --aurora-interactive-alpha: 0.7;
-  --aurora-blur: 30px;
-  --aurora-brightness: 92%;
-  --aurora-saturate: 132%;
-  --aurora-contrast: 108%;
+  --aurora-1: 44, 91, 126;
+  --aurora-2: 76, 68, 132;
+  --aurora-3: 36, 124, 112;
+  --aurora-4: 108, 64, 94;
+  --aurora-5: 118, 105, 67;
+  --aurora-6: 54, 126, 92;
+  --aurora-7: 95, 74, 128;
+  --aurora-interactive: 86, 84, 146;
+  --aurora-alpha: 0.38;
+  --aurora-soft-alpha: 0.25;
+  --aurora-interactive-alpha: 0.3;
+  --aurora-blur: 38px;
+  --aurora-brightness: 82%;
+  --aurora-saturate: 104%;
+  --aurora-contrast: 98%;
   --aurora-circle-size: 112vh;
-  --aurora-blending: hard-light;
+  --aurora-blending: screen;
 
   --page-text: #d3d7e1;
   --text-strong: #ffffff;
@@ -87,19 +87,19 @@
   --accent-strong: #416d20;
   --accent-contrast: #f8ffe7;
 
-  --panel-border: rgba(50, 43, 86, 0.18);
-  --panel-bg-a: rgba(255, 255, 255, 0.58);
-  --panel-bg-b: rgba(255, 255, 255, 0.24);
-  --panel-highlight: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.2)),
-    radial-gradient(circle at 18% 0%, rgba(87, 132, 226, 0.15), transparent 34%),
-    radial-gradient(circle at 90% 90%, rgba(216, 126, 196, 0.14), transparent 36%);
-  --panel-shadow: 0 20px 54px rgba(45, 38, 86, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  --panel-frost: blur(16px) saturate(125%);
+  --panel-border: rgba(50, 43, 86, 0.23);
+  --panel-bg-a: rgba(255, 255, 255, 0.2);
+  --panel-bg-b: rgba(255, 255, 255, 0.035);
+  --panel-highlight: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.025)),
+    radial-gradient(circle at 18% 0%, rgba(87, 132, 226, 0.11), transparent 34%),
+    radial-gradient(circle at 90% 90%, rgba(216, 126, 196, 0.08), transparent 36%);
+  --panel-shadow: 0 24px 64px rgba(45, 38, 86, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.46);
+  --panel-frost: blur(26px) saturate(150%);
 
-  --chip-border: rgba(50, 43, 86, 0.14);
-  --chip-bg: rgba(255, 255, 255, 0.55);
-  --button-secondary-bg: rgba(255, 255, 255, 0.48);
-  --media-bg: rgba(255, 255, 255, 0.42);
+  --chip-border: rgba(50, 43, 86, 0.16);
+  --chip-bg: rgba(255, 255, 255, 0.15);
+  --button-secondary-bg: rgba(255, 255, 255, 0.14);
+  --media-bg: rgba(255, 255, 255, 0.1);
 
   --nav-link: rgba(21, 18, 31, 0.68);
   --nav-link-hover: #15121f;

@@ -9,7 +9,7 @@ export const projects = [
     {
         id: "byteflow",
         title: "Byteflow",
-        year: "2026",
+        year: "2024",
         category: {pl: "Aplikacja desktopowa", en: "Desktop application"},
         era: "without-ai",
         featured: true,
@@ -161,7 +161,7 @@ export const projects = [
     {
         id: "crimsongpt",
         title: "CrimsonGPT",
-        year: "2026",
+        year: "2024",
         category: {pl: "Full-stack / NLP", en: "Full-stack / NLP"},
         era: "without-ai",
         featured: true,

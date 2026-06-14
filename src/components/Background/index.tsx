@@ -26,14 +26,27 @@ export default function Background() {
             return;
         }
 
+        const getTransformPosition = (clientX: number, clientY: number) => {
+            const parentRect = element.parentElement?.getBoundingClientRect();
+            const originX = parentRect?.left ?? 0;
+            const originY = parentRect?.top ?? 0;
+
+            return {
+                x: clientX - originX - element.offsetWidth / 2,
+                y: clientY - originY - element.offsetHeight / 2,
+            };
+        };
+
         const initialPosition = {
             x: window.innerWidth * 0.58,
             y: window.innerHeight * 0.42,
         };
 
-        targetPositionRef.current = initialPosition;
-        currentPositionRef.current = initialPosition;
-        element.style.transform = `translate3d(${Math.round(initialPosition.x)}px, ${Math.round(initialPosition.y)}px, 0)`;
+        const initialTransformPosition = getTransformPosition(initialPosition.x, initialPosition.y);
+
+        targetPositionRef.current = initialTransformPosition;
+        currentPositionRef.current = initialTransformPosition;
+        element.style.transform = `translate3d(${Math.round(initialTransformPosition.x)}px, ${Math.round(initialTransformPosition.y)}px, 0)`;
 
         const stopAnimation = () => {
             if (animationFrameIdRef.current !== null) {
@@ -68,10 +81,7 @@ export default function Background() {
         };
 
         const handlePointerMove = (event: PointerEvent) => {
-            targetPositionRef.current = {
-                x: event.clientX,
-                y: event.clientY,
-            };
+            targetPositionRef.current = getTransformPosition(event.clientX, event.clientY);
 
             startAnimation();
         };

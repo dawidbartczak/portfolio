@@ -25,8 +25,8 @@ export const siteCopy = {
             en: "Freelance / contract software delivery",
         },
         title: {
-            pl: "Dawid Bartczak. End-to-end MVP builder.",
-            en: "Dawid Bartczak. End-to-end MVP builder.",
+            pl: "Dawid Bartczak. End‑to‑end MVP builder.",
+            en: "Dawid Bartczak. End‑to‑end MVP builder.",
         },
         lead: {
             pl: "Jestem Dawid Bartczak. Łączę full-stack, aplikacje desktop/mobile, automatyzacje oraz ML/NLP, żeby zamieniać niejasne problemy w działające systemy. Moje starsze projekty powstały ręcznie, przed powszechnym AI-assisted codingiem. Dziś używam AI jako mnożnika produktywności, bez oddawania mu decyzji inżynierskich.",
@@ -35,9 +35,19 @@ export const siteCopy = {
         primaryCta: {pl: "Zobacz projekty", en: "View work"},
         secondaryCta: {pl: "Napisz do mnie", en: "Contact me"},
         status: {pl: "Dostępny na projekty freelance/contract", en: "Available for freelance/contract projects"},
+        asideTitle: {pl: "Brief → MVP → wdrożenie", en: "Brief → MVP → deploy"},
+        asideLead: {
+            pl: "Jeden wykonawca do produktu, kodu i technicznego dowiezienia pierwszej wersji.",
+            en: "One builder for product, code and technical delivery of the first working version.",
+        },
+        asideSteps: [
+            {pl: "Brief", en: "Brief"},
+            {pl: "MVP", en: "MVP"},
+            {pl: "Wdrożenie", en: "Deploy"},
+        ],
     },
     proof: [
-        {value: "5+", label: {pl: "lat samodzielnego budowania projektów", en: "years building projects independently"}},
+        {value: "6+", label: {pl: "lat samodzielnego budowania projektów", en: "years building projects independently"}},
         {value: "9", label: {pl: "publicznych repozytoriów jako dowód pracy", en: "public repositories as work proof"}},
         {value: "4", label: {pl: "obszary: web, desktop, mobile, ML/NLP", en: "areas: web, desktop, mobile, ML/NLP"}},
         {value: "AI+", label: {pl: "AI jako mnożnik, nie zamiennik myślenia", en: "AI as multiplier, not a thinking replacement"}},

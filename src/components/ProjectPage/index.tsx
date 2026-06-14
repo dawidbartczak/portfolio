@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import {useMemo, useState} from "react";
-import {Code, Play} from "@/icons";
+import {Code, Moon, Play, Sun} from "@/icons";
 import {localeNames, text} from "@/content/site";
 import {useThemePreference, type ThemePreference} from "@/hooks/useThemePreference";
 import type {Locale, Project, ProjectLink} from "@/types/project";
@@ -16,6 +16,11 @@ const linkIcons = {
     demo: Play,
     source: Code,
     "case-study": Code,
+};
+
+const themeIcons = {
+    dark: Moon,
+    light: Sun,
 };
 
 function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale }) {
@@ -46,17 +51,26 @@ export default function ProjectPage({ project }: ProjectPageProps) {
                 <Link href="/">{locale === "pl" ? "← Strona główna" : "← Home"}</Link>
                 <div className={styles.navControls}>
                     <div className={styles.themeToggle} aria-label={locale === "pl" ? "Przełącznik motywu" : "Theme switcher"}>
-                        {(["dark", "light"] as ThemePreference[]).map((item) => (
-                            <button
-                                aria-pressed={theme === item}
-                                className={theme === item ? styles.themeActive : undefined}
-                                key={item}
-                                onClick={() => setTheme(item)}
-                                type="button"
-                            >
-                                {item === "dark" ? "Dark" : "Light"}
-                            </button>
-                        ))}
+                        {(["dark", "light"] as ThemePreference[]).map((item) => {
+                            const Icon = themeIcons[item];
+                            const label = item === "dark"
+                                ? (locale === "pl" ? "Włącz ciemny motyw" : "Use dark theme")
+                                : (locale === "pl" ? "Włącz jasny motyw" : "Use light theme");
+
+                            return (
+                                <button
+                                    aria-label={label}
+                                    aria-pressed={theme === item}
+                                    className={theme === item ? styles.themeActive : undefined}
+                                    key={item}
+                                    onClick={() => setTheme(item)}
+                                    title={label}
+                                    type="button"
+                                >
+                                    <Icon className={styles.themeIcon}/>
+                                </button>
+                            );
+                        })}
                     </div>
                     <div className={styles.localeToggle} aria-label="Language switcher">
                         {(["pl", "en"] as Locale[]).map((item) => (
