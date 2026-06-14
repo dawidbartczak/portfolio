@@ -222,6 +222,8 @@
     max-width: 780px;
     font-size: clamp(2.55rem, 7.3vw, 5.7rem);
     line-height: 0.98;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
 }
 
 .lead {
@@ -238,6 +240,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.55rem;
+    scroll-margin-top: 6rem;
 }
 
 .heroBadges {
@@ -1163,7 +1166,8 @@
     }
 
     .hero h1 {
-        font-size: clamp(2.15rem, 13vw, 4rem);
+        font-size: clamp(2rem, 9.2vw, 2.75rem);
+        line-height: 1.08;
     }
 
     .heroVisual {

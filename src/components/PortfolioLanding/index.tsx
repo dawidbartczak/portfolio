@@ -41,6 +41,13 @@ const linkIcons = {
     "case-study": Code,
 };
 
+const paragonRepositorySummaryLink: ProjectLink = {
+    type: "source",
+    label: {pl: "Repozytoria", en: "Repositories"},
+    value: "3 repo",
+    href: "/projects/paragon-pipeline#project-links",
+};
+
 const themeIcons = {
     dark: Moon,
     light: Sun,
@@ -94,16 +101,37 @@ function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale })
         <div className={styles.links}>
             {links.map((link) => {
                 const Icon = linkIcons[link.type];
+                const content = (
+                    <>
+                        <Icon className={styles.inlineIcon}/>
+                        <span>{text(link.label, locale)}</span>
+                    </>
+                );
+
+                if (link.href.startsWith("/")) {
+                    return (
+                        <Link className={styles.inlineLink} href={link.href} key={`${link.type}-${link.href}`}>
+                            {content}
+                        </Link>
+                    );
+                }
 
                 return (
                     <a className={styles.inlineLink} href={link.href} key={`${link.type}-${link.href}`} rel="noreferrer" target="_blank">
-                        <Icon className={styles.inlineIcon}/>
-                        <span>{text(link.label, locale)}</span>
+                        {content}
                     </a>
                 );
             })}
         </div>
     );
+}
+
+function landingProjectLinks(project: Project, limit: number) {
+    if (project.id === "paragon-pipeline") {
+        return [paragonRepositorySummaryLink];
+    }
+
+    return project.links.slice(0, limit);
 }
 
 function FeaturedCard({
@@ -115,7 +143,7 @@ function FeaturedCard({
     onPreview: (project: Project) => void;
     project: Project;
 }) {
-    const cardLinks = project.id === "paragon-pipeline" ? project.links : project.links.slice(0, 2);
+    const cardLinks = landingProjectLinks(project, 2);
 
     return (
         <article className={cx(styles.glassPanel, styles.featuredCard, styles.interactiveCard)} data-reveal>
@@ -172,9 +200,7 @@ function FeaturedCard({
 }
 
 function ArchiveCard({project, locale}: { project: Project; locale: Locale }) {
-    const cardLinks = project.id === "paragon-pipeline"
-        ? project.links.filter((link) => text(link.label, locale) === "ParagonPIE")
-        : project.links.slice(0, 1);
+    const cardLinks = landingProjectLinks(project, 1);
 
     return (
         <article className={cx(styles.glassPanel, styles.archiveCard, styles.interactiveCard)} data-reveal id={`project-${project.id}`}>

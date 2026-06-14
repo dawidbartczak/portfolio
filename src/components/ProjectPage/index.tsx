@@ -85,7 +85,7 @@ function repoLabel(project: Project, locale: Locale) {
 
 function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale }) {
     return (
-        <div className={styles.links}>
+        <div className={styles.links} id="project-links">
             {links.map((link) => {
                 const Icon = linkIcons[link.type];
 
