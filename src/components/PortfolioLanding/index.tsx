@@ -8,6 +8,7 @@ import {
     Bot,
     Boxes,
     BrainCircuit,
+    ChevronDown,
     Compass,
     Code2,
     GitBranch,
@@ -16,7 +17,7 @@ import {
     Server,
     Sparkles,
 } from "lucide-react";
-import {Fragment, useEffect, useMemo, useRef, useState} from "react";
+import {Fragment, type MouseEvent, useEffect, useMemo, useRef, useState} from "react";
 import {
     Code,
     Github,
@@ -215,6 +216,20 @@ export default function PortfolioLanding() {
         };
     }, []);
 
+    const handleScrollCue = (event: MouseEvent<HTMLAnchorElement>) => {
+        const target = document.getElementById("proof");
+
+        if (!target) {
+            return;
+        }
+
+        event.preventDefault();
+        target.scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+            block: "start",
+        });
+    };
+
     return (
         <main className={cx(styles.page, styles.revealReady)}>
             <nav className={cx(styles.nav, isScrolled && styles.navScrolled)} aria-label="Primary">
@@ -308,9 +323,18 @@ export default function PortfolioLanding() {
                         </div>
                     </aside>
                 </div>
+
+                <a
+                    aria-label={locale === "pl" ? "Przewiń do kolejnej sekcji" : "Scroll to the next section"}
+                    className={styles.scrollCue}
+                    href="#proof"
+                    onClick={handleScrollCue}
+                >
+                    <ChevronDown aria-hidden="true" className={styles.scrollCueIcon}/>
+                </a>
             </section>
 
-            <section className={styles.proofStrip} aria-label="Proof points">
+            <section className={styles.proofStrip} id="proof" aria-label="Proof points">
                 {siteCopy.proof.map((item, index) => {
                     return (
                     <div className={cx(styles.glassPanel, styles.proofItem, styles.interactiveCard)} data-reveal key={item.value}>

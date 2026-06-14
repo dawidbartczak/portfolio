@@ -273,6 +273,8 @@
 }
 
 .hero {
+    position: relative;
+    overflow: visible;
     margin-top: clamp(1.15rem, 2.5vh, 1.8rem);
     scroll-margin-top: 5.5rem;
 }
@@ -334,6 +336,64 @@
     margin-top: 1.45rem;
 }
 
+.scrollCue {
+    position: absolute;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    z-index: 2;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.65rem;
+    height: 2.65rem;
+    margin: 0;
+    border: 1px solid color-mix(in srgb, var(--accent-strong) 34%, var(--panel-border));
+    border-radius: 999px;
+    background:
+        linear-gradient(145deg, color-mix(in srgb, var(--panel-bg-a) 76%, transparent), color-mix(in srgb, var(--panel-bg-b) 68%, transparent)),
+        color-mix(in srgb, var(--button-secondary-bg) 82%, transparent);
+    color: var(--accent-strong);
+    box-shadow:
+        0 0.65rem 1.8rem color-mix(in srgb, var(--accent-strong) 12%, transparent),
+        inset 0 1px 0 color-mix(in srgb, var(--text-strong) 12%, transparent);
+    transform: translate3d(-50%, 50%, 0);
+    transition:
+        border-color var(--motion-fast) ease,
+        color var(--motion-fast) ease,
+        transform var(--motion-fast) var(--motion-ease);
+}
+
+.scrollCue::before {
+    content: "";
+    position: absolute;
+    inset: -0.42rem;
+    z-index: -1;
+    border-radius: inherit;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent-strong) 16%, transparent), transparent 66%);
+    opacity: 0.72;
+    pointer-events: none;
+}
+
+.scrollCueIcon {
+    display: block;
+    width: 1.15rem;
+    height: 1.15rem;
+    animation: scrollCueFloat 1.8s var(--motion-ease) infinite;
+}
+
+@keyframes scrollCueFloat {
+    0%,
+    100% {
+        transform: translate3d(0, -2px, 0);
+    }
+
+    50% {
+        transform: translate3d(0, 3px, 0);
+    }
+}
+
 .primaryButton,
 .secondaryButton,
 .caseStudyLink {
@@ -375,6 +435,12 @@
     .secondaryButton:hover,
     .caseStudyLink:hover {
         transform: translateY(-1px);
+    }
+
+    .scrollCue:hover {
+        border-color: color-mix(in srgb, var(--accent-strong) 58%, var(--panel-border));
+        color: var(--accent);
+        transform: translate3d(-50%, calc(50% - 1px), 0);
     }
 }
 
@@ -583,6 +649,7 @@
 .tagList span,
 .eraBadge,
 .archiveCategory {
+    gap: 0.36rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -601,7 +668,8 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.8rem;
-    margin-top: clamp(1.8rem, 3vw, 2.5rem);
+    margin-top: clamp(2.85rem, 4vw, 3.5rem);
+    scroll-margin-top: 6rem;
 }
 
 .proofItem .panelContent {
@@ -1098,7 +1166,7 @@
 
     .proofStrip {
         gap: 0.6rem;
-        margin-top: 1.15rem;
+        margin-top: 2.8rem;
     }
 
     .section,
@@ -1191,10 +1259,15 @@
     .primaryButton,
     .secondaryButton,
     .caseStudyLink,
+    .scrollCue,
     .inlineLink,
     .textLink,
     .featuredMedia {
         transition: none;
+    }
+
+    .scrollCueIcon {
+        animation: none;
     }
 
     .interactiveCard:hover,
@@ -1205,5 +1278,9 @@
     .inlineLink:hover,
     .textLink:hover {
         transform: none;
+    }
+
+    .scrollCue:hover {
+        transform: translate3d(-50%, 50%, 0);
     }
 }
