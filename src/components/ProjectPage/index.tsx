@@ -277,7 +277,7 @@ export default function ProjectPage({project}: ProjectPageProps) {
                 </div>
             </nav>
 
-            <section className={cx(styles.hero, styles.glassPanel)} data-reveal>
+            <section className={cx(styles.hero, styles.glassPanel)}>
                 <div className={styles.panelContent}>
                     <div className={styles.heroCopy}>
                         <p className={styles.eyebrow}>{projectMode} / {project.year}</p>
