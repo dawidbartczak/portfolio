@@ -220,10 +220,12 @@
 
 .hero h1 {
     max-width: 780px;
-    font-size: clamp(2.55rem, 7.3vw, 5.7rem);
+    font-size: clamp(2.55rem, 6.4vw, 5.15rem);
     line-height: 0.98;
-    overflow-wrap: anywhere;
     text-wrap: balance;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: manual;
 }
 
 .lead {
