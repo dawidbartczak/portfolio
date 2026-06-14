@@ -312,7 +312,7 @@ export const projects = [
         proofPoints: [
             {pl: "Łączy frontend produktu z eksperymentem ML.", en: "Connects product frontend with an ML experiment."},
             {pl: "Pokazuje ciekawość wokół modeli językowych jeszcze przed boomem AI toolingowym.", en: "Shows curiosity around language models before AI tooling became standard."},
-            {pl: "Ma działające demo i publiczny kod.", en: "Has a working demo and public source code."},
+            {pl: "Ma publiczny kod i czytelny zakres eksperymentu.", en: "Has public source code and a clear experimental scope."},
         ],
         caseStudy: {
             problem: {
@@ -409,12 +409,6 @@ export const projects = [
             note: withoutAiNote,
         },
         links: [
-            {
-                type: "demo",
-                label: {pl: "Demo", en: "Demo"},
-                value: "crimsongpt.dawidbartczak.dev",
-                href: "https://crimsongpt.dawidbartczak.dev",
-            },
             {
                 type: "source",
                 label: {pl: "Kod źródłowy", en: "Source code"},
