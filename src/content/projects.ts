@@ -123,6 +123,14 @@ export const projects = [
                 {pl: "Potrafię dowieźć narzędzie użytkowe od pomysłu do działającej aplikacji.", en: "I can ship a practical tool from idea to working app."},
                 {pl: "Nie jestem ograniczony do jednej platformy.", en: "I am not limited to one platform."},
             ],
+            hireFit: {
+                title: {pl: "Dobry sygnał dla podobnych zleceń", en: "A strong signal for similar work"},
+                items: [
+                    {pl: "wewnętrzne narzędzia desktopowe i techniczne workflow", en: "internal desktop tools and technical workflows"},
+                    {pl: "integracje z nietypowym sprzętem, plikami albo lokalnym środowiskiem", en: "integrations with unusual hardware, files or local environments"},
+                    {pl: "MVP narzędzia, które ma być użyteczne, nie tylko efektowne", en: "tool MVPs that need to be useful, not only visually polished"},
+                ],
+            },
             note: withoutAiNote,
         },
         links: [
@@ -251,6 +259,14 @@ export const projects = [
                 {pl: "Potrafię projektować pipeline'y ML od pierwszych zasad.", en: "I can design ML pipelines from first principles."},
                 {pl: "Umiem rozłożyć niejasny problem na architekturę techniczną.", en: "I can turn an ambiguous problem into technical architecture."},
             ],
+            hireFit: {
+                title: {pl: "Dobry sygnał dla podobnych zleceń", en: "A strong signal for similar work"},
+                items: [
+                    {pl: "OCR, klasyfikacja dokumentów i ekstrakcja danych", en: "OCR, document classification and data extraction"},
+                    {pl: "prototypy ML/NLP, gdzie trzeba szybko sprawdzić ryzyko techniczne", en: "ML/NLP prototypes that need fast technical risk validation"},
+                    {pl: "automatyzacje dokumentów z nieidealnymi danymi wejściowymi", en: "document automation with imperfect input data"},
+                ],
+            },
             note: withoutAiNote,
         },
         links: [
@@ -382,6 +398,14 @@ export const projects = [
                 {pl: "Potrafię budować produkt wokół technologii, której dopiero się uczę.", en: "I can build a product around technology I am actively learning."},
                 {pl: "Umiem łączyć research, UI i wdrażalny kod.", en: "I can connect research, UI and shippable code."},
             ],
+            hireFit: {
+                title: {pl: "Dobry sygnał dla podobnych zleceń", en: "A strong signal for similar work"},
+                items: [
+                    {pl: "AI/LLM prototype, który musi wyglądać jak produkt, nie lab demo", en: "AI/LLM prototypes that need to feel like products, not lab demos"},
+                    {pl: "interfejsy czatu, workflow prompt/response i UX wokół modelu", en: "chat interfaces, prompt/response workflows and model-facing UX"},
+                    {pl: "pierwsza wersja aplikacji wokół niepewnej technologii", en: "first product versions around uncertain technology"},
+                ],
+            },
             note: withoutAiNote,
         },
         links: [
@@ -444,6 +468,14 @@ export const projects = [
             proves: [
                 {pl: "Potrafię zejść niżej niż framework i zrozumieć mechanikę.", en: "I can go below the framework and understand the mechanics."},
             ],
+            hireFit: {
+                title: {pl: "Dobry sygnał dla podobnych zleceń", en: "A strong signal for similar work"},
+                items: [
+                    {pl: "interaktywne wizualizacje techniczne w przeglądarce", en: "interactive technical visualisations in the browser"},
+                    {pl: "algorytmiczne prototypy, gdzie trzeba zejść niżej niż biblioteka", en: "algorithmic prototypes that require going below a library"},
+                    {pl: "narzędzia edukacyjne albo demo pokazujące mechanikę systemu", en: "educational tools or demos that explain system mechanics"},
+                ],
+            },
             note: withoutAiNote,
         },
         links: [
@@ -496,6 +528,14 @@ export const projects = [
             proves: [
                 {pl: "Potrafię budować narzędzia edukacyjne i eksperymentalne.", en: "I can build educational and experimental tools."},
             ],
+            hireFit: {
+                title: {pl: "Dobry sygnał dla podobnych zleceń", en: "A strong signal for similar work"},
+                items: [
+                    {pl: "wizualizacje danych, modeli i procesów matematycznych", en: "visualisations of data, models and mathematical processes"},
+                    {pl: "interaktywne demo do sprawdzania hipotezy albo mechaniki algorytmu", en: "interactive demos for validating hypotheses or algorithm mechanics"},
+                    {pl: "prototypy, które mają tłumaczyć trudny temat przez działanie", en: "prototypes that explain difficult concepts through interaction"},
+                ],
+            },
             note: withoutAiNote,
         },
         links: [
@@ -548,6 +588,14 @@ export const projects = [
             proves: [
                 {pl: "Potrafię pracować poza webem i myśleć produktowo.", en: "I can work beyond the web and think product-first."},
             ],
+            hireFit: {
+                title: {pl: "Dobry sygnał dla podobnych zleceń", en: "A strong signal for similar work"},
+                items: [
+                    {pl: "mobilne MVP z prostym, użytecznym flow", en: "mobile MVPs with simple, useful flows"},
+                    {pl: "prototypy aplikacji społecznych, konkursowych lub walidacyjnych", en: "social-impact, competition or validation app prototypes"},
+                    {pl: "produktowe uporządkowanie pomysłu pod telefon", en: "product shaping for mobile-first ideas"},
+                ],
+            },
             note: withoutAiNote,
         },
         links: [
@@ -599,6 +647,14 @@ export const projects = [
             proves: [
                 {pl: "Rozumiem, że AI/ML to nie tylko gotowe API.", en: "I understand that AI/ML is not only a ready-made API."},
             ],
+            hireFit: {
+                title: {pl: "Dobry sygnał dla podobnych zleceń", en: "A strong signal for similar work"},
+                items: [
+                    {pl: "przygotowanie danych tekstowych i prototypy NLP", en: "text data preparation and NLP prototypes"},
+                    {pl: "eksperymenty z polskim językiem, tokenizacją i pipeline'ami", en: "experiments with Polish language, tokenisation and pipelines"},
+                    {pl: "AI tooling, gdzie trzeba rozumieć fundament, nie tylko wywołać API", en: "AI tooling that needs foundation-level understanding, not only API calls"},
+                ],
+            },
             note: withoutAiNote,
         },
         links: [

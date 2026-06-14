@@ -35,6 +35,10 @@ export type ProjectCaseStudy = {
     };
     hardParts: LocalizedText[];
     proves: LocalizedText[];
+    hireFit?: {
+        title: LocalizedText;
+        items: LocalizedText[];
+    };
     note?: LocalizedText;
 };
 

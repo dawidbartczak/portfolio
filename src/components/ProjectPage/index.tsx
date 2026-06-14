@@ -162,6 +162,7 @@ export default function ProjectPage({project}: ProjectPageProps) {
         },
     ];
     const primaryProof = project.caseStudy.proves[0] ?? project.proofPoints[0] ?? project.role;
+    const hireFit = project.caseStudy.hireFit;
     const deliveryLensItems: StoryItem[] = [
         {
             eyebrow: {pl: "01", en: "01"},
@@ -543,17 +544,35 @@ export default function ProjectPage({project}: ProjectPageProps) {
 
             <section className={cx(styles.cta, styles.glassPanel, styles.interactiveCard)} data-reveal>
                 <div className={styles.panelContent}>
-                    <div>
+                    <div className={styles.ctaCopy}>
                         <p className={styles.eyebrow}>{locale === "pl" ? "Następny krok" : "Next step"}</p>
                         <h2>{locale === "pl" ? "Masz podobny problem do dowiezienia?" : "Have a similar problem to ship?"}</h2>
                         <p>{locale === "pl"
                             ? "Napisz krótko, co chcesz zbudować. Najpierw uporządkuję problem, potem zaproponuję sensowną architekturę i pierwszy działający zakres."
                             : "Send a short note about what you want to build. I will first clarify the problem, then propose the architecture and the first shippable scope."}</p>
                     </div>
-                    <a className={styles.mailLink} href={contact.mailto}>
-                        <Mail className={styles.icon}/>
-                        <span>{locale === "pl" ? "Napisz email" : "Send email"}</span>
-                    </a>
+                    <aside className={styles.ctaFit}>
+                        {hireFit && (
+                            <>
+                                <div className={styles.sectionKicker}>
+                                    <Target className={styles.kickerIcon}/>
+                                    <span>{t(hireFit.title)}</span>
+                                </div>
+                                <ul>
+                                    {hireFit.items.map((item, index) => (
+                                        <li key={`hire-fit-${index}`}>
+                                            <ShieldCheck className={styles.fitIcon}/>
+                                            <span>{t(item)}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
+                        <a className={styles.mailLink} href={contact.mailto}>
+                            <Mail className={styles.icon}/>
+                            <span>{locale === "pl" ? "Napisz email" : "Send email"}</span>
+                        </a>
+                    </aside>
                 </div>
             </section>
         </main>

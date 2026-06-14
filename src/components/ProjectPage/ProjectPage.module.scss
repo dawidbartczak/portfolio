@@ -816,17 +816,49 @@
 }
 
 .cta .panelContent {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(320px, 0.72fr);
+    gap: clamp(1.1rem, 3vw, 2.2rem);
     align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
 }
 
-.cta p {
+.ctaCopy p {
     max-width: 760px;
 }
 
+.ctaFit {
+    display: grid;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.ctaFit ul {
+    display: grid;
+    gap: 0.65rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ctaFit li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.58rem;
+    align-items: flex-start;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.fitIcon {
+    width: 1rem;
+    min-width: 1rem;
+    height: 1rem;
+    margin-top: 0.2rem;
+    color: var(--accent-strong);
+}
+
 .mailLink {
+    width: fit-content;
     min-height: 2.65rem;
     padding: 0.75rem 1rem;
     border-radius: 999px;
@@ -858,6 +890,7 @@
 @media (max-width: 980px) {
     .hero > .panelContent,
     .lensHeader,
+    .cta .panelContent,
     .deliveryProof,
     .clientBridge,
     .deepDive {
@@ -974,6 +1007,10 @@
 
     .cta .panelContent {
         display: grid;
+    }
+
+    .ctaFit {
+        gap: 1.05rem;
     }
 
     .mailLink {
