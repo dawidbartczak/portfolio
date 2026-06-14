@@ -11,15 +11,17 @@ import {
     GitBranch,
     Layers3,
     Lightbulb,
+    Maximize2,
     Rocket,
     ShieldCheck,
     Sparkles,
     Target,
     Trophy,
     Wrench,
+    X,
     type LucideIcon,
 } from "lucide-react";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {Code, Mail, Moon, Play, Sun} from "@/icons";
 import {contact, localeNames, text} from "@/content/site";
 import {useReveal} from "@/hooks/useReveal";
@@ -101,10 +103,34 @@ function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale })
 
 export default function ProjectPage({project}: ProjectPageProps) {
     const [locale, setLocale] = useState<Locale>("pl");
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
     const [theme, setTheme] = useThemePreference();
     const t = useMemo(() => (value: LocalizedText) => text(value, locale), [locale]);
 
     useReveal();
+
+    useEffect(() => {
+        if (!isPreviewOpen) {
+            return;
+        }
+
+        const previousOverflow = document.body.style.overflow;
+
+        document.body.style.overflow = "hidden";
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setIsPreviewOpen(false);
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [isPreviewOpen]);
 
     const projectMode = project.featuredLabel ? t(project.featuredLabel) : t(project.category);
     const hireFit = project.caseStudy.hireFit;
@@ -301,14 +327,25 @@ export default function ProjectPage({project}: ProjectPageProps) {
                     <aside className={styles.heroVisual}>
                         <div className={styles.mediaFrame}>
                             {project.thumbnailPath ? (
-                                <Image
-                                    alt={project.title}
-                                    className={styles.projectImage}
-                                    height={540}
-                                    src={project.thumbnailPath}
-                                    unoptimized
-                                    width={860}
-                                />
+                                <button
+                                    aria-label={locale === "pl" ? `Powiększ screenshot projektu ${project.title}` : `Enlarge ${project.title} project screenshot`}
+                                    className={styles.mediaButton}
+                                    onClick={() => setIsPreviewOpen(true)}
+                                    type="button"
+                                >
+                                    <Image
+                                        alt={project.title}
+                                        className={styles.projectImage}
+                                        height={540}
+                                        src={project.thumbnailPath}
+                                        unoptimized
+                                        width={860}
+                                    />
+                                    <span className={styles.mediaHint} aria-hidden="true">
+                                        <Maximize2 className={styles.mediaHintIcon}/>
+                                        <span>{locale === "pl" ? "Powiększ" : "Enlarge"}</span>
+                                    </span>
+                                </button>
                             ) : (
                                 <div className={styles.mediaFallback}>
                                     <BrainCircuit className={styles.fallbackIcon}/>
@@ -329,6 +366,39 @@ export default function ProjectPage({project}: ProjectPageProps) {
                     </aside>
                 </div>
             </section>
+
+            {isPreviewOpen && project.thumbnailPath && (
+                <div
+                    aria-label={locale === "pl" ? "Podgląd screenshotu projektu" : "Project screenshot preview"}
+                    aria-modal="true"
+                    className={styles.imageModal}
+                    onClick={() => setIsPreviewOpen(false)}
+                    role="dialog"
+                >
+                    <div className={styles.imageModalPanel} onClick={(event) => event.stopPropagation()}>
+                        <button
+                            aria-label={locale === "pl" ? "Zamknij podgląd" : "Close preview"}
+                            className={styles.imageModalClose}
+                            onClick={() => setIsPreviewOpen(false)}
+                            type="button"
+                        >
+                            <X className={styles.imageModalCloseIcon}/>
+                        </button>
+                        <Image
+                            alt={project.title}
+                            className={styles.imageModalImage}
+                            height={900}
+                            src={project.thumbnailPath}
+                            unoptimized
+                            width={1440}
+                        />
+                        <div className={styles.imageModalCaption}>
+                            <strong>{project.title}</strong>
+                            <span>{t(project.description)}</span>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <section className={styles.proofStrip} aria-label={locale === "pl" ? "Szybkie fakty" : "Quick facts"}>
                 {proofStats.map((item) => {
