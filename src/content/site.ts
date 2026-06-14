@@ -35,7 +35,7 @@ export const siteCopy = {
         primaryCta: {pl: "Zobacz projekty", en: "View work"},
         secondaryCta: {pl: "Napisz do mnie", en: "Contact me"},
         status: {pl: "Dostępny na projekty freelance/contract", en: "Available for freelance/contract projects"},
-        asideTitle: {pl: "Brief → MVP → wdrożenie", en: "Brief → MVP → deploy"},
+        asideTitle: {pl: "Brief → MVP → deploy", en: "Brief → MVP → deploy"},
         asideLead: {
             pl: "Jeden wykonawca do produktu, kodu i technicznego dowiezienia pierwszej wersji.",
             en: "One builder for product, code and technical delivery of the first working version.",
@@ -43,7 +43,7 @@ export const siteCopy = {
         asideSteps: [
             {pl: "Brief", en: "Brief"},
             {pl: "MVP", en: "MVP"},
-            {pl: "Wdrożenie", en: "Deploy"},
+            {pl: "Deploy", en: "Deploy"},
         ],
     },
     proof: [

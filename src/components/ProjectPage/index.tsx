@@ -146,8 +146,8 @@ export default function ProjectPage({ project }: ProjectPageProps) {
                     <div className={styles.panelContent}>
                         <h2>{locale === "pl" ? "Najtrudniejsze fragmenty" : "Hard parts"}</h2>
                         <ul>
-                            {project.caseStudy.hardParts.map((item) => (
-                                <li key={t(item)}>{t(item)}</li>
+                            {project.caseStudy.hardParts.map((item, index) => (
+                                <li key={`hard-part-${index}`}>{t(item)}</li>
                             ))}
                         </ul>
                     </div>
@@ -157,8 +157,8 @@ export default function ProjectPage({ project }: ProjectPageProps) {
                     <div className={styles.panelContent}>
                         <h2>{locale === "pl" ? "Co to udowadnia" : "What this proves"}</h2>
                         <ul>
-                            {project.caseStudy.proves.map((item) => (
-                                <li key={t(item)}>{t(item)}</li>
+                            {project.caseStudy.proves.map((item, index) => (
+                                <li key={`proves-${index}`}>{t(item)}</li>
                             ))}
                         </ul>
                     </div>

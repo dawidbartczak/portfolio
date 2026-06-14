@@ -13,9 +13,11 @@ import {
     Code2,
     GitBranch,
     Layers3,
+    Maximize2,
     Rocket,
     Server,
     Sparkles,
+    X,
 } from "lucide-react";
 import {Fragment, type MouseEvent, useEffect, useMemo, useRef, useState} from "react";
 import {
@@ -100,16 +102,29 @@ function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale })
     );
 }
 
-function FeaturedCard({project, locale}: { project: Project; locale: Locale }) {
+function FeaturedCard({
+    locale,
+    onPreview,
+    project,
+}: {
+    locale: Locale;
+    onPreview: (project: Project) => void;
+    project: Project;
+}) {
     const cardLinks = project.id === "paragon-pipeline" ? project.links : project.links.slice(0, 2);
 
     return (
         <article className={cx(styles.glassPanel, styles.featuredCard, styles.interactiveCard)} data-reveal>
             <div className={styles.panelContent}>
-                <div className={styles.featuredMedia}>
+                <button
+                    aria-label={locale === "pl" ? `Powiększ zdjęcie projektu ${project.title}` : `Enlarge ${project.title} project image`}
+                    className={styles.featuredMedia}
+                    onClick={() => onPreview(project)}
+                    type="button"
+                >
                     {project.thumbnailPath && (
                         <Image
-                            alt=""
+                            alt={project.title}
                             className={styles.projectImage}
                             height={400}
                             src={project.thumbnailPath}
@@ -117,7 +132,10 @@ function FeaturedCard({project, locale}: { project: Project; locale: Locale }) {
                             width={640}
                         />
                     )}
-                </div>
+                    <span className={styles.mediaHint} aria-hidden="true">
+                        <Maximize2 className={styles.mediaHintIcon}/>
+                    </span>
+                </button>
 
                 <div className={styles.featuredBody}>
                     <div className={styles.metaRow}>
@@ -132,8 +150,8 @@ function FeaturedCard({project, locale}: { project: Project; locale: Locale }) {
                     <p>{text(project.description, locale)}</p>
 
                     <ul className={styles.proofList}>
-                        {project.proofPoints.slice(0, 3).map((point) => (
-                            <li key={text(point, locale)}>{text(point, locale)}</li>
+                        {project.proofPoints.slice(0, 3).map((point, index) => (
+                            <li key={`${project.id}-proof-${index}`}>{text(point, locale)}</li>
                         ))}
                     </ul>
 
@@ -191,10 +209,114 @@ export default function PortfolioLanding() {
     const [locale, setLocale] = useState<Locale>("pl");
     const [theme, setTheme] = useThemePreference();
     const [isScrolled, setIsScrolled] = useState(false);
+    const [previewProject, setPreviewProject] = useState<Project | null>(null);
+    const heroAsideRef = useRef<HTMLElement | null>(null);
     const scrollFrameRef = useRef<number | null>(null);
     const t = useMemo(() => (value: {pl: string; en: string}) => text(value, locale), [locale]);
 
     useReveal();
+
+    useEffect(() => {
+        const element = heroAsideRef.current;
+        const supportsFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        if (!element || !supportsFinePointer.matches || prefersReducedMotion.matches) {
+            return undefined;
+        }
+
+        let rect = element.getBoundingClientRect();
+        let frame: number | null = null;
+        let nextX = "0deg";
+        let nextY = "0deg";
+        let glowX = "50%";
+        let glowY = "50%";
+        let isTiltActive = false;
+
+        const commitTilt = () => {
+            frame = null;
+            element.style.setProperty("--tilt-x", nextX);
+            element.style.setProperty("--tilt-y", nextY);
+            element.style.setProperty("--tilt-glow-x", glowX);
+            element.style.setProperty("--tilt-glow-y", glowY);
+            element.style.transform = isTiltActive
+                ? `perspective(920px) rotateX(${nextX}) rotateY(${nextY}) translate3d(0, -2px, 0)`
+                : "perspective(920px) rotateX(0deg) rotateY(0deg) translate3d(0, 0, 0)";
+        };
+
+        const queueTilt = () => {
+            if (frame !== null) {
+                return;
+            }
+
+            frame = window.requestAnimationFrame(commitTilt);
+        };
+
+        const handlePointerEnter = () => {
+            isTiltActive = true;
+            rect = element.getBoundingClientRect();
+        };
+
+        const handlePointerMove = (event: PointerEvent) => {
+            isTiltActive = true;
+            const relativeX = (event.clientX - rect.left) / rect.width;
+            const relativeY = (event.clientY - rect.top) / rect.height;
+            const centeredX = Math.max(-1, Math.min(1, (relativeX - 0.5) * 2));
+            const centeredY = Math.max(-1, Math.min(1, (relativeY - 0.5) * 2));
+
+            nextX = `${(-centeredY * 4).toFixed(2)}deg`;
+            nextY = `${(centeredX * 5).toFixed(2)}deg`;
+            glowX = `${Math.round(relativeX * 100)}%`;
+            glowY = `${Math.round(relativeY * 100)}%`;
+            queueTilt();
+        };
+
+        const resetTilt = () => {
+            isTiltActive = false;
+            nextX = "0deg";
+            nextY = "0deg";
+            glowX = "50%";
+            glowY = "50%";
+            queueTilt();
+        };
+
+        element.addEventListener("pointerenter", handlePointerEnter);
+        element.addEventListener("pointermove", handlePointerMove);
+        element.addEventListener("pointerleave", resetTilt);
+
+        return () => {
+            element.removeEventListener("pointerenter", handlePointerEnter);
+            element.removeEventListener("pointermove", handlePointerMove);
+            element.removeEventListener("pointerleave", resetTilt);
+
+            if (frame !== null) {
+                window.cancelAnimationFrame(frame);
+            }
+
+            element.style.removeProperty("transform");
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!previewProject) {
+            return undefined;
+        }
+
+        const previousOverflow = document.body.style.overflow;
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setPreviewProject(null);
+            }
+        };
+
+        document.body.style.overflow = "hidden";
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [previewProject]);
 
     useEffect(() => {
         const updateScrollState = () => {
@@ -300,14 +422,14 @@ export default function PortfolioLanding() {
                         </div>
                     </div>
 
-                    <aside className={cx(styles.heroAside, styles.interactiveCard)}>
+                    <aside className={cx(styles.heroAside, styles.interactiveCard)} ref={heroAsideRef}>
                         <div className={styles.heroStatusRow}>
                             <span className={styles.statusDot}/>
                             <span>{t(siteCopy.hero.status)}</span>
                         </div>
                         <div className={styles.deliveryMap} aria-label={locale === "pl" ? "Proces dostarczania" : "Delivery process"}>
                             {siteCopy.hero.asideSteps.map((step, index) => (
-                                <Fragment key={t(step)}>
+                                <Fragment key={`delivery-${index}`}>
                                     <div className={styles.deliveryStep}>
                                         <span className={styles.deliveryIndex}>{String(index + 1).padStart(2, "0")}</span>
                                         <strong>{t(step)}</strong>
@@ -365,7 +487,7 @@ export default function PortfolioLanding() {
                 <div className={styles.offerGrid}>
                     {siteCopy.offer.items.map((item, index) => {
                         return (
-                        <article className={cx(styles.glassPanel, styles.offerCard, styles.interactiveCard)} data-reveal key={t(item.title)}>
+                        <article className={cx(styles.glassPanel, styles.offerCard, styles.interactiveCard)} data-reveal key={`offer-${index}`}>
                             <div className={styles.panelContent}>
                                 <div className={styles.cardHeader}>
                                     <span className={styles.iconBadge}>
@@ -389,7 +511,12 @@ export default function PortfolioLanding() {
                 </div>
                 <div className={styles.featuredGrid}>
                     {featuredProjects.map((project) => (
-                        <FeaturedCard key={project.id} locale={locale} project={project}/>
+                        <FeaturedCard
+                            key={project.id}
+                            locale={locale}
+                            onPreview={setPreviewProject}
+                            project={project}
+                        />
                     ))}
                 </div>
             </section>
@@ -416,7 +543,7 @@ export default function PortfolioLanding() {
                 <div className={styles.aiGrid}>
                     {siteCopy.aiWorkflow.items.map((item, index) => {
                         return (
-                        <article className={cx(styles.glassPanel, styles.aiCard, styles.interactiveCard)} data-reveal key={t(item.title)}>
+                        <article className={cx(styles.glassPanel, styles.aiCard, styles.interactiveCard)} data-reveal key={`ai-workflow-${index}`}>
                             <div className={styles.panelContent}>
                                 <div className={styles.cardHeader}>
                                     <span className={styles.iconBadge}>
@@ -440,7 +567,7 @@ export default function PortfolioLanding() {
                 <div className={styles.processGrid}>
                     {siteCopy.process.steps.map((step, index) => {
                         return (
-                        <article className={cx(styles.glassPanel, styles.processCard, styles.interactiveCard)} data-reveal key={t(step.name)}>
+                        <article className={cx(styles.glassPanel, styles.processCard, styles.interactiveCard)} data-reveal key={`process-${index}`}>
                             <div className={styles.panelContent}>
                                 <div className={styles.processMeta}>
                                     <span className={styles.processNumber}>{String(index + 1).padStart(2, "0")}</span>
@@ -502,6 +629,39 @@ export default function PortfolioLanding() {
                     </div>
                 </div>
             </section>
+
+            {previewProject?.thumbnailPath && (
+                <div
+                    aria-label={locale === "pl" ? "Podgląd zdjęcia projektu" : "Project image preview"}
+                    aria-modal="true"
+                    className={styles.imageModal}
+                    onClick={() => setPreviewProject(null)}
+                    role="dialog"
+                >
+                    <div className={styles.imageModalPanel} onClick={(event) => event.stopPropagation()}>
+                        <button
+                            aria-label={locale === "pl" ? "Zamknij podgląd" : "Close preview"}
+                            className={styles.imageModalClose}
+                            onClick={() => setPreviewProject(null)}
+                            type="button"
+                        >
+                            <X className={styles.imageModalCloseIcon}/>
+                        </button>
+                        <Image
+                            alt={previewProject.title}
+                            className={styles.imageModalImage}
+                            height={900}
+                            src={previewProject.thumbnailPath}
+                            unoptimized
+                            width={1440}
+                        />
+                        <div className={styles.imageModalCaption}>
+                            <strong>{previewProject.title}</strong>
+                            <span>{text(previewProject.description, locale)}</span>
+                        </div>
+                    </div>
+                </div>
+            )}
         </main>
     );
 }

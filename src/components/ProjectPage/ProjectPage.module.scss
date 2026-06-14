@@ -276,7 +276,7 @@
 }
 
 .notePanel {
-    border-color: color-mix(in srgb, var(--panel-border) 65%, transparent);
+    border: 0;
     background: transparent;
     box-shadow: none;
 }
