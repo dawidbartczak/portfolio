@@ -461,39 +461,41 @@ export default function ProjectPage({project}: ProjectPageProps) {
             )}
 
             <section className={styles.clientBridge}>
-                <div className={cx(styles.glassPanel, styles.bridgeIntro, styles.interactiveCard)} data-reveal>
+                <article className={cx(styles.glassPanel, styles.bridgePanel, styles.interactiveCard)} data-reveal>
                     <div className={styles.panelContent}>
-                        <div className={styles.sectionKicker}>
-                            <Sparkles className={styles.kickerIcon}/>
-                            <span>{locale === "pl" ? "Jak przekładam to na zlecenie" : "How this translates to client work"}</span>
+                        <div className={styles.bridgeCopy}>
+                            <div className={styles.sectionKicker}>
+                                <Sparkles className={styles.kickerIcon}/>
+                                <span>{locale === "pl" ? "Jak przekładam to na zlecenie" : "How this translates to client work"}</span>
+                            </div>
+                            <h2>{locale === "pl"
+                                ? `Podobny problem dowiózłbym jako konkretny projekt, nie jako eksperyment bez końca.`
+                                : `I would ship a similar problem as a concrete project, not an endless experiment.`}</h2>
+                            <p>{locale === "pl"
+                                ? `${project.title} jest dowodem technicznego kierunku. Dla klienta zaczynam od zakresu, który można szybko sprawdzić, wdrożyć i świadomie rozwijać.`
+                                : `${project.title} is proof of technical direction. For a client, I start with a scope that can be validated, deployed and developed deliberately.`}</p>
                         </div>
-                        <h2>{locale === "pl"
-                            ? `Podobny problem dowiózłbym jako konkretny projekt, nie jako eksperyment bez końca.`
-                            : `I would ship a similar problem as a concrete project, not an endless experiment.`}</h2>
-                        <p>{locale === "pl"
-                            ? `${project.title} jest dowodem technicznego kierunku. Dla klienta zaczynam od zakresu, który można szybko sprawdzić, wdrożyć i świadomie rozwijać.`
-                            : `${project.title} is proof of technical direction. For a client, I start with a scope that can be validated, deployed and developed deliberately.`}</p>
+
+                        <ol className={styles.bridgeSteps}>
+                            {clientBridgeSteps.map((item) => {
+                                const Icon = item.icon;
+
+                                return (
+                                    <li key={item.id}>
+                                        <div className={styles.bridgeStepMeta}>
+                                            <span>{t(item.eyebrow)}</span>
+                                            <Icon className={styles.bridgeStepIcon}/>
+                                        </div>
+                                        <div>
+                                            <h3>{t(item.title)}</h3>
+                                            <p>{t(item.text)}</p>
+                                        </div>
+                                    </li>
+                                );
+                            })}
+                        </ol>
                     </div>
-                </div>
-
-                <div className={styles.bridgeGrid}>
-                    {clientBridgeSteps.map((item) => {
-                        const Icon = item.icon;
-
-                        return (
-                            <article className={cx(styles.glassPanel, styles.bridgeCard, styles.interactiveCard)} data-reveal key={item.id}>
-                                <div className={styles.panelContent}>
-                                    <div className={styles.cardTopline}>
-                                        <span>{t(item.eyebrow)}</span>
-                                        <Icon className={styles.cardIcon}/>
-                                    </div>
-                                    <h3>{t(item.title)}</h3>
-                                    <p>{t(item.text)}</p>
-                                </div>
-                            </article>
-                        );
-                    })}
-                </div>
+                </article>
             </section>
 
             <section className={styles.deepDive}>
