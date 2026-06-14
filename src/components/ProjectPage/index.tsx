@@ -6,7 +6,6 @@ import {
     ArrowLeft,
     AppWindow,
     BrainCircuit,
-    Code2,
     ExternalLink,
     FileText,
     GitBranch,
@@ -108,6 +107,9 @@ export default function ProjectPage({project}: ProjectPageProps) {
     useReveal();
 
     const projectMode = project.featuredLabel ? t(project.featuredLabel) : t(project.category);
+    const hireFit = project.caseStudy.hireFit;
+    const primaryProof = project.caseStudy.proves[0] ?? project.proofPoints[0] ?? project.role;
+    const clientSignal = hireFit?.items[0];
     const storyItems: StoryItem[] = [
         {
             eyebrow: {pl: "01 / Kontekst", en: "01 / Context"},
@@ -151,9 +153,10 @@ export default function ProjectPage({project}: ProjectPageProps) {
             value: projectMode,
         },
         {
-            icon: Code2,
-            label: locale === "pl" ? "Stack" : "Stack",
-            value: locale === "pl" ? `${project.stack.length} obszary` : `${project.stack.length} areas`,
+            icon: Target,
+            label: locale === "pl" ? "Sygnał" : "Signal",
+            tone: "signal",
+            value: clientSignal ? t(clientSignal) : primaryProof ? t(primaryProof) : projectMode,
         },
         {
             icon: FileText,
@@ -161,8 +164,6 @@ export default function ProjectPage({project}: ProjectPageProps) {
             value: repoLabel(project, locale),
         },
     ];
-    const primaryProof = project.caseStudy.proves[0] ?? project.proofPoints[0] ?? project.role;
-    const hireFit = project.caseStudy.hireFit;
     const deliveryLensItems: StoryItem[] = [
         {
             eyebrow: {pl: "01", en: "01"},
@@ -334,7 +335,7 @@ export default function ProjectPage({project}: ProjectPageProps) {
                     const Icon = item.icon;
 
                     return (
-                        <article className={cx(styles.glassPanel, styles.proofItem, styles.interactiveCard)} data-reveal key={item.label}>
+                        <article className={cx(styles.glassPanel, styles.proofItem, item.tone === "signal" && styles.proofItemSignal, styles.interactiveCard)} data-reveal key={item.label}>
                             <div className={styles.panelContent}>
                                 <Icon className={styles.proofIcon}/>
                                 <span>{item.label}</span>

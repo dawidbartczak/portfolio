@@ -394,6 +394,15 @@
     text-overflow: ellipsis;
 }
 
+.proofItemSignal strong {
+    display: -webkit-box;
+    font-size: clamp(0.78rem, 0.9vw, 0.9rem);
+    line-height: 1.22;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
 .deliveryLens,
 .storySection,
 .deliveryProof,
