@@ -21,7 +21,7 @@ import {
     X,
     type LucideIcon,
 } from "lucide-react";
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import {Code, Mail, Moon, Play, Sun} from "@/icons";
 import {contact, localeNames, text} from "@/content/site";
 import {useReveal} from "@/hooks/useReveal";
@@ -104,7 +104,9 @@ function ProjectLinks({links, locale}: { links: ProjectLink[]; locale: Locale })
 export default function ProjectPage({project}: ProjectPageProps) {
     const [locale, setLocale] = useState<Locale>("pl");
     const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const [theme, setTheme] = useThemePreference();
+    const isScrolledRef = useRef(false);
     const t = useMemo(() => (value: LocalizedText) => text(value, locale), [locale]);
 
     useReveal();
@@ -131,6 +133,47 @@ export default function ProjectPage({project}: ProjectPageProps) {
             window.removeEventListener("keydown", handleKeyDown);
         };
     }, [isPreviewOpen]);
+
+    useEffect(() => {
+        const prefersStaticNav = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
+
+        if (prefersStaticNav) {
+            isScrolledRef.current = false;
+            return undefined;
+        }
+
+        const updateScrolledState = () => {
+            const nextIsScrolled = window.scrollY > 12;
+
+            if (isScrolledRef.current !== nextIsScrolled) {
+                isScrolledRef.current = nextIsScrolled;
+                setIsScrolled(nextIsScrolled);
+            }
+        };
+
+        let frame = 0;
+        const onScroll = () => {
+            if (frame) {
+                return;
+            }
+
+            frame = window.requestAnimationFrame(() => {
+                frame = 0;
+                updateScrolledState();
+            });
+        };
+
+        updateScrolledState();
+        window.addEventListener("scroll", onScroll, {passive: true});
+
+        return () => {
+            if (frame) {
+                window.cancelAnimationFrame(frame);
+            }
+
+            window.removeEventListener("scroll", onScroll);
+        };
+    }, []);
 
     const projectMode = project.featuredLabel ? t(project.featuredLabel) : t(project.category);
     const hireFit = project.caseStudy.hireFit;
@@ -255,13 +298,16 @@ export default function ProjectPage({project}: ProjectPageProps) {
 
     return (
         <main className={cx(styles.page, styles.revealReady)}>
-            <nav className={styles.nav}>
+            <nav className={cx(styles.nav, isScrolled && styles.navScrolled)} aria-label="Primary">
+                <Link className={styles.brandBack} href={`/#project-${project.id}`}>
+                    <ArrowLeft className={styles.navIcon}/>
+                    <span>{locale === "pl" ? "Karta projektu" : "Project card"}</span>
+                </Link>
                 <div className={styles.navLinks}>
-                    <Link href={`/#project-${project.id}`}>
-                        <ArrowLeft className={styles.navIcon}/>
-                        <span>{locale === "pl" ? "Karta projektu" : "Project card"}</span>
-                    </Link>
-                    <Link href="/#top">{locale === "pl" ? "Start strony" : "Page top"}</Link>
+                    <a href="#proof">{locale === "pl" ? "Fakty" : "Facts"}</a>
+                    <a href="#story">{locale === "pl" ? "Case study" : "Case study"}</a>
+                    <a href="#signal">{locale === "pl" ? "Dowód" : "Proof"}</a>
+                    <a href="#contact">{locale === "pl" ? "Kontakt" : "Contact"}</a>
                 </div>
 
                 <div className={styles.navControls}>
@@ -303,7 +349,7 @@ export default function ProjectPage({project}: ProjectPageProps) {
                 </div>
             </nav>
 
-            <section className={cx(styles.hero, styles.glassPanel)}>
+            <section className={cx(styles.hero, styles.glassPanel)} id="top">
                 <div className={styles.panelContent}>
                     <div className={styles.heroCopy}>
                         <p className={styles.eyebrow}>{projectMode} / {project.year}</p>
@@ -402,7 +448,7 @@ export default function ProjectPage({project}: ProjectPageProps) {
                 </div>
             )}
 
-            <section className={styles.proofStrip} aria-label={locale === "pl" ? "Szybkie fakty" : "Quick facts"}>
+            <section className={styles.proofStrip} id="proof" aria-label={locale === "pl" ? "Szybkie fakty" : "Quick facts"}>
                 {proofStats.map((item) => {
                     const Icon = item.icon;
 
@@ -455,7 +501,7 @@ export default function ProjectPage({project}: ProjectPageProps) {
                 </div>
             </section>
 
-            <section className={styles.storySection}>
+            <section className={styles.storySection} id="story">
                 <div className={cx(styles.sectionHeader, styles.storyHeader)} data-reveal>
                     <div className={styles.storyIntroCopy}>
                         <p className={styles.eyebrow}>{locale === "pl" ? "Case study" : "Case study"}</p>
@@ -590,7 +636,7 @@ export default function ProjectPage({project}: ProjectPageProps) {
                 </article>
             </section>
 
-            <section className={styles.deepDive}>
+            <section className={styles.deepDive} id="signal">
                 <article className={cx(styles.glassPanel, styles.timelinePanel, styles.interactiveCard)} data-reveal>
                     <div className={styles.panelContent}>
                         <div className={styles.sectionKicker}>
@@ -645,7 +691,7 @@ export default function ProjectPage({project}: ProjectPageProps) {
                 </section>
             )}
 
-            <section className={cx(styles.cta, styles.glassPanel, styles.interactiveCard)} data-reveal>
+            <section className={cx(styles.cta, styles.glassPanel, styles.interactiveCard)} data-reveal id="contact">
                 <div className={styles.panelContent}>
                     <div className={styles.ctaCopy}>
                         <p className={styles.eyebrow}>{locale === "pl" ? "Następny krok" : "Next step"}</p>
