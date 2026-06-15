@@ -49,8 +49,8 @@
   --nav-bg: rgba(13, 11, 25, 0.82);
   --nav-bg-top: rgba(13, 11, 25, 0.52);
   --nav-border: rgba(255, 255, 255, 0.16);
-  --nav-shadow: 0 18px 42px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.11);
-  --nav-shadow-top: 0 20px 55px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.13);
+  --nav-shadow: 0 18px 42px rgba(0, 0, 0, 0.24), inset 0 -1px 0 rgba(255, 255, 255, 0.11);
+  --nav-shadow-top: 0 20px 55px rgba(0, 0, 0, 0.2), inset 0 -1px 0 rgba(255, 255, 255, 0.13);
   --toggle-bg: rgba(255, 255, 255, 0.06);
   --toggle-active-bg: rgba(255, 255, 255, 0.18);
 }
@@ -106,8 +106,8 @@
   --nav-bg: rgba(255, 255, 255, 0.82);
   --nav-bg-top: rgba(255, 255, 255, 0.58);
   --nav-border: rgba(50, 43, 86, 0.14);
-  --nav-shadow: 0 18px 42px rgba(45, 38, 86, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.75);
-  --nav-shadow-top: 0 22px 58px rgba(84, 76, 134, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  --nav-shadow: 0 18px 42px rgba(45, 38, 86, 0.12), inset 0 -1px 0 rgba(255, 255, 255, 0.75);
+  --nav-shadow-top: 0 22px 58px rgba(84, 76, 134, 0.14), inset 0 -1px 0 rgba(255, 255, 255, 0.78);
   --toggle-bg: rgba(255, 255, 255, 0.42);
   --toggle-active-bg: rgba(21, 18, 31, 0.1);
 }
@@ -162,8 +162,8 @@ p {
     --panel-bg-b: rgba(255, 255, 255, 0.045);
     --panel-shadow: 0 10px 30px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     --panel-frost: none;
-    --nav-shadow: 0 10px 24px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    --nav-shadow-top: 0 10px 24px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    --nav-shadow: 0 10px 24px rgba(0, 0, 0, 0.18), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+    --nav-shadow-top: 0 10px 24px rgba(0, 0, 0, 0.16), inset 0 -1px 0 rgba(255, 255, 255, 0.09);
   }
 
   :root[data-theme="light"] {
@@ -175,8 +175,8 @@ p {
     --panel-bg-a: rgba(255, 255, 255, 0.24);
     --panel-bg-b: rgba(255, 255, 255, 0.085);
     --panel-shadow: 0 12px 28px rgba(45, 38, 86, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.42);
-    --nav-shadow: 0 10px 24px rgba(45, 38, 86, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.62);
-    --nav-shadow-top: 0 10px 24px rgba(84, 76, 134, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.66);
+    --nav-shadow: 0 10px 24px rgba(45, 38, 86, 0.1), inset 0 -1px 0 rgba(255, 255, 255, 0.62);
+    --nav-shadow-top: 0 10px 24px rgba(84, 76, 134, 0.11), inset 0 -1px 0 rgba(255, 255, 255, 0.66);
   }
 
   html {
