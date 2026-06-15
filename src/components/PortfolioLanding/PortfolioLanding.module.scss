@@ -1445,19 +1445,60 @@
         gap: 0.5rem;
         margin-top: 0.2rem;
         padding: 0.5rem 0.62rem;
+        transform: none;
+        transition: none;
+        will-change: auto;
     }
 
     .nav::before {
         inset: 0;
+        backdrop-filter: none;
+        transition: none;
     }
 
     .navScrolled {
         border-radius: 0 0 0.95rem 0.95rem;
-        transform: translate3d(0, -0.32rem, 0);
+        transform: none;
     }
 
     .navScrolled::before {
         inset: 0;
+        backdrop-filter: none;
+    }
+
+    .glassPanel::before {
+        backdrop-filter: none;
+    }
+
+    .interactiveCard,
+    .heroAside.interactiveCard,
+    .interactiveCard::after,
+    .revealReady [data-reveal],
+    .featuredMedia,
+    .primaryButton,
+    .secondaryButton,
+    .caseStudyLink,
+    .inlineLink,
+    .textLink,
+    .scrollCue {
+        transition: none;
+        will-change: auto;
+    }
+
+    .interactiveCard::after {
+        display: none;
+    }
+
+    .revealReady [data-reveal],
+    .revealReady [data-reveal]:not(.interactiveCard),
+    .revealReady [data-revealed="true"] {
+        opacity: 1;
+        transform: none;
+        will-change: auto;
+    }
+
+    .scrollCueIcon {
+        animation: none;
     }
 
     .brand {
@@ -1667,6 +1708,55 @@
     .deliveryArrow {
         justify-self: center;
         transform: rotate(90deg);
+    }
+}
+
+@media (pointer: coarse) {
+    .nav,
+    .nav::before,
+    .interactiveCard,
+    .heroAside.interactiveCard,
+    .interactiveCard::after,
+    .revealReady [data-reveal],
+    .featuredMedia,
+    .primaryButton,
+    .secondaryButton,
+    .caseStudyLink,
+    .inlineLink,
+    .textLink,
+    .scrollCue {
+        transition: none;
+        will-change: auto;
+    }
+
+    .nav {
+        transform: none;
+    }
+
+    .nav::before,
+    .navScrolled::before,
+    .glassPanel::before {
+        backdrop-filter: none;
+    }
+
+    .navScrolled {
+        transform: none;
+    }
+
+    .interactiveCard::after {
+        display: none;
+    }
+
+    .revealReady [data-reveal],
+    .revealReady [data-reveal]:not(.interactiveCard),
+    .revealReady [data-revealed="true"] {
+        opacity: 1;
+        transform: none;
+        will-change: auto;
+    }
+
+    .scrollCueIcon {
+        animation: none;
     }
 }
 

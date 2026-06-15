@@ -457,13 +457,28 @@ export default function ProjectPage({project}: ProjectPageProps) {
 
             <section className={styles.storySection}>
                 <div className={cx(styles.sectionHeader, styles.storyHeader)} data-reveal>
-                    <div>
+                    <div className={styles.storyIntroCopy}>
                         <p className={styles.eyebrow}>{locale === "pl" ? "Case study" : "Case study"}</p>
                         <h2>{locale === "pl" ? "Od problemu do działającego systemu." : "From problem to working system."}</h2>
                     </div>
-                    <p className={styles.storyHeaderCopy}>{locale === "pl"
-                        ? "Cztery krótkie części pokazują kontekst, dowieziony artefakt, decyzje techniczne i odpowiedzialność za efekt."
-                        : "Four short parts show the context, shipped artifact, technical decisions and ownership of the outcome."}</p>
+                    <div className={styles.storyFlow}>
+                        <p className={styles.storyHeaderCopy}>{locale === "pl"
+                            ? "Zamiast jednej ściany opisu: krótka ścieżka od kontekstu do sygnału, który daje projekt."
+                            : "Instead of one wall of copy: a short path from context to the signal this project gives."}</p>
+                        <ol aria-label={locale === "pl" ? "Struktura case study" : "Case study structure"}>
+                            {storyItems.map((item, index) => {
+                                const Icon = item.icon;
+
+                                return (
+                                    <li key={`story-flow-${item.id}`}>
+                                        <span>{String(index + 1).padStart(2, "0")}</span>
+                                        <Icon className={styles.storyFlowIcon}/>
+                                        <strong>{t(item.title)}</strong>
+                                    </li>
+                                );
+                            })}
+                        </ol>
+                    </div>
                 </div>
 
                 <div className={styles.storyGrid}>

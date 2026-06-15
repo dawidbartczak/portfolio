@@ -241,6 +241,7 @@ export default function PortfolioLanding() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [previewProject, setPreviewProject] = useState<Project | null>(null);
     const heroAsideRef = useRef<HTMLElement | null>(null);
+    const isScrolledRef = useRef(false);
     const scrollFrameRef = useRef<number | null>(null);
     const t = useMemo(() => (value: {pl: string; en: string}) => text(value, locale), [locale]);
 
@@ -349,9 +350,21 @@ export default function PortfolioLanding() {
     }, [previewProject]);
 
     useEffect(() => {
+        const usesStableMobileNav = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
+
+        if (usesStableMobileNav) {
+            isScrolledRef.current = false;
+            return undefined;
+        }
+
         const updateScrollState = () => {
             scrollFrameRef.current = null;
-            setIsScrolled(window.scrollY > 12);
+            const nextIsScrolled = window.scrollY > 12;
+
+            if (isScrolledRef.current !== nextIsScrolled) {
+                isScrolledRef.current = nextIsScrolled;
+                setIsScrolled(nextIsScrolled);
+            }
         };
 
         const handleScroll = () => {

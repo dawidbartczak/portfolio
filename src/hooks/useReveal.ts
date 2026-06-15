@@ -5,9 +5,10 @@ import {useEffect} from "react";
 export function useReveal(selector = "[data-reveal]") {
     useEffect(() => {
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const prefersMobileFastPath = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
         const tracked = new WeakSet<HTMLElement>();
 
-        if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        if (prefersReducedMotion || prefersMobileFastPath || !("IntersectionObserver" in window)) {
             const elements = Array.from(document.querySelectorAll<HTMLElement>(selector));
             elements.forEach((element) => element.setAttribute("data-revealed", "true"));
             return undefined;
