@@ -141,7 +141,7 @@
 
 .nav {
     position: sticky;
-    top: 0.75rem;
+    top: 0;
     z-index: 20;
     display: grid;
     grid-template-columns: 1fr auto auto;
@@ -164,6 +164,7 @@
     inset: 0;
     z-index: 0;
     border: 1px solid var(--nav-border);
+    border-top-width: 0;
     border-radius: inherit;
     background: var(--nav-bg-top);
     box-shadow: var(--nav-shadow-top);
@@ -180,11 +181,13 @@
 .navScrolled {
     margin-top: 0;
     border-radius: 0 0 1.15rem 1.15rem;
-    transform: translate3d(0, -0.55rem, 0);
+    transform: none;
 }
 
 .navScrolled::before {
     inset: 0;
+    border-top-width: 0;
+    border-top-color: transparent;
     background: var(--nav-bg);
     box-shadow: var(--nav-shadow);
     backdrop-filter: blur(12px) saturate(132%);
